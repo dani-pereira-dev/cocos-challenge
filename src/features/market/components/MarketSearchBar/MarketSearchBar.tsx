@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Pressable, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { colors } from '@ui-kit/foundations/colors';
@@ -16,7 +16,7 @@ export function MarketSearchBar({ value, onChangeText, onClear }: MarketSearchBa
   return (
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
-        <Ionicons name="search" size={18} color={colors.textTertiary} style={styles.icon} />
+        <Icon name="search" size={18} color={colors.textTertiary} style={styles.icon} />
         <TextInput
           style={styles.input}
           value={value}
@@ -30,7 +30,7 @@ export function MarketSearchBar({ value, onChangeText, onClear }: MarketSearchBa
         />
         {value.length > 0 ? (
           <Pressable onPress={onClear} hitSlop={8}>
-            <Ionicons name="close-circle" size={18} color={colors.textTertiary} />
+            <Icon name="close-circle" size={18} color={colors.textTertiary} />
           </Pressable>
         ) : null}
       </View>

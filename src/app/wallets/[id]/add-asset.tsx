@@ -11,7 +11,7 @@ import { AssetPickerItem } from '@/features/wallets/components/AssetPickerItem';
 import { useWalletsStore } from '@/features/wallets/store/walletsStore';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
-import { styles } from './add-asset.styles';
+import { styles } from '@/features/wallets/styles/wallet-add-asset.styles';
 
 export default function AddAssetScreen() {
   const { t } = useTranslation();

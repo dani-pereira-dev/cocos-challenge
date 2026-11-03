@@ -9,7 +9,7 @@ import { QuantityAssetHeader } from '@/features/wallets/components/QuantityAsset
 import { QuantityInputCard } from '@/features/wallets/components/QuantityInputCard';
 import { useQuantityInput } from '@/features/wallets/hooks/useQuantityInput';
 import { formatAmount } from '@/utils/formatters';
-import { styles } from './ticker.styles';
+import { styles } from '@/features/wallets/styles/wallet-ticker.styles';
 
 export default function QuantityInputScreen() {
   const { t } = useTranslation();

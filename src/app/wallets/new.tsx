@@ -3,14 +3,14 @@ import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
 import { TextInput } from '@ui-kit/components/TextInput';
 import { colors } from '@ui-kit/foundations/colors';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { useWalletsStore } from '@/features/wallets/store/walletsStore';
-import { styles } from './new.styles';
+import { styles } from '@/features/wallets/styles/wallet-new.styles';
 
 export default function NewWalletScreen() {
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ export default function NewWalletScreen() {
       >
         <View style={styles.content}>
           <View style={styles.iconWrapper}>
-            <Ionicons name="briefcase-outline" size={64} color={colors.primary} />
+            <Icon name="briefcase-outline" size={64} color={colors.primary} />
           </View>
 
           <Text variant="h3" align="center">

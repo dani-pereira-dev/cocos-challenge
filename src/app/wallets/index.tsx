@@ -2,7 +2,7 @@ import { FlatList, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
 import { EmptyView } from '@/components/EmptyView';
@@ -11,7 +11,7 @@ import { CustomWallet } from '@/domain/entities/wallet';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { WalletListItem } from '@/features/wallets/components/WalletListItem';
 import { useWalletsStore } from '@/features/wallets/store/walletsStore';
-import { styles } from './index.styles';
+import { styles } from '@/features/wallets/styles/wallets-list.styles';
 
 export default function WalletsScreen() {
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ export default function WalletsScreen() {
             style={({ pressed }) => [styles.createRow, pressed && styles.createRowPressed]}
             onPress={() => router.push('/wallets/new')}
           >
-            <Ionicons name="add-circle-outline" size={22} color={colors.primary} />
+            <Icon name="add-circle-outline" size={22} color={colors.primary} />
             <Text variant="bodySemibold" color="brand">
               {t('wallets.createNew')}
             </Text>

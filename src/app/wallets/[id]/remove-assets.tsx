@@ -9,7 +9,7 @@ import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { SelectableAssetItem } from '@/features/wallets/components/SelectableAssetItem';
 import { useWalletDetail } from '@/features/wallets/hooks/useWalletDetail';
 import { useWalletsStore } from '@/features/wallets/store/walletsStore';
-import { styles } from './remove-assets.styles';
+import { styles } from '@/features/wallets/styles/wallet-remove-assets.styles';
 
 export default function RemoveAssetsScreen() {
   const { t } = useTranslation();

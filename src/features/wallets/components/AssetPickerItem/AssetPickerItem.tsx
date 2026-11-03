@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { TickerAvatar } from '@/components/TickerAvatar';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
@@ -45,7 +45,7 @@ export function AssetPickerItem({ asset, assignedQuantity, onPress }: AssetPicke
         ) : null}
       </View>
 
-      <Ionicons
+      <Icon
         name={isAssigned ? 'create-outline' : 'add-circle-outline'}
         size={22}
         color={colors.primary}

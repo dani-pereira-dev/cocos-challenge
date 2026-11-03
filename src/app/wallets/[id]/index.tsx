@@ -3,7 +3,7 @@ import { Alert, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { LoadingView } from '@/components/LoadingView';
 import { colors } from '@ui-kit/foundations/colors';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
@@ -12,7 +12,7 @@ import { WalletAssetList } from '@/features/wallets/components/WalletAssetList';
 import { WalletOptionsSheet } from '@/features/wallets/components/WalletOptionsSheet';
 import { useWalletDetail } from '@/features/wallets/hooks/useWalletDetail';
 import { useWalletsStore } from '@/features/wallets/store/walletsStore';
-import { styles } from './index.styles';
+import { styles } from '@/features/wallets/styles/wallet-detail.styles';
 
 export default function WalletDetailScreen() {
   const { t } = useTranslation();
@@ -52,7 +52,7 @@ export default function WalletDetailScreen() {
         title={wallet.name}
         rightElement={
           <Pressable onPress={() => setOptionsVisible(true)} hitSlop={12}>
-            <Ionicons name="ellipsis-vertical" size={22} color={colors.textSecondary} />
+            <Icon name="ellipsis-vertical" size={22} color={colors.textSecondary} />
           </Pressable>
         }
       />

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon, type IconName } from '@ui-kit';
 import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
@@ -12,9 +12,8 @@ interface OrderResultProps {
   onClose: () => void;
 }
 
-type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
-type StatusConfig = { iconName: IoniconName; labelKey: string; color: string };
+type StatusConfig = { iconName: IconName; labelKey: string; color: string };
 
 const STATUS_CONFIG: Record<OrderStatus, StatusConfig> = {
   FILLED: { iconName: 'checkmark-circle', labelKey: 'order.statusFilled', color: colors.success },
@@ -29,7 +28,7 @@ export function OrderResult({ result, onClose }: OrderResultProps) {
   return (
     <View style={styles.container}>
       <View style={[styles.iconCircle, { backgroundColor: `${config.color}20` }]}>
-        <Ionicons name={config.iconName} size={48} color={config.color} />
+        <Icon name={config.iconName} size={48} color={config.color} />
       </View>
 
       <Text variant="h3" align="center">

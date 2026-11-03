@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { styles } from './layout.styles';
+import { styles } from '@/styles/layout.styles';
 
 // Reactotron solo se inicializa en desarrollo — no afecta builds de producción
 if (__DEV__) {

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
 import { styles } from './SystemErrorBanner.styles';
@@ -11,7 +11,7 @@ interface SystemErrorBannerProps {
 export function SystemErrorBanner({ message }: SystemErrorBannerProps) {
   return (
     <View style={styles.banner}>
-      <Ionicons name="alert-circle-outline" size={16} color={colors.warning} />
+      <Icon name="alert-circle-outline" size={16} color={colors.warning} />
       <Text variant="caption" style={styles.text}>
         {message}
       </Text>

@@ -1,18 +1,17 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Icon, type IconName } from '@ui-kit';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { colors } from '@ui-kit/foundations/colors';
 import { OrderModal } from '@/features/order/components/OrderModal';
 
-type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
 
 interface TabIconProps {
-  name: IoniconsName;
+  name: IconName;
   focused: boolean;
 }
 
 function TabIcon({ name, focused }: TabIconProps) {
-  return <Ionicons name={name} size={24} color={focused ? colors.tabActive : colors.tabInactive} />;
+  return <Icon name={name} size={24} color={focused ? colors.tabActive : colors.tabInactive} />;
 }
 
 export default function TabLayout() {

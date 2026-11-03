@@ -1,5 +1,5 @@
 import { Pressable, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { styles } from './OrderNavBar.styles';
 
@@ -14,7 +14,7 @@ export function OrderNavBar({ title, accentColor, onBack, onClose }: OrderNavBar
   return (
     <View style={styles.navBar}>
       <Pressable onPress={onBack} hitSlop={12} style={styles.navButton}>
-        <Ionicons name="arrow-back" size={22} color={accentColor} />
+        <Icon name="arrow-back" size={22} color={accentColor} />
       </Pressable>
 
       <Text variant="bodySemibold" style={[styles.navTitle, { color: accentColor }]}>
@@ -23,7 +23,7 @@ export function OrderNavBar({ title, accentColor, onBack, onClose }: OrderNavBar
 
       {onClose ? (
         <Pressable onPress={onClose} hitSlop={12} style={styles.navButton}>
-          <Ionicons name="close" size={22} color={accentColor} />
+          <Icon name="close" size={22} color={accentColor} />
         </Pressable>
       ) : (
         <View style={styles.navButton} />

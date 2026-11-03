@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
 import { styles } from './WalletBanner.styles';
@@ -15,7 +15,7 @@ export function WalletBanner() {
       onPress={() => router.push('/wallets')}
     >
       <View style={styles.iconContainer}>
-        <Ionicons name="briefcase-outline" size={24} color={colors.textInverse} />
+        <Icon name="briefcase-outline" size={24} color={colors.textInverse} />
       </View>
 
       <View style={styles.textContainer}>
@@ -27,7 +27,7 @@ export function WalletBanner() {
         </Text>
       </View>
 
-      <Ionicons name="chevron-forward" size={20} color={colors.textInverse} />
+      <Icon name="chevron-forward" size={20} color={colors.textInverse} />
     </Pressable>
   );
 }

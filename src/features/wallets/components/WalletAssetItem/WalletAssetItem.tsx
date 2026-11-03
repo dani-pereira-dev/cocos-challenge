@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -38,7 +38,7 @@ function DeleteAction({ progress, methods, ticker, onDelete }: DeleteActionProps
   return (
     <Animated.View style={[styles.deleteAction, animatedStyle]}>
       <Pressable style={styles.deleteButton} onPress={handlePress}>
-        <Ionicons name="trash-outline" size={20} color="#fff" />
+        <Icon name="trash-outline" size={20} color="#fff" />
         <Text variant="caption" style={styles.deleteLabel}>
           {t('wallets.confirmDelete')}
         </Text>

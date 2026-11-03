@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { CustomWallet } from '@/domain/entities/wallet';
 import { colors } from '@ui-kit/foundations/colors';
@@ -24,7 +24,7 @@ export function WalletListItem({ wallet, onPress }: WalletListItemProps) {
       onPress={() => onPress(wallet)}
     >
       <View style={styles.iconContainer}>
-        <Ionicons name="briefcase-outline" size={22} color={colors.primary} />
+        <Icon name="briefcase-outline" size={22} color={colors.primary} />
       </View>
 
       <View style={styles.info}>
@@ -37,7 +37,7 @@ export function WalletListItem({ wallet, onPress }: WalletListItemProps) {
         </Text>
       </View>
 
-      <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
+      <Icon name="chevron-forward" size={20} color={colors.textTertiary} />
     </Pressable>
   );
 }

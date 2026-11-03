@@ -8,7 +8,7 @@ import { Text } from '@ui-kit/components/Text';
 import { TextInput } from '@ui-kit/components/TextInput';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { useWalletsStore } from '@/features/wallets/store/walletsStore';
-import { styles } from './rename.styles';
+import { styles } from '@/features/wallets/styles/wallet-rename.styles';
 
 export default function RenameWalletScreen() {
   const { t } = useTranslation();

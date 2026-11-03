@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Text } from '@ui-kit/components/Text';
 import { TickerAvatar } from '@/components/TickerAvatar';
 import { colors } from '@ui-kit/foundations/colors';
@@ -24,7 +24,7 @@ export function SelectableAssetItem({ allocation, selected, onToggle }: Selectab
     >
       <View style={[styles.checkbox, selected && styles.checkboxSelected]}>
         {selected ? (
-          <Ionicons name="checkmark" size={14} color={colors.textInverse} />
+          <Icon name="checkmark" size={14} color={colors.textInverse} />
         ) : null}
       </View>
 

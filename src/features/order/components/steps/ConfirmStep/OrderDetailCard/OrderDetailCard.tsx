@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
@@ -20,7 +20,7 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
     <View style={styles.card}>
       <View style={styles.row}>
         <View style={styles.rowLeft}>
-          <Ionicons name="time-outline" size={16} color={colors.textSecondary} />
+          <Icon name="time-outline" size={16} color={colors.textSecondary} />
           <Text variant="body" color="secondary">
             {t('order.liquidacionLabel')}
           </Text>
@@ -32,7 +32,7 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
 
       <View style={styles.row}>
         <View style={styles.rowLeft}>
-          <Ionicons name="swap-horizontal-outline" size={16} color={colors.textSecondary} />
+          <Icon name="swap-horizontal-outline" size={16} color={colors.textSecondary} />
           <Text variant="body" color="secondary">
             {isMarketOrder(orderType) ? t('order.priceMarketLabel') : t('order.priceLimitLabel')}
           </Text>
@@ -47,7 +47,7 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
 
       <View style={styles.row}>
         <View style={styles.rowLeft}>
-          <Ionicons name="calendar-outline" size={16} color={colors.textSecondary} />
+          <Icon name="calendar-outline" size={16} color={colors.textSecondary} />
           <Text variant="body" color="secondary">
             {t('order.validezLabel')}
           </Text>

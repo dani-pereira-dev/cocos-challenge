@@ -1,6 +1,6 @@
 import { View, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@ui-kit';
 import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
@@ -18,7 +18,7 @@ export function ErrorView({ message, onRetry, style }: ErrorViewProps) {
 
   return (
     <View style={[styles.container, style]}>
-      <Ionicons name="alert-circle-outline" size={48} color={colors.warning} style={styles.icon} />
+      <Icon name="alert-circle-outline" size={48} color={colors.warning} style={styles.icon} />
       <Text variant="bodyMedium" color="primary" align="center">
         {t('common.somethingWentWrong')}
       </Text>
