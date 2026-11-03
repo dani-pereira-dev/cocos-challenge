@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
-import { OrderType } from '@/domain/entities/order';
+import { isMarketOrder, OrderType } from '@/domain/entities/order';
 import { formatCurrency } from '@/utils/formatters';
 import { copy } from '@/constants/copy';
 import { styles } from './OrderDetailCard.styles';
@@ -32,7 +32,7 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
         <View style={styles.rowLeft}>
           <Ionicons name="swap-horizontal-outline" size={16} color={colors.textSecondary} />
           <Text variant="body" color="secondary">
-            {orderType === 'MARKET' ? copy.order.priceMarketLabel : copy.order.priceLimitLabel}
+            {isMarketOrder(orderType) ? copy.order.priceMarketLabel : copy.order.priceLimitLabel}
           </Text>
         </View>
         <Text variant="bodySemibold">

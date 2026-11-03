@@ -3,7 +3,14 @@ import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
 import { TextInput } from '@ui-kit/components/TextInput';
 import { colors } from '@ui-kit/foundations/colors';
-import { OrderableInstrument, OrderSide, OrderType } from '@/domain/entities/order';
+import {
+  isBuyOrder,
+  isLimitOrder,
+  isMarketOrder,
+  OrderableInstrument,
+  OrderSide,
+  OrderType,
+} from '@/domain/entities/order';
 import { QuantityMode } from '@/features/order/utils/order-form';
 import { SubSheetType } from '@/features/order/hooks/useOrderForm';
 import { formatAmount } from '@/utils/formatters';
@@ -69,12 +76,12 @@ export function FormStep({
   onSelectQuantityMode,
   onSelectOrderType,
 }: FormStepProps) {
-  const isBuy = side === 'BUY';
+  const isBuy = isBuyOrder(side);
   const accentColor = isBuy ? colors.success : colors.error;
   const sideLabel = isBuy ? copy.order.buy : copy.order.sell;
 
   const modeLabelText = quantityMode === 'amount' ? copy.order.byAmount : copy.order.byShares;
-  const priceLabelText = orderType === 'MARKET' ? copy.order.typeMarket : copy.order.typeLimit;
+  const priceLabelText = isMarketOrder(orderType) ? copy.order.typeMarket : copy.order.typeLimit;
   const modeRowLabel = isBuy
     ? copy.order.modeLabel(modeLabelText)
     : copy.order.modeLabelSell(modeLabelText);
@@ -109,7 +116,7 @@ export function FormStep({
 
             <View style={styles.availableRow}>
               <Text variant="caption" color="secondary">
-                {side === 'BUY'
+                {isBuy
                   ? copy.order.availableLabel(formatAmount(cash ?? 0))
                   : copy.portfolio.shares(instrument.quantity ?? 0)}
               </Text>
@@ -143,7 +150,7 @@ export function FormStep({
 
             <FieldRow label={copy.order.priceLabel(priceLabelText)} onModify={onOpenPriceSheet} />
 
-            {orderType === 'LIMIT' ? (
+            {isLimitOrder(orderType) ? (
               <View style={styles.limitPriceRow}>
                 <TextInput
                   value={limitPriceInput}

@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { OrderRequest, OrderResponse, OrderSide, OrderType } from '@/domain/entities/order';
+import {
+  isBuyOrder,
+  isLimitOrder,
+  isSellOrder,
+  OrderRequest,
+  OrderResponse,
+  OrderSide,
+  OrderType,
+} from '@/domain/entities/order';
 import { isUserError, resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { calculateSharesFromAmount } from '@/domain/use-cases/calculations';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
@@ -54,9 +62,9 @@ export function useOrderForm() {
 
   const showUseAll = isUseAllAvailable({ side, cash, ownedShares: instrument?.quantity });
 
-  const exceedsCash = side === 'BUY' && cash != null && estimatedValid && derivedTotal > cash;
+  const exceedsCash = isBuyOrder(side) && cash != null && estimatedValid && derivedTotal > cash;
   const exceedsShares =
-    side === 'SELL' &&
+    isSellOrder(side) &&
     instrument?.quantity != null &&
     estimatedValid &&
     derivedShares > instrument.quantity;
@@ -70,7 +78,7 @@ export function useOrderForm() {
   const isSubmitDisabled =
     isPending ||
     !estimatedValid ||
-    (orderType === 'LIMIT' && limitPriceInput.trim() === '') ||
+    (isLimitOrder(orderType) && limitPriceInput.trim() === '') ||
     exceedsCash ||
     exceedsShares;
 
@@ -109,7 +117,7 @@ export function useOrderForm() {
     }
 
     let limitPrice: number | undefined;
-    if (orderType === 'LIMIT') {
+    if (isLimitOrder(orderType)) {
       limitPrice = parseFloat(limitPriceInput.replace(',', '.'));
       if (!limitPrice || limitPrice <= 0 || !Number.isFinite(limitPrice)) {
         setValidationError(copy.order.invalidPrice);

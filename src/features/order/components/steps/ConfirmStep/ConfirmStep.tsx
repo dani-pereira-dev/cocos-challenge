@@ -1,7 +1,13 @@
 import { ScrollView, View } from 'react-native';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
-import { OrderableInstrument, OrderSide, OrderType } from '@/domain/entities/order';
+import {
+  isBuyOrder,
+  isLimitOrder,
+  OrderableInstrument,
+  OrderSide,
+  OrderType,
+} from '@/domain/entities/order';
 import { styles } from './ConfirmStep.styles';
 import { formatDate } from '@/utils/formatters';
 import { copy } from '@/constants/copy';
@@ -37,12 +43,13 @@ export function ConfirmStep({
   onBack,
   onSubmit,
 }: ConfirmStepProps) {
-  const isBuy = side === 'BUY';
+  const isBuy = isBuyOrder(side);
   const accentColor = isBuy ? colors.success : colors.error;
   const title = isBuy ? copy.order.confirmTitleBuy : copy.order.confirmTitleSell;
 
-  const orderPrice =
-    orderType === 'LIMIT' ? parseFloat(limitPriceInput.replace(',', '.')) : instrument.last_price;
+  const orderPrice = isLimitOrder(orderType)
+    ? parseFloat(limitPriceInput.replace(',', '.'))
+    : instrument.last_price;
 
   const subtotal = derivedShares * instrument.last_price;
   const comision = subtotal * COMISION_RATE;

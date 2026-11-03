@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { Text } from '@ui-kit/components/Text';
-import { OrderType } from '@/domain/entities/order';
+import { isLimitOrder, isMarketOrder, OrderType } from '@/domain/entities/order';
 import { QuantityMode } from '@/features/order/utils/order-form';
 import { SubSheetType } from '@/features/order/hooks/useOrderForm';
 import { copy } from '@/constants/copy';
@@ -72,12 +72,12 @@ export function SubSheet({
           <>
             <RadioRow
               label={copy.order.typeMarket}
-              selected={orderType === 'MARKET'}
+              selected={isMarketOrder(orderType)}
               onPress={() => onSelectOrderType('MARKET')}
             />
             <RadioRow
               label={copy.order.typeLimit}
-              selected={orderType === 'LIMIT'}
+              selected={isLimitOrder(orderType)}
               onPress={() => onSelectOrderType('LIMIT')}
             />
           </>

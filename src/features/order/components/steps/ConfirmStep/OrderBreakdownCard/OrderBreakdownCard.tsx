@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text } from '@ui-kit/components/Text';
-import { OrderSide } from '@/domain/entities/order';
+import { isBuyOrder, OrderSide } from '@/domain/entities/order';
 import { formatCurrency } from '@/utils/formatters';
 import { copy } from '@/constants/copy';
 import { styles } from './OrderBreakdownCard.styles';
@@ -20,10 +20,9 @@ export function OrderBreakdownCard({
   comision,
   impuestos,
 }: OrderBreakdownCardProps) {
-  const detailLabel =
-    side === 'BUY'
-      ? copy.order.buyDetailLabel(derivedShares)
-      : copy.order.sellDetailLabel(derivedShares);
+  const detailLabel = isBuyOrder(side)
+    ? copy.order.buyDetailLabel(derivedShares)
+    : copy.order.sellDetailLabel(derivedShares);
 
   return (
     <View style={styles.card}>

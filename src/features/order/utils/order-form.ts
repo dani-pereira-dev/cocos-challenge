@@ -1,5 +1,5 @@
 import { calculateSharesFromAmount } from '@/domain/use-cases/calculations';
-import { OrderSide } from '@/domain/entities/order';
+import { isBuyOrder, isSellOrder, OrderSide } from '@/domain/entities/order';
 
 export type QuantityMode = 'amount' | 'shares';
 
@@ -18,7 +18,7 @@ export interface UseAllParams {
 export function computeUseAllValue(params: UseAllParams): string | null {
   const { side, quantityMode, cash, ownedShares, lastPrice } = params;
 
-  if (side === 'SELL') {
+  if (isSellOrder(side)) {
     if (ownedShares == null) return null;
     if (quantityMode === 'shares') {
       return String(ownedShares);
@@ -42,6 +42,6 @@ export function computeUseAllValue(params: UseAllParams): string | null {
 export function isUseAllAvailable(
   params: Pick<UseAllParams, 'side' | 'cash' | 'ownedShares'>,
 ): boolean {
-  if (params.side === 'BUY') return params.cash != null;
+  if (isBuyOrder(params.side)) return params.cash != null;
   return params.ownedShares != null;
 }
