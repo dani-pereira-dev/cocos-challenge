@@ -16,8 +16,7 @@ import { WalletBanner } from '@/features/wallets/components/WalletBanner';
 
 export default function PortfolioScreen() {
   const { t } = useTranslation();
-  const { holdings: _holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
-  const holdings: typeof _holdings = []; // TODO: remove — simulating empty state
+  const { holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
   const openOrder = useOrderModalStore((s) => s.openOrder);
 
   function handleAssetPress(asset: PortfolioAssetWithMetrics) {
