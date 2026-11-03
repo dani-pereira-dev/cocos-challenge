@@ -169,15 +169,66 @@ La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta 
 
 ---
 
-## 14. Reseteo de estado en `onShow` (no en `useEffect`)
+## 14. Reseteo de estado del modal con `resetToken` + `key`
 
-**Decisión:** El estado del modal de orden se resetea en el callback `onShow` del componente `Modal`, no en un `useEffect`.
+**Decisión:** El store de Zustand expone un `resetToken: number` que incrementa en cada llamada a `openOrder`. El contenido del modal (`OrderModalContent`) recibe ese token como `key`, lo que fuerza un remount sincrónico en cada apertura.
 
-**Por qué:** La regla de lint `react-hooks/set-state-in-effect` prohíbe `setState` dentro de `useEffect` sin dependencias (causa renders adicionales). `onShow` es un event handler, semánticamente correcto y sin penalidad de lint.
+**Por qué:** El enfoque anterior (`onShow={reset}`) disparaba el reset **después** de que terminaba la animación de entrada (~300ms). Durante esa ventana el modal era visible mostrando el estado de la orden anterior, produciendo un flash perceptible. Con `key={resetToken}`, React desmonta y monta el componente sincrónicamente antes del primer frame, garantizando que siempre abra en el paso `select` sin estado residual.
+
+```ts
+// store
+openOrder: (instrument) => set((s) => ({ visible: true, instrument, resetToken: s.resetToken + 1 })),
+
+// OrderModal
+<OrderModalContent key={resetToken} onClose={closeOrder} />
+```
+
+**Trade-off:** Se agrega un campo `resetToken` al store. El costo es mínimo y el resultado es determinístico.
 
 ---
 
-## 15. Gestión de paquetes: pnpm
+## 15. Estructura de componentes: carpeta propia + archivo de estilos separado
+
+**Decisión:** Cada componente vive en su propia carpeta con tres archivos: `ComponentName.tsx`, `ComponentName.styles.ts` e `index.ts`.
+
+```
+Button/
+├── Button.tsx           # lógica y JSX
+├── Button.styles.ts     # StyleSheet.create(...)
+└── index.ts             # export { Button } from './Button'
+```
+
+**Por qué:** Mezclar estilos y lógica en un mismo archivo supera rápidamente las 200 líneas en componentes reales. La separación hace que los cambios de UI (estilos) y los cambios de comportamiento (lógica) sean diffs independientes y más fáciles de revisar. El `index.ts` mantiene los imports de los consumidores estables cuando el archivo se mueve o refactoriza.
+
+**Alcance:** Aplica a todos los componentes de `src/components/`, `src/features/*/components/` y `ui-kit/components/`. Las pantallas en `src/app/` no pueden moverse a subcarpetas (Expo Router las usaría como rutas), pero sí tienen su `.styles.ts` al mismo nivel.
+
+---
+
+## 16. Step Registry para el modal de orden
+
+**Decisión:** Los pasos del modal se despachan con un `Record<Step, () => ReactNode>` en lugar de bloques `{step === '...' && <Component />}` en cadena.
+
+```ts
+const stepRenderers: Record<Step, () => ReactNode> = {
+  select:  () => <SelectStep  ... />,
+  form:    () => <FormStep    ... />,
+  confirm: () => <ConfirmStep ... />,
+  result:  () => form.result ? <ResultSheet /> : null,
+};
+
+return (
+  <View>
+    <Pressable ... />
+    {stepRenderers[step]()}
+  </View>
+);
+```
+
+**Por qué:** `Record<Step, ...>` es exhaustivo: TypeScript da error si falta algún step o si se agrega uno nuevo sin handler. Agregar un paso (`'otp'`, `'review'`) solo requiere una entrada al mapa sin modificar condicionales existentes. El cuerpo del componente queda con una sola línea de render en lugar de cuatro bloques anidados.
+
+---
+
+## 17. Gestión de paquetes: pnpm
 
 **Decisión:** Se usa `pnpm` como package manager.
 
@@ -187,7 +238,7 @@ La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta 
 
 ---
 
-## 16. Debugging: Reactotron
+## 18. Debugging: Reactotron
 
 **Decisión:** Se integró Reactotron para debugging en desarrollo.
 
@@ -195,23 +246,3 @@ La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta 
 
 La configuración solo se activa en `__DEV__` y no tiene impacto en builds de producción.
 
----
-
-## Checklist de requisitos del challenge
-
-| Requisito                                                    | Estado                      |
-| ------------------------------------------------------------ | --------------------------- |
-| Listado de instrumentos con ticker, nombre, precio y retorno | ✅                          |
-| Portfolio con valor de mercado, ganancia y rendimiento       | ✅                          |
-| Buscador por ticker                                          | ✅                          |
-| Modal de orden BUY/SELL, MARKET/LIMIT                        | ✅                          |
-| Input de cantidad o monto en pesos                           | ✅                          |
-| Mostrar resultado con id y status                            | ✅                          |
-| TypeScript                                                   | ✅                          |
-| Expo                                                         | ✅                          |
-| README con instrucciones                                     | ✅                          |
-| Decisiones técnicas documentadas                             | ✅                          |
-| Tests unitarios                                              | ✅ (20 tests en order-form) |
-| Manejo robusto de errores                                    | ✅                          |
-| Arquitectura escalable                                       | ✅                          |
-| State management                                             | ✅ (React Query + Zustand)  |
