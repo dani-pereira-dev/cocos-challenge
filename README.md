@@ -6,14 +6,10 @@ App móvil desarrollada con **Expo / React Native** para el challenge técnico d
 
 ## Requisitos previos
 
-| Herramienta                  | Versión mínima | Cómo instalar                                                                                                                               |
-| ---------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Node.js                      | 20 LTS         | [nodejs.org](https://nodejs.org)                                                                                                            |
-| pnpm                         | 10             | `npm install -g pnpm`                                                                                                                       |
-| Expo CLI                     | última         | `npm install -g expo-cli` (o usar `bunx`/`npx`)                                                                                             |
-| Expo Go (dispositivo físico) | cualquiera     | [App Store](https://apps.apple.com/app/expo-go/id982107779) / [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) |
-
-> **Simulador (alternativa a Expo Go):** para iOS necesitás Xcode instalado; para Android, Android Studio con un AVD configurado.
+| Herramienta | Versión mínima | Cómo instalar                   |
+| ----------- | -------------- | ------------------------------- |
+| Node.js     | 20 LTS         | [nodejs.org](https://nodejs.org) |
+| pnpm        | 10             | `npm install -g pnpm`           |
 
 ---
 
@@ -32,19 +28,48 @@ pnpm install
 
 ## Ejecutar en desarrollo
 
+### Opción A — Expo Go (más rápida, sin compilación nativa)
+
 ```bash
-# Inicia el servidor de desarrollo (Metro Bundler)
 npx expo start
 ```
 
-Luego elegí cómo correr la app:
+Escaneá el QR con la cámara del celular (iOS) o desde la app Expo Go (Android). No requiere Xcode ni Android Studio.
 
-| Opción                    | Cómo                                                                                      |
-| ------------------------- | ----------------------------------------------------------------------------------------- |
-| **Expo Go (iOS/Android)** | Escaneá el QR que aparece en la terminal con la cámara del celular o desde la app Expo Go |
-| **Simulador iOS**         | Presioná `i` en la terminal (requiere Xcode)                                              |
-| **Emulador Android**      | Presioná `a` en la terminal (requiere Android Studio + AVD)                               |
-| **Web**                   | Presioná `w` en la terminal                                                               |
+> **Limitación:** Expo Go solo incluye los módulos nativos que trae de fábrica. Si la app usa módulos extra con código nativo (ej. `expo-splash-screen` con configuración custom), algunos comportamientos pueden diferir del build real.
+
+---
+
+### Opción B — Dev build nativo (recomendada para iOS/Android)
+
+Genera un build de desarrollo que incluye todos los módulos nativos del proyecto.
+
+#### Prerrequisitos iOS
+
+| Herramienta | Cómo instalar                                                        |
+| ----------- | -------------------------------------------------------------------- |
+| Xcode       | App Store (incluye el simulador de iPhone)                           |
+| CocoaPods   | `sudo gem install cocoapods --no-document`                           |
+
+#### Prerrequisitos Android
+
+| Herramienta   | Cómo instalar                             |
+| ------------- | ----------------------------------------- |
+| Android Studio | [developer.android.com/studio](https://developer.android.com/studio) — incluye el SDK y el AVD manager |
+
+#### Comandos
+
+```bash
+# iOS (simulador)
+npx expo run:ios
+
+# Android (emulador)
+npx expo run:android
+```
+
+El primer build tarda varios minutos porque compila el código nativo. Los rebuilds siguientes son incrementales y mucho más rápidos.
+
+> **Nota:** Si los directorios `ios/` y `android/` no existen, Expo los genera automáticamente antes de compilar (Continuous Native Generation). No los edites manualmente — cualquier configuración nativa va en `app.json` y config plugins.
 
 ---
 
@@ -97,7 +122,7 @@ cocos-challenge/
 │   │   ├── (tabs)/
 │   │   │   ├── index.tsx      # Tab Portfolio
 │   │   │   └── market.tsx     # Tab Mercado
-│   │   └── wallets/           # Pantallas de carteras
+│   │   └── wallets/           # Pantallas de carteras (stack independiente)
 │   ├── constants/
 │   │   └── api-endpoints.ts   # Todos los paths de la API centralizados
 │   ├── domain/
@@ -105,18 +130,19 @@ cocos-challenge/
 │   │   ├── interfaces/        # ApiError, resolveErrorMessage, isUserError
 │   │   └── use-cases/         # Lógica de negocio pura (cálculos)
 │   ├── features/
-│   │   ├── market/            # Componentes de la pantalla Mercado
-│   │   ├── order/             # Modal de orden + utils + tests
-│   │   ├── portfolio/         # Componentes de la pantalla Portfolio
+│   │   ├── market/            # Componentes, servicio e hook de instrumentos/búsqueda
+│   │   ├── order/             # Modal de orden, store, servicio, utils y tests
+│   │   ├── portfolio/         # Componentes y hook de portfolio
 │   │   └── wallets/           # Carteras: componentes, hooks, store
-│   ├── hooks/                 # React Query hooks (instrumentos, portfolio, search, orden)
-│   ├── services/              # Capa de acceso a la API
-│   ├── store/                 # Estado global (Zustand)
+│   ├── hooks/                 # Hooks de datos compartidos entre features (portfolio)
+│   ├── services/              # api-client + portfolio.service (compartido)
 │   └── utils/                 # Formatters (moneda, porcentaje, fecha)
 └── ui-kit/                    # Design system interno
     ├── components/            # Button, Text, TextInput, Icon, Skeleton
     └── foundations/           # Colors, typography, spacing
 ```
+
+> **Principio de colocation:** los servicios, hooks y stores propios de una feature viven dentro de `src/features/<nombre>/`. El nivel global (`src/services/`, `src/hooks/`) solo contiene código compartido por dos o más features.
 
 ---
 

@@ -22,13 +22,15 @@ Este documento registra las decisiones de arquitectura y diseño tomadas durante
 src/
 ├── domain/          # Entidades, interfaces, casos de uso (sin deps de UI)
 ├── features/
-│   ├── market/      # Todo lo de la pantalla Mercado
-│   ├── order/       # Modal + utils + tests
-│   └── portfolio/   # Todo lo de la pantalla Portfolio
-├── hooks/           # Hooks de datos compartidos entre features
-├── services/        # Acceso a API
-└── store/           # Estado global
+│   ├── market/      # Componentes, servicio e hook de instrumentos/búsqueda
+│   ├── order/       # Modal + store + servicio + utils + tests
+│   ├── portfolio/   # Componentes y hook de portfolio
+│   └── wallets/     # Carteras: componentes, hooks, store
+├── hooks/           # Hooks compartidos entre 2+ features (portfolio)
+└── services/        # api-client + servicios compartidos (portfolio.service)
 ```
+
+Ver Decisión 28 para el criterio de colocation que rige qué vive dentro de una feature y qué va al nivel global.
 
 **Por qué:** Escala bien: agregar una feature nueva no requiere tocar carpetas existentes. El dominio sin dependencias de React permite testearlo en aislamiento con tests puros (sin mocks de componentes).
 
@@ -139,7 +141,7 @@ La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta 
 
 ## 11. Restricción de venta sin posición
 
-**Decisión:** El botón "Vender" en el modal de selección se deshabilita (con hint explicativo) cuando el usuario no tiene posición en el instrumento.
+**Decisión:** El botón "Vender" en el modal de selección se deshabilita visualmente cuando el usuario no tiene posición en el instrumento.
 
 **Por qué:** Evitar intentos de venta en corto que la API rechazaría con error. Mejor prevenir en UI que dejar al usuario llegar al final del flujo para encontrar un error.
 
