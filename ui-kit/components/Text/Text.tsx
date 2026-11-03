@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text as RNText, StyleProp, StyleSheet, TextStyle } from 'react-native';
+import { Text as RNText, StyleProp, TextStyle } from 'react-native';
 import { colors, ColorToken } from '../../foundations/colors';
 import { textStyles, TextStyleToken } from '../../foundations/typography';
+import { styles } from './Text.styles';
 
 type TextColor = ColorToken | string;
 
@@ -63,8 +64,3 @@ export const Text: React.FC<TextProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  base: {
-    color: colors.textPrimary,
-  },
-});

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   ActivityIndicator,
   Pressable,
-  StyleSheet,
   TextStyle,
   ViewStyle,
 } from 'react-native';
@@ -10,6 +9,7 @@ import { colors } from '../../foundations/colors';
 import { borderRadius, spacing } from '../../foundations/spacing';
 import { textStyles } from '../../foundations/typography';
 import { Text } from '../Text/Text';
+import { styles } from './Button.styles';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -138,16 +138,3 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  base: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fullWidth: {
-    width: '100%',
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-});
