@@ -28,7 +28,11 @@
     "totalValueLabel": "Valor total",
     "totalGainLabel": "Resultado",
     "dailyChangeLabel": "Hoy",
-    "cashLabel": "Efectivo disponible"
+    "cashLabel": "Efectivo disponible",
+    "emptyTitle": "¡Empezá a invertir hoy!",
+    "emptySubtitlePrefix": "Tu portfolio está vacío. Explorá",
+    "emptySubtitleLink": "el mercado",
+    "emptySubtitleSuffix": "y encontrá instrumentos para hacer crecer tu dinero."
   },
 
   "search": {
