@@ -13,7 +13,7 @@
         "foregroundImage": "./assets/images/android-icon-foreground.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.cocoschallenge",
+      "package": "com.danipereiradev.cocoschallenge",
       "permissions": []
     },
     "web": {
@@ -37,7 +37,18 @@
       "reactCompiler": true
     },
     "ios": {
-      "bundleIdentifier": "com.anonymous.cocoschallenge"
-    }
+      "bundleIdentifier": "com.danipereiradev.cocoschallenge"
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "2b65e514-1ecd-4813-bb97-ce8e2a0bfc62"
+      }
+    },
+    "owner": "danielpereira19861978"
   }
 }
