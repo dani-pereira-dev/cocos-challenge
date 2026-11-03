@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     gap: spacing['3'],
   },
   icon: {
-    fontSize: 40,
+    marginBottom: spacing['1'],
   },
   message: {
     marginBottom: spacing['2'],

@@ -1,0 +1,1 @@
+export { WalletNavBar } from './WalletNavBar';

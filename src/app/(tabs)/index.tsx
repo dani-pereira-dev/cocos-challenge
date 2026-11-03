@@ -12,6 +12,7 @@ import { PortfolioSummaryHeader } from '@/features/portfolio/components/Portfoli
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useOrderModalStore } from '@/store';
+import { WalletBanner } from '@/features/wallets/components/WalletBanner';
 
 export default function PortfolioScreen() {
   const { t } = useTranslation();
@@ -46,7 +47,13 @@ export default function PortfolioScreen() {
           data={holdings}
           keyExtractor={(item) => item.instrument_id.toString()}
           renderItem={({ item }) => <PortfolioListItem asset={item} onPress={handleAssetPress} />}
-          ListHeaderComponent={<PortfolioSummaryHeader assets={holdings} cash={cash} />}
+          ListHeaderComponent={
+            <>
+              <PortfolioSummaryHeader assets={holdings} cash={cash} />
+              <WalletBanner />
+            </>
+          }
+
           ListEmptyComponent={
             <EmptyView message={t('portfolio.noAssets')} style={styles.emptyContainer} />
           }
