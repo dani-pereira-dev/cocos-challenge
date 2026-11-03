@@ -200,7 +200,7 @@ Button/
 
 **Por qué:** Mezclar estilos y lógica en un mismo archivo supera rápidamente las 200 líneas en componentes reales. La separación hace que los cambios de UI (estilos) y los cambios de comportamiento (lógica) sean diffs independientes y más fáciles de revisar. El `index.ts` mantiene los imports de los consumidores estables cuando el archivo se mueve o refactoriza.
 
-**Alcance:** Aplica a todos los componentes de `src/components/`, `src/features/*/components/` y `ui-kit/components/`. Las pantallas en `src/app/` no pueden moverse a subcarpetas (Expo Router las usaría como rutas), pero sí tienen su `.styles.ts` al mismo nivel.
+**Alcance:** Aplica a todos los componentes de `src/components/`, `src/features/*/components/` y `ui-kit/components/`.
 
 ---
 
@@ -228,7 +228,28 @@ return (
 
 ---
 
-## 17. Gestión de paquetes: pnpm
+## 17. Internacionalización: i18next
+
+**Decisión:** Los textos visibles al usuario están centralizados en `src/i18n/locales/es.json` y se acceden mediante `useTranslation()` de `react-i18next` en componentes React, e `i18n.t()` directamente en código no-React (servicios, domain).
+
+**Por qué:** Un objeto `copy` tipado en TypeScript funciona bien para un idioma, pero no escala a múltiples idiomas sin reescribir todos los puntos de uso. i18next resuelve plurales, interpolaciones y cambio de idioma en runtime sin modificar componentes. La migración también elimina las funciones de formato (`copy.portfolio.shares(qty)`) reemplazándolas con el sistema de plurales nativo de i18next (`count`).
+
+```ts
+// Componente React
+const { t } = useTranslation();
+t('portfolio.shares', { count: qty }); // "1 acción" / "5 acciones"
+t('market.noSearchResults', { query }); // interpolación
+
+// Servicio / dominio (no-React)
+import i18n from '@/i18n';
+i18n.t('errors.network');
+```
+
+**Trade-off:** Agrega una dependencia de runtime y quita el tipado estático de claves (aunque existen plugins de TypeScript para i18next que lo recuperan). Para una app de un solo idioma el `copy.ts` era suficiente; se eligió i18next pensando en la escalabilidad del producto.
+
+---
+
+## 18. Gestión de paquetes: pnpm
 
 **Decisión:** Se usa `pnpm` como package manager.
 
@@ -238,7 +259,7 @@ return (
 
 ---
 
-## 18. Debugging: Reactotron
+## 19. Debugging: Reactotron
 
 **Decisión:** Se integró Reactotron para debugging en desarrollo.
 

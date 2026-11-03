@@ -42,18 +42,18 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: t('market.tabLabel'),
+            title: t('portfolio.tabLabel'),
             tabBarIcon: ({ focused }) => (
-              <TabIcon name={focused ? 'bar-chart' : 'bar-chart-outline'} focused={focused} />
+              <TabIcon name={focused ? 'briefcase' : 'briefcase-outline'} focused={focused} />
             ),
           }}
         />
         <Tabs.Screen
-          name="portfolio"
+          name="market"
           options={{
-            title: t('portfolio.tabLabel'),
+            title: t('market.tabLabel'),
             tabBarIcon: ({ focused }) => (
-              <TabIcon name={focused ? 'briefcase' : 'briefcase-outline'} focused={focused} />
+              <TabIcon name={focused ? 'bar-chart' : 'bar-chart-outline'} focused={focused} />
             ),
           }}
         />

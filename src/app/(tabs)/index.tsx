@@ -1,78 +1,59 @@
-import { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { Text } from '@ui-kit/components/Text';
 import { EmptyView } from '@/components/EmptyView';
+import { styles } from '@/features/portfolio/portfolio.screen.styles';
 import { ErrorView } from '@/components/ErrorView';
 import { LoadingView } from '@/components/LoadingView';
-import { Instrument } from '@/domain/entities/instrument';
-import { MarketSearchBar } from '@/features/market/components/MarketSearchBar';
-import { InstrumentListItem } from '@/features/market/components/InstrumentListItem';
-import { useDebounce } from '@/hooks/useDebounce';
-import { useInstrumentsQuery } from '@/hooks/useInstrumentsQuery';
-import { useSearchQuery } from '@/hooks/useSearchQuery';
+import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
+import { PortfolioListItem } from '@/features/portfolio/components/PortfolioListItem';
+import { PortfolioSummaryHeader } from '@/features/portfolio/components/PortfolioSummaryHeader';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
+import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useOrderModalStore } from '@/store';
-import { Text } from '@ui-kit/components/Text';
-import { styles } from '@/features/market/market.screen.styles';
 
-export default function MarketScreen() {
+export default function PortfolioScreen() {
   const { t } = useTranslation();
-  const [searchText, setSearchText] = useState('');
-  const debouncedSearch = useDebounce(searchText, 400);
+  const { holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
   const openOrder = useOrderModalStore((s) => s.openOrder);
 
-  const isSearching = debouncedSearch.trim().length > 0;
-
-  const instrumentsQuery = useInstrumentsQuery();
-  const searchQuery = useSearchQuery(debouncedSearch);
-
-  const activeQuery = isSearching ? searchQuery : instrumentsQuery;
-  const { data, isLoading, isError, error, refetch } = activeQuery;
-
-  function handleClear() {
-    setSearchText('');
+  function handleAssetPress(asset: PortfolioAssetWithMetrics) {
+    openOrder({
+      id: asset.instrument_id,
+      ticker: asset.ticker,
+      name: asset.ticker,
+      last_price: asset.last_price,
+      quantity: asset.quantity,
+    });
   }
-
-  function handleInstrumentPress(instrument: Instrument) {
-    openOrder(instrument);
-  }
-
-  const listData = (data as Instrument[] | undefined) ?? [];
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <Text variant="h3">{t('market.title')}</Text>
+        <Text variant="h3">{t('portfolio.title')}</Text>
       </View>
 
-      <MarketSearchBar value={searchText} onChangeText={setSearchText} onClear={handleClear} />
-
       {isLoading ? (
-        <LoadingView message={t('market.loading')} />
+        <LoadingView />
       ) : isError ? (
-        <ErrorView message={resolveErrorMessage(error, t('market.fetchError'))} onRetry={refetch} />
+        <ErrorView
+          message={resolveErrorMessage(error, t('portfolio.fetchError'))}
+          onRetry={refetch}
+        />
       ) : (
         <FlatList
-          data={listData}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <InstrumentListItem instrument={item} onPress={handleInstrumentPress} />
-          )}
+          data={holdings}
+          keyExtractor={(item) => item.instrument_id.toString()}
+          renderItem={({ item }) => <PortfolioListItem asset={item} onPress={handleAssetPress} />}
+          ListHeaderComponent={<PortfolioSummaryHeader assets={holdings} cash={cash} />}
           ListEmptyComponent={
-            <EmptyView
-              message={
-                isSearching
-                  ? t('market.noSearchResults', { query: debouncedSearch })
-                  : t('market.noInstruments')
-              }
-              style={styles.emptyContainer}
-            />
+            <EmptyView message={t('portfolio.noAssets')} style={styles.emptyContainer} />
           }
+          contentContainerStyle={holdings.length === 0 ? styles.emptyList : undefined}
           removeClippedSubviews
           maxToRenderPerBatch={20}
           windowSize={10}
-          contentContainerStyle={listData.length === 0 ? styles.emptyList : undefined}
         />
       )}
     </SafeAreaView>

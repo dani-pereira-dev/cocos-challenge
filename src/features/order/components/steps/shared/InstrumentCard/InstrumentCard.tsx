@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
-import { TickerAvatar } from '@/features/market/components/TickerAvatar';
+import { TickerAvatar } from '@/components/TickerAvatar';
 import { formatAmount } from '@/utils/formatters';
 import { styles } from './InstrumentCard.styles';
 

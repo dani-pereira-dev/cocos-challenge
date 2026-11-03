@@ -1,10 +1,10 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
-import { TickerAvatar } from '@/features/market/components/TickerAvatar';
-import { ReturnBadge } from '@/features/market/components/ReturnBadge';
+import { resolveGainColor } from '@/utils/colors';
+import { TickerAvatar } from '@/components/TickerAvatar';
+import { ReturnBadge } from '@/components/ReturnBadge';
 import { formatCurrency } from '@/utils/formatters';
 import { styles } from './PortfolioListItem.styles';
 
@@ -15,12 +15,7 @@ interface PortfolioListItemProps {
 
 export function PortfolioListItem({ asset, onPress }: PortfolioListItemProps) {
   const { t } = useTranslation();
-  const gainColor =
-    asset.gain_amount > 0
-      ? colors.success
-      : asset.gain_amount < 0
-        ? colors.error
-        : colors.textSecondary;
+  const gainColor = resolveGainColor(asset.gain_amount);
 
   const gainPrefix = asset.gain_amount > 0 ? '+' : '';
 
