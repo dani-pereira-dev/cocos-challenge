@@ -139,8 +139,32 @@ cocos-challenge/
 
 ## Tests
 
-Los tests unitarios cubren la lógica del formulario de órdenes (`src/features/order/__tests__/order-form.test.ts`):
+El proyecto tiene dos tipos de tests:
 
-- `computeUseAllValue`: todas las combinaciones BUY/SELL × monto/títulos
-- `isUseAllAvailable`: casos de borde con efectivo o posición nula/cero
-- Validación de inputs inválidos (NaN, Infinity, negativo, cero)
+### Tests unitarios (lógica pura)
+
+| Archivo | Qué cubre |
+| ------- | --------- |
+| `src/__tests__/calculations.test.ts` | Cálculos de retorno y valor de mercado |
+| `src/features/order/__tests__/order-form.test.ts` | `computeUseAllValue` (BUY/SELL × monto/títulos), `isUseAllAvailable`, validación de inputs |
+
+### Tests de componentes (React Native Testing Library)
+
+| Archivo | Componente | Casos cubiertos |
+| ------- | ---------- | --------------- |
+| `src/features/order/__tests__/SelectStep.test.tsx` | `SelectStep` | Botones Buy/Sell/Cancel, Sell deshabilitado sin posición |
+| `src/features/order/__tests__/FormStep.test.tsx` | `FormStep` | Submit deshabilitado, "Usar todo", errores de validación, excede efectivo |
+| `src/features/wallets/__tests__/WalletAssetItem.test.tsx` | `WalletAssetItem` | Render de ticker/cantidad/valor, precio de holding, singular/plural |
+| `src/features/wallets/__tests__/WalletEmptyContent.test.tsx` | `WalletEmptyContent` | Estado vacío, navegación a add-asset |
+| `src/features/wallets/__tests__/WalletAssetList.test.tsx` | `WalletAssetList` | Total valorizado, lista de allocations, navegación |
+| `src/features/wallets/__tests__/QuantityInputCard.test.tsx` | `QuantityInputCard` | Cantidad disponible, "Usar todo", error por exceso, hint de precio |
+
+### Setup de tests
+
+La configuración vive en `src/test-utils/`:
+
+- **`setup.ts`** — inicializa i18n globalmente para todos los tests
+- **`mocks/reanimated.ts`** — stub de `react-native-reanimated` (la versión nativa no corre en Jest)
+- **`mocks/vector-icons.ts`** — stub de `@expo/vector-icons` (evita carga de fuentes en `componentDidMount`)
+
+> **Nota:** `render` de RNTL v14 es async → siempre usar `await render(...)` en los tests de componentes.

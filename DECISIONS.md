@@ -363,3 +363,29 @@ src/app/wallets/
 ```
 
 **Por qué:** Las carteras son un flujo completo con múltiples pasos que no corresponde a un tab. Un Stack independiente mantiene la historia de navegación limpia y permite volver paso a paso.
+
+---
+
+## 26. Estrategia de tests de componentes: React Native Testing Library
+
+**Decisión:** Usar `@testing-library/react-native` (RNTL) para tests de componentes. No se usan Enzyme ni snapshots.
+
+**Por qué:** RNTL obliga a testear desde la perspectiva del usuario: qué texto ve, qué puede presionar. Eso hace los tests resistentes a refactors internos (renombrar una función, cambiar estilos) y detecta regresiones reales. Los snapshots son frágiles y no capturan comportamiento, solo estructura.
+
+**Trade-off:** Requiere más setup que un test de función pura (mocks de Reanimated, vector-icons, expo-router). El costo se paga una sola vez en `src/test-utils/`.
+
+---
+
+## 27. Selección de casos de test para componentes
+
+**Decisión:** Se priorizan tests de comportamiento observable sobre tests de implementación interna.
+
+**Criterio de selección:**
+- **Lógica condicional en UI**: botones que se habilitan/deshabilitan según estado (`isSubmitDisabled`, `canSell`, `exceedsHolding`) son el tipo de bug más silencioso — el código compila pero el usuario no puede operar.
+- **Navegación por props**: cada `router.push` con un path dinámico (ej. `/wallets/${walletId}/add-asset`) es un contrato que puede romperse si cambia la estructura de rutas.
+- **Textos i18n críticos**: las claves de traducción que aparecen en flujos de negocio (errores, CTAs, hints de validación) merecen ser afirmadas para detectar si una clave se borra del JSON o cambia de sentido.
+
+**Qué se descartó y por qué:**
+- `ReanimatedSwipeable` → el gesto en sí no se puede simular con `fireEvent`; la lógica real es thin (`onDelete(ticker)`), ya cubierta indirectamente.
+- Snapshots → agregan ruido sin valor diferencial en una base de código que cambia activamente.
+- Tests de estilos (`StyleSheet`) → no representan comportamiento del usuario.
