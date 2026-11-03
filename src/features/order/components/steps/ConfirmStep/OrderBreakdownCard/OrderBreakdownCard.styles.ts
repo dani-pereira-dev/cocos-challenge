@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { borderRadius, colors, spacing } from '@ui-kit';
+import { borderRadius, colors, shadow, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   card: {
@@ -7,8 +7,9 @@ export const styles = StyleSheet.create({
     borderRadius: borderRadius.lg,
     paddingHorizontal: spacing['4'],
     paddingVertical: spacing['2'],
-    gap: spacing['3'],
+    gap: spacing['2'],
     paddingBottom: spacing['4'],
+    ...shadow.sm,
   },
   row: {
     flexDirection: 'row',

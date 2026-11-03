@@ -8,19 +8,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['3'],
+    paddingVertical: spacing['4'],
     backgroundColor: colors.surface,
     gap: spacing['3'],
     borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
+    borderBottomColor: colors.border,
   },
   info: {
     flex: 1,
-    gap: 2,
+    gap: 3,
   },
   metrics: {
     alignItems: 'flex-end',
-    gap: 2,
+    gap: 4,
   },
   deleteAction: {
     width: DELETE_ACTION_WIDTH,
@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
+    borderBottomColor: colors.border,
   },
   deleteButton: {
     flex: 1,

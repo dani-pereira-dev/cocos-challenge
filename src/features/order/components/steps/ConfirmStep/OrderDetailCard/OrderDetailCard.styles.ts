@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { borderRadius, colors, spacing } from '@ui-kit';
+import { borderRadius, colors, shadow, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
     overflow: 'hidden',
+    ...shadow.sm,
   },
   row: {
     flexDirection: 'row',
@@ -21,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: colors.borderLight,
+    backgroundColor: colors.border,
     marginHorizontal: spacing['4'],
   },
 });

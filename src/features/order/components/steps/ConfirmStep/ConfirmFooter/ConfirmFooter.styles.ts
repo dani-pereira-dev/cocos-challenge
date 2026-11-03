@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.border,
     paddingHorizontal: spacing['4'],
-    paddingTop: spacing['3'],
+    paddingTop: spacing['4'],
     paddingBottom: spacing['8'],
     gap: spacing['3'],
   },
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   totalAmount: {
     fontSize: fontSize.md,
-    fontWeight: fontWeight.semibold,
+    fontWeight: fontWeight.bold,
     flexShrink: 1,
     textAlign: 'right',
   },

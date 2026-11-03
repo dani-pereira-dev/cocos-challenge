@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors, spacing } from '@ui-kit';
+import { borderRadius, colors, shadow, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   container: {
@@ -22,9 +22,10 @@ export const styles = StyleSheet.create({
   },
   inputCard: {
     backgroundColor: colors.surface,
-    borderRadius: 12,
+    borderRadius: borderRadius.lg,
     padding: spacing['4'],
     gap: spacing['3'],
+    ...shadow.sm,
   },
   inputHeader: {
     gap: spacing['2'],
@@ -41,6 +42,6 @@ export const styles = StyleSheet.create({
     padding: spacing['4'],
     backgroundColor: colors.surface,
     borderTopWidth: 1,
-    borderTopColor: colors.borderLight,
+    borderTopColor: colors.border,
   },
 });

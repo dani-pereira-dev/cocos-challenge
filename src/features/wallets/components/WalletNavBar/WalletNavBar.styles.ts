@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['3'],
+    paddingVertical: spacing['4'],
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
+    borderBottomColor: colors.border,
   },
   backButton: {
     width: 32,

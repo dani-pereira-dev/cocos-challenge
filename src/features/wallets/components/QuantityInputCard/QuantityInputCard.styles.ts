@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { colors, spacing } from '@ui-kit';
+import { borderRadius, colors, shadow, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.surface,
-    borderRadius: 12,
+    borderRadius: borderRadius.lg,
     padding: spacing['4'],
     gap: spacing['3'],
+    ...shadow.sm,
   },
   header: {
     gap: spacing['2'],

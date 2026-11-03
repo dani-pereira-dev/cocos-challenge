@@ -7,10 +7,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['3'],
+    paddingVertical: spacing['4'],
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
+    borderBottomColor: colors.border,
   },
   list: {
     flex: 1,
@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
     padding: spacing['4'],
     backgroundColor: colors.surface,
     borderTopWidth: 1,
-    borderTopColor: colors.borderLight,
+    borderTopColor: colors.border,
   },
 });

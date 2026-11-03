@@ -7,9 +7,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing['8'],
-    gap: spacing['2'],
+    gap: spacing['3'],
   },
   icon: {
     marginBottom: spacing['2'],
+    opacity: 0.5,
   },
 });

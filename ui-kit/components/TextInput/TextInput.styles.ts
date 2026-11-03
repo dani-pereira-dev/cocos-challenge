@@ -13,11 +13,12 @@ export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.inputBackground,
+    backgroundColor: colors.surface,
     borderWidth: 1.5,
-    borderRadius: borderRadius.md,
+    borderColor: colors.inputBorder,
+    borderRadius: borderRadius.lg,
     paddingHorizontal: spacing['3'],
-    minHeight: 48,
+    minHeight: 50,
   },
   disabledContainer: {
     backgroundColor: colors.surfaceSecondary,

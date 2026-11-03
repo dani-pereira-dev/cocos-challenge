@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { borderRadius, colors, spacing } from '@ui-kit';
+import { borderRadius, colors, shadow, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   card: {
@@ -9,13 +9,14 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing['3'],
+    ...shadow.sm,
   },
   info: {
     flex: 1,
-    gap: 2,
+    gap: 3,
   },
   priceBox: {
     alignItems: 'flex-end',
-    gap: 2,
+    gap: 4,
   },
 });

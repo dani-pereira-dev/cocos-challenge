@@ -12,10 +12,10 @@ export const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.inputBackground,
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: borderRadius.lg,
     borderWidth: 1,
-    borderColor: colors.inputBorder,
+    borderColor: colors.border,
     paddingHorizontal: spacing['3'],
     height: 44,
     gap: spacing['2'],

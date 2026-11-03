@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { borderRadius, colors, fontSize, fontWeight, spacing } from '@ui-kit';
+import { borderRadius, colors, fontSize, fontWeight, shadow, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   screen: {
@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
     overflow: 'hidden',
+    ...shadow.sm,
   },
   divider: {
     height: 1,
@@ -82,9 +83,9 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.border,
     paddingHorizontal: spacing['4'],
-    paddingTop: spacing['3'],
+    paddingTop: spacing['4'],
     paddingBottom: spacing['8'],
-    gap: spacing['2'],
+    gap: spacing['3'],
   },
   footerHint: {
     textAlign: 'center',

@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['4'],
+    paddingTop: spacing['5'],
+    paddingBottom: spacing['4'],
     backgroundColor: colors.surface,
   },
   emptyList: {

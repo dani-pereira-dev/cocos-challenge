@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.surface,
     paddingHorizontal: spacing['4'],
-    paddingTop: spacing['3'],
-    paddingBottom: spacing['3'],
+    paddingTop: spacing['4'],
+    paddingBottom: spacing['4'],
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
@@ -21,5 +21,6 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: fontSize.md,
     fontWeight: fontWeight.semibold,
+    color: colors.textPrimary,
   },
 });

@@ -15,11 +15,11 @@ export const styles = StyleSheet.create({
   },
   content: {
     padding: spacing['4'],
-    gap: spacing['3'],
+    gap: spacing['4'],
     paddingBottom: spacing['6'],
   },
   sectionTitle: {
-    marginTop: spacing['2'],
+    marginTop: spacing['1'],
     marginBottom: spacing['1'],
   },
 });

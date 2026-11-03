@@ -6,11 +6,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['3'],
+    paddingVertical: spacing['4'],
     backgroundColor: colors.surface,
     gap: spacing['3'],
     borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
+    borderBottomColor: colors.border,
   },
   pressed: {
     backgroundColor: colors.surfaceSecondary,
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   checkbox: {
     width: 22,
     height: 22,
-    borderRadius: 4,
+    borderRadius: 6,
     borderWidth: 2,
     borderColor: colors.border,
     alignItems: 'center',
@@ -30,6 +30,6 @@ export const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
-    gap: 2,
+    gap: 3,
   },
 });

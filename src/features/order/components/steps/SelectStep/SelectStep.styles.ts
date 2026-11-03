@@ -26,22 +26,24 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buyButton: {
-    backgroundColor: colors.successLight,
+    backgroundColor: colors.primary,
   },
   buyText: {
-    color: colors.success,
+    color: colors.textInverse,
   },
   sellButton: {
-    backgroundColor: colors.errorLight,
+    backgroundColor: '#374151',
   },
   sellText: {
-    color: colors.error,
+    color: colors.textInverse,
   },
   cancelButton: {
     backgroundColor: colors.surfaceSecondary,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   disabled: {
-    opacity: 0.45,
+    opacity: 0.4,
   },
   noPositionHint: {
     color: colors.error,
