@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { useOrderModalStore } from '@/store';
-import { useOrderForm } from '../../hooks/useOrderForm';
+import { useOrderForm, Step } from '../../hooks/useOrderForm';
 import { SelectStep } from '../steps/SelectStep/SelectStep';
 import { FormStep } from '../steps/FormStep/FormStep';
 import { ConfirmStep } from '../steps/ConfirmStep/ConfirmStep';
@@ -39,85 +40,86 @@ function OrderModalContent({ onClose }: OrderModalContentProps) {
     setStep('form');
   }
 
+  const stepRenderers: Record<Step, () => ReactNode> = {
+    select: () => (
+      <SelectStep
+        instrument={instrument}
+        onBuy={() => form.goToForm('BUY')}
+        onSell={() => form.goToForm('SELL')}
+        onCancel={onClose}
+      />
+    ),
+    form: () => (
+      <FormStep
+        instrument={instrument}
+        side={form.side}
+        orderType={form.orderType}
+        quantityMode={form.quantityMode}
+        amountInput={form.amountInput}
+        limitPriceInput={form.limitPriceInput}
+        validationError={form.validationError}
+        submitBlockReason={form.submitBlockReason}
+        estimatedValid={form.estimatedValid}
+        isSubmitDisabled={form.isSubmitDisabled}
+        showUseAll={form.showUseAll}
+        cash={form.cash}
+        derivedTotal={form.derivedTotal}
+        subSheet={form.subSheet}
+        onBack={form.goBack}
+        onClose={onClose}
+        onAmountChange={(v) => {
+          form.setAmountInput(v);
+          form.setValidationError(null);
+        }}
+        onLimitPriceChange={(v) => {
+          form.setLimitPriceInput(v);
+          form.setValidationError(null);
+        }}
+        onUseAll={form.handleUseAll}
+        onOpenModeSheet={() => form.setSubSheet('mode')}
+        onOpenPriceSheet={() => form.setSubSheet('price')}
+        onSubmit={() => setStep('confirm')}
+        onCloseSubSheet={() => form.setSubSheet(null)}
+        onSelectQuantityMode={(mode) => {
+          form.setQuantityMode(mode);
+          form.setAmountInput('');
+          form.setSubSheet(null);
+        }}
+        onSelectOrderType={(type) => {
+          form.setOrderType(type);
+          form.setSubSheet(null);
+        }}
+      />
+    ),
+    confirm: () => (
+      <ConfirmStep
+        instrument={instrument}
+        side={form.side}
+        orderType={form.orderType}
+        derivedShares={form.derivedShares}
+        limitPriceInput={form.limitPriceInput}
+        systemError={form.systemError}
+        isPending={form.isPending}
+        onBack={handleConfirmBack}
+        onSubmit={form.handleSubmit}
+      />
+    ),
+    result: () =>
+      form.result ? (
+        <View style={styles.resultSheet}>
+          <View style={styles.handle} />
+          <OrderResult result={form.result} onClose={onClose} />
+        </View>
+      ) : null,
+  };
+
   return (
     <View style={styles.overlay}>
       <Pressable
         style={StyleSheet.absoluteFill}
         onPress={step === 'select' ? onClose : undefined}
       />
-
-      {step === 'select' && (
-        <SelectStep
-          instrument={instrument}
-          onBuy={() => form.goToForm('BUY')}
-          onSell={() => form.goToForm('SELL')}
-          onCancel={onClose}
-        />
-      )}
-
-      {step === 'form' && (
-        <FormStep
-          instrument={instrument}
-          side={form.side}
-          orderType={form.orderType}
-          quantityMode={form.quantityMode}
-          amountInput={form.amountInput}
-          limitPriceInput={form.limitPriceInput}
-          validationError={form.validationError}
-          submitBlockReason={form.submitBlockReason}
-          estimatedValid={form.estimatedValid}
-          isSubmitDisabled={form.isSubmitDisabled}
-          showUseAll={form.showUseAll}
-          cash={form.cash}
-          derivedTotal={form.derivedTotal}
-          subSheet={form.subSheet}
-          onBack={form.goBack}
-          onClose={onClose}
-          onAmountChange={(v) => {
-            form.setAmountInput(v);
-            form.setValidationError(null);
-          }}
-          onLimitPriceChange={(v) => {
-            form.setLimitPriceInput(v);
-            form.setValidationError(null);
-          }}
-          onUseAll={form.handleUseAll}
-          onOpenModeSheet={() => form.setSubSheet('mode')}
-          onOpenPriceSheet={() => form.setSubSheet('price')}
-          onSubmit={() => setStep('confirm')}
-          onCloseSubSheet={() => form.setSubSheet(null)}
-          onSelectQuantityMode={(mode) => {
-            form.setQuantityMode(mode);
-            form.setAmountInput('');
-            form.setSubSheet(null);
-          }}
-          onSelectOrderType={(type) => {
-            form.setOrderType(type);
-            form.setSubSheet(null);
-          }}
-        />
-      )}
-
-      {step === 'confirm' && (
-        <ConfirmStep
-          instrument={instrument}
-          side={form.side}
-          orderType={form.orderType}
-          derivedShares={form.derivedShares}
-          limitPriceInput={form.limitPriceInput}
-          systemError={form.systemError}
-          isPending={form.isPending}
-          onBack={handleConfirmBack}
-          onSubmit={form.handleSubmit}
-        />
-      )}
-
-      {step === 'result' && form.result && (
-        <View style={styles.resultSheet}>
-          <View style={styles.handle} />
-          <OrderResult result={form.result} onClose={onClose} />
-        </View>
-      )}
+      {stepRenderers[step]()}
     </View>
   );
 }
