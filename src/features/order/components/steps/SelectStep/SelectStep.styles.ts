@@ -45,9 +45,4 @@ export const styles = StyleSheet.create({
   disabled: {
     opacity: 0.4,
   },
-  noPositionHint: {
-    color: colors.error,
-    fontSize: 11,
-    marginTop: 2,
-  },
 });

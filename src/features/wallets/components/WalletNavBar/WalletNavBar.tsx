@@ -23,7 +23,7 @@ export function WalletNavBar({ title, onBack, rightElement }: WalletNavBarProps)
   return (
     <View style={styles.container}>
       <Pressable onPress={handleBack} hitSlop={12} style={styles.backButton}>
-        <Icon name="arrow-back" size={22} color={colors.textBrand} />
+        <Icon name="arrow-back" size={22} color={colors.textPrimary} />
       </Pressable>
 
       <Text variant="h3" style={styles.title} numberOfLines={1}>

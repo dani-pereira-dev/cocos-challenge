@@ -91,7 +91,6 @@
     "estimatedToPayLabel": "Estimado a pagar",
     "estimatedToReceiveLabel": "Estimado a recibir",
     "confirmButton": "Confirmar",
-    "noPositionHint": "Sin posición en este instrumento",
     "systemErrorPrefix": "Error al procesar la orden"
   },
 
