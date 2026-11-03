@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { searchInstruments } from '../search.service';
-import { queryKeys } from '@/hooks/query-keys';
+import { marketQueryKeys } from '../market.query-keys';
 
 /**
  * Busca instrumentos por ticker con debounce delegado al componente que lo llama.
@@ -8,7 +8,7 @@ import { queryKeys } from '@/hooks/query-keys';
  */
 export function useSearchQuery(query: string) {
   return useQuery({
-    queryKey: queryKeys.search.byQuery(query),
+    queryKey: marketQueryKeys.search.byQuery(query),
     queryFn: () => searchInstruments(query),
     enabled: query.trim().length > 0,
     // Los resultados de búsqueda se consideran frescos por 30 segundos

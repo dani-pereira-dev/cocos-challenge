@@ -10,7 +10,7 @@ export const isMarketOrder = (type: OrderType) => type === 'MARKET';
 export interface OrderableInstrument {
   id: number;
   ticker: string;
-  name: string;
+  name?: string; // ausente cuando se abre desde portfolio (la API no lo devuelve en holdings)
   last_price: number;
   quantity?: number; // cantidad de acciones en cartera (disponible solo al abrir desde portfolio)
 }

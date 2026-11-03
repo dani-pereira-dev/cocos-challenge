@@ -405,8 +405,34 @@ src/app/wallets/
 
 ## 28. Colocation: artefactos feature-específicos viven dentro de su feature
 
-**Decisión:** Todo artefacto con un único dueño vive dentro de `src/features/<nombre>/`. El nivel global (`src/services/`, `src/hooks/`, `src/store/`, `src/components/`) se reserva exclusivamente para código consumido por 2 o más features o infraestructura compartida (api-client, tipos de dominio, query-keys).
+**Decisión:** Todo artefacto con un único dueño vive dentro de `src/features/<nombre>/`. El nivel global (`src/services/`, `src/hooks/`, `src/components/`) se reserva exclusivamente para código consumido por 2 o más features o infraestructura compartida (api-client, tipos de dominio).
+
+Las query keys siguen la misma regla: `src/features/market/market.query-keys.ts` define las keys de `instruments` y `search` (propias de market); `src/hooks/query-keys.ts` solo define `portfolio` (cross-feature, usada tanto por `usePortfolioQuery` como invalidada por `useSubmitOrderMutation`).
 
 **Por qué:** La colocation reduce el tiempo de orientación cuando se trabaja en una feature: todos sus artefactos están en un solo lugar. También hace obvio qué se puede borrar sin efecto colateral — si está dentro de una feature, solo esa feature puede depender de ello.
 
 **Trade-off:** Los tabs (`src/app/(tabs)`) importan desde `src/features/order/store/` directamente, cruzando la frontera feature→app. Es el costo aceptable de un store que coordina la apertura del modal desde cualquier pantalla.
+
+---
+
+## 29. Lógica de negocio financiera en el dominio, no en componentes
+
+**Decisión:** Las constantes de tasas (`COMISION_RATE`, `IMPUESTOS_RATE`) y la función `calculateOrderBreakdown` viven en `src/domain/use-cases/calculations.ts`, junto al resto de las fórmulas financieras del dominio.
+
+**Por qué:** Las reglas de comisiones e impuestos son lógica de negocio pura — no dependen de UI, son testeables en aislamiento y podrían cambiar independientemente del componente que las consume. Mezclarlas en `ConfirmStep` las habría dejado sin cobertura de tests y acopladas a la presentación.
+
+---
+
+## 30. `useDebounce` fuera del UI kit
+
+**Decisión:** `useDebounce` vive en `src/hooks/useDebounce.ts`, no en `ui-kit/`.
+
+**Por qué:** El UI kit es una capa puramente presentacional (componentes visuales y tokens de diseño). `useDebounce` es infraestructura de datos — no tiene relación con la capa visual y no debería ser importable como parte del design system. Los consumidores lo importan desde `@/hooks/useDebounce`.
+
+---
+
+## 31. `OrderableInstrument.name` es opcional
+
+**Decisión:** El campo `name` en `OrderableInstrument` es `name?: string`.
+
+**Por qué:** La API de portfolio no devuelve el nombre del instrumento en los holdings — solo el ticker. Al abrir el modal desde Portfolio, `name` no está disponible. Forzarlo como requerido generaba el bug de pasar `name: asset.ticker` (mostrando el ticker dos veces). `InstrumentCard` renderiza la línea de nombre solo cuando el valor está presente.

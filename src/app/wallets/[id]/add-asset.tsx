@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +9,9 @@ import { EmptyView } from '@/components/EmptyView';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { AssetPickerItem } from '@/features/wallets/components/AssetPickerItem';
-import { useWalletsStore } from '@/features/wallets/store/walletsStore';
+import { useWalletsStore } from '@/features/wallets/store/wallets.store';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
-import { resolveErrorMessage } from '@/domain/interfaces/api-error';
+import { resolveErrorMessage } from '@/domain/interfaces';
 import { styles } from '@/features/wallets/styles/wallet-add-asset.styles';
 
 export default function AddAssetScreen() {
@@ -20,8 +21,9 @@ export default function AddAssetScreen() {
   const wallet = useWalletsStore((state) => state.wallets.find((wallet) => wallet.id === id));
   const { holdings, isLoading, isError, error, refetch } = usePortfolioQuery();
 
-  const allocationMap = new Map(
-    wallet?.allocations.map((alloc) => [alloc.ticker, alloc.quantity]) ?? [],
+  const allocationMap = useMemo(
+    () => new Map(wallet?.allocations.map((alloc) => [alloc.ticker, alloc.quantity]) ?? []),
+    [wallet?.allocations],
   );
 
   function handleAssetPress(asset: PortfolioAssetWithMetrics) {

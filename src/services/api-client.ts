@@ -1,5 +1,5 @@
 import i18n from '@/i18n';
-import { ApiError } from '@/domain/interfaces/api-error';
+import { ApiError } from '@/domain/interfaces';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? '';
 

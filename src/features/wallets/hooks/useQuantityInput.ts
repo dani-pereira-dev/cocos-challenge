@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
-import { useWalletsStore } from '../store/walletsStore';
+import { useWalletsStore } from '../store/wallets.store';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 
 export function useQuantityInput(walletId: string, ticker: string) {

@@ -8,10 +8,11 @@ import { MarketSkeleton } from '@/features/market/components/MarketSkeleton';
 import { Instrument } from '@/domain/entities/instrument';
 import { MarketSearchBar } from '@/features/market/components/MarketSearchBar';
 import { InstrumentListItem } from '@/features/market/components/InstrumentListItem';
-import { Text, useDebounce } from '@ui-kit';
+import { Text } from '@ui-kit';
+import { useDebounce } from '@/hooks/useDebounce';
 import { useInstrumentsQuery } from '@/features/market/hooks/useInstrumentsQuery';
 import { useSearchQuery } from '@/features/market/hooks/useSearchQuery';
-import { resolveErrorMessage } from '@/domain/interfaces/api-error';
+import { resolveErrorMessage } from '@/domain/interfaces';
 import { useOrderModalStore } from '@/features/order/store/orderModal.store';
 
 import { styles } from '@/features/market/market.screen.styles';

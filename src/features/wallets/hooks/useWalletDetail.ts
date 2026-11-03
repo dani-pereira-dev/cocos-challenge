@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { WalletAllocation } from '@/domain/entities/wallet';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
-import { useWalletsStore } from '../store/walletsStore';
+import { useWalletsStore } from '../store/wallets.store';
 
 export interface EnrichedAllocation extends WalletAllocation {
   holding: PortfolioAssetWithMetrics | null;

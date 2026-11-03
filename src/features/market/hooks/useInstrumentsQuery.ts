@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { InstrumentWithReturn } from '@/domain/entities/instrument';
 import { calculateInstrumentReturn } from '@/domain/use-cases/calculations';
 import { fetchInstruments } from '../instruments.service';
-import { queryKeys } from '@/hooks/query-keys';
+import { marketQueryKeys } from '../market.query-keys';
 
 /**
  * Obtiene y cachea el listado de instrumentos del mercado.
@@ -12,7 +12,7 @@ import { queryKeys } from '@/hooks/query-keys';
  */
 export function useInstrumentsQuery() {
   const query = useQuery({
-    queryKey: queryKeys.instruments.all,
+    queryKey: marketQueryKeys.instruments.all,
     queryFn: fetchInstruments,
   });
 

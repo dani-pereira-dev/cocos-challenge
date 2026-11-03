@@ -9,7 +9,7 @@ import { PortfolioSkeleton } from '@/features/portfolio/components/PortfolioSkel
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { PortfolioListItem } from '@/features/portfolio/components/PortfolioListItem';
 import { PortfolioSummaryHeader } from '@/features/portfolio/components/PortfolioSummaryHeader';
-import { resolveErrorMessage } from '@/domain/interfaces/api-error';
+import { resolveErrorMessage } from '@/domain/interfaces';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useOrderModalStore } from '@/features/order/store/orderModal.store';
 import { WalletBanner } from '@/features/wallets/components/WalletBanner';
@@ -23,7 +23,6 @@ export default function PortfolioScreen() {
     openOrder({
       id: asset.instrument_id,
       ticker: asset.ticker,
-      name: asset.ticker,
       last_price: asset.last_price,
       quantity: asset.quantity,
     });

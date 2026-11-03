@@ -9,7 +9,7 @@ import { EmptyView } from '@/components/EmptyView';
 import { CustomWallet } from '@/domain/entities/wallet';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { WalletListItem } from '@/features/wallets/components/WalletListItem';
-import { useWalletsStore } from '@/features/wallets/store/walletsStore';
+import { useWalletsStore } from '@/features/wallets/store/wallets.store';
 import { styles } from '@/features/wallets/styles/wallets-list.styles';
 
 export default function WalletsScreen() {

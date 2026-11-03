@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Text, colors } from '@ui-kit';
 
 import { isBuyOrder, isLimitOrder } from '@/domain/entities/order';
+import { calculateOrderBreakdown } from '@/domain/use-cases/calculations';
 import { useOrderFormContext } from '@/features/order/contexts/OrderFormContext';
 import { formatDate } from '@/utils/formatters';
 import { InstrumentCard } from '../shared/InstrumentCard/InstrumentCard';
@@ -11,9 +12,6 @@ import { OrderDetailCard } from './OrderDetailCard/OrderDetailCard';
 import { OrderBreakdownCard } from './OrderBreakdownCard/OrderBreakdownCard';
 import { ConfirmFooter } from './ConfirmFooter/ConfirmFooter';
 import { styles } from './ConfirmStep.styles';
-
-const COMISION_RATE = 0.006;
-const IMPUESTOS_RATE = 0.0012;
 
 export function ConfirmStep() {
   const { t } = useTranslation();
@@ -38,10 +36,11 @@ export function ConfirmStep() {
     ? parseFloat(limitPriceInput.replace(',', '.'))
     : instrument!.last_price;
 
-  const subtotal = derivedShares * instrument!.last_price;
-  const comision = subtotal * COMISION_RATE;
-  const impuestos = subtotal * IMPUESTOS_RATE;
-  const netTotal = isBuy ? subtotal + comision + impuestos : subtotal - comision - impuestos;
+  const { subtotal, comision, impuestos, netTotal } = calculateOrderBreakdown(
+    derivedShares,
+    instrument!.last_price,
+    isBuy,
+  );
 
   const estimatedLabel = isBuy
     ? t('order.estimatedToPayLabel')

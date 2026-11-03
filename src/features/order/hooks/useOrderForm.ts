@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isLimitOrder, OrderRequest, OrderResponse, OrderSide } from '@/domain/entities/order';
-import { isUserError, resolveErrorMessage } from '@/domain/interfaces/api-error';
+import { isUserError, resolveErrorMessage } from '@/domain/interfaces';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useSubmitOrderMutation } from './useSubmitOrderMutation';
 import { useOrderModalStore } from '../store/orderModal.store';
@@ -100,7 +100,6 @@ export function useOrderForm() {
     setStep: navigation.setStep,
     subSheet: navigation.subSheet,
     setSubSheet: navigation.setSubSheet,
-    goBack: navigation.goBack,
     goToForm,
     reset,
     // Form fields

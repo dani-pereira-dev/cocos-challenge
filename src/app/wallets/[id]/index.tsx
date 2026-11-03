@@ -11,7 +11,7 @@ import { WalletEmptyContent } from '@/features/wallets/components/WalletEmptyCon
 import { WalletAssetList } from '@/features/wallets/components/WalletAssetList';
 import { WalletOptionsSheet } from '@/features/wallets/components/WalletOptionsSheet';
 import { useWalletDetail } from '@/features/wallets/hooks/useWalletDetail';
-import { useWalletsStore } from '@/features/wallets/store/walletsStore';
+import { useWalletsStore } from '@/features/wallets/store/wallets.store';
 import { styles } from '@/features/wallets/styles/wallet-detail.styles';
 
 export default function WalletDetailScreen() {

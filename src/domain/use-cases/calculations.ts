@@ -47,3 +47,25 @@ export function calculateSharesFromAmount(amountInPesos: number, lastPrice: numb
   if (lastPrice <= 0) return 0;
   return Math.floor(amountInPesos / lastPrice);
 }
+
+export const COMISION_RATE = 0.006;
+export const IMPUESTOS_RATE = 0.0012;
+
+export interface OrderBreakdown {
+  subtotal: number;
+  comision: number;
+  impuestos: number;
+  netTotal: number;
+}
+
+export function calculateOrderBreakdown(
+  shares: number,
+  lastPrice: number,
+  isBuy: boolean,
+): OrderBreakdown {
+  const subtotal = shares * lastPrice;
+  const comision = subtotal * COMISION_RATE;
+  const impuestos = subtotal * IMPUESTOS_RATE;
+  const netTotal = isBuy ? subtotal + comision + impuestos : subtotal - comision - impuestos;
+  return { subtotal, comision, impuestos, netTotal };
+}

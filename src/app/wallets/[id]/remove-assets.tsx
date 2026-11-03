@@ -8,7 +8,7 @@ import { WalletRemoveAssetsSkeleton } from '@/features/wallets/components/Wallet
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { SelectableAssetItem } from '@/features/wallets/components/SelectableAssetItem';
 import { useWalletDetail } from '@/features/wallets/hooks/useWalletDetail';
-import { useWalletsStore } from '@/features/wallets/store/walletsStore';
+import { useWalletsStore } from '@/features/wallets/store/wallets.store';
 import { styles } from '@/features/wallets/styles/wallet-remove-assets.styles';
 
 export default function RemoveAssetsScreen() {

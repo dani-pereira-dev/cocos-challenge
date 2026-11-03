@@ -6,7 +6,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Button, Text, TextInput } from '@ui-kit';
 
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
-import { useWalletsStore } from '@/features/wallets/store/walletsStore';
+import { useWalletsStore } from '@/features/wallets/store/wallets.store';
 import { styles } from '@/features/wallets/styles/wallet-rename.styles';
 
 export default function RenameWalletScreen() {

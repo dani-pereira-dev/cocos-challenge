@@ -7,7 +7,7 @@ import { styles } from './InstrumentCard.styles';
 
 interface InstrumentCardProps {
   ticker: string;
-  name: string;
+  name?: string;
   lastPrice?: number;
   avatarSize?: number;
 }
@@ -20,9 +20,11 @@ export function InstrumentCard({ ticker, name, lastPrice, avatarSize = 40 }: Ins
       <TickerAvatar ticker={ticker} size={avatarSize} />
       <View style={styles.info}>
         <Text variant="bodySemibold">{ticker}</Text>
-        <Text variant="caption" color="secondary" numberOfLines={1}>
-          {name}
-        </Text>
+        {name ? (
+          <Text variant="caption" color="secondary" numberOfLines={1}>
+            {name}
+          </Text>
+        ) : null}
       </View>
       {lastPrice != null ? (
         <View style={styles.priceBox}>

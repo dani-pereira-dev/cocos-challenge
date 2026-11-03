@@ -28,7 +28,6 @@ export const colors = {
   // Bordes y separadores
   border: '#E2E8F0',
   borderLight: '#F1F5F9',
-  divider: '#E2E8F0',
 
   // Tab bar
   tabActive: '#2563EB',
