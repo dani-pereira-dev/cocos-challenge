@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { isLimitOrder, OrderRequest, OrderResponse, OrderSide } from '@/domain/entities/order';
 import { isUserError, resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
-import { useSubmitOrderMutation } from '@/hooks/useSubmitOrderMutation';
-import { useOrderModalStore } from '@/store';
+import { useSubmitOrderMutation } from './useSubmitOrderMutation';
+import { useOrderModalStore } from '../store/orderModal.store';
 import { useOrderNavigation } from './useOrderNavigation';
 import { useOrderInputs } from './useOrderInputs';
 

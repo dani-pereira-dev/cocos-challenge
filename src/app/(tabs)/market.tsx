@@ -9,10 +9,10 @@ import { Instrument } from '@/domain/entities/instrument';
 import { MarketSearchBar } from '@/features/market/components/MarketSearchBar';
 import { InstrumentListItem } from '@/features/market/components/InstrumentListItem';
 import { Text, useDebounce } from '@ui-kit';
-import { useInstrumentsQuery } from '@/hooks/useInstrumentsQuery';
-import { useSearchQuery } from '@/hooks/useSearchQuery';
+import { useInstrumentsQuery } from '@/features/market/hooks/useInstrumentsQuery';
+import { useSearchQuery } from '@/features/market/hooks/useSearchQuery';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
-import { useOrderModalStore } from '@/store';
+import { useOrderModalStore } from '@/features/order/store/orderModal.store';
 
 import { styles } from '@/features/market/market.screen.styles';
 

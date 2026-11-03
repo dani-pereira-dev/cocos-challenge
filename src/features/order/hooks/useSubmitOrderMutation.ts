@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { OrderRequest } from '@/domain/entities/order';
-import { submitOrder } from '@/services/orders.service';
-import { queryKeys } from './query-keys';
+import { submitOrder } from '../orders.service';
+import { queryKeys } from '@/hooks/query-keys';
 
 /**
  * Mutación para enviar una orden de compra o venta.

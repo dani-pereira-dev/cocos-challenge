@@ -3,12 +3,15 @@ import { QuantityInputCard } from '../components/QuantityInputCard/QuantityInput
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 
 const holding: PortfolioAssetWithMetrics = {
+  instrument_id: 1,
   ticker: 'GGAL',
   quantity: 10,
   last_price: 150,
   close_price: 145,
-  return: 0.03,
+  avg_cost_price: 140,
   market_value: 1500,
+  gain_amount: 100,
+  gain_percent: 0.07,
 };
 
 const baseProps = {

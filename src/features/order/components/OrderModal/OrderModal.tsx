@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
-import { useOrderModalStore } from '@/store';
+import { useOrderModalStore } from '../../store/orderModal.store';
 import { OrderFormProvider, useOrderFormContext } from '../../contexts/OrderFormContext';
 import { Step } from '../../hooks/useOrderForm';
 import { SelectStep } from '../steps/SelectStep/SelectStep';

@@ -1,6 +1,6 @@
 import { Instrument } from '@/domain/entities/instrument';
 import { API_ENDPOINTS } from '@/constants/api-endpoints';
-import { apiClient } from './api-client';
+import { apiClient } from '@/services/api-client';
 
 export async function searchInstruments(query: string): Promise<Instrument[]> {
   const trimmed = query.trim();

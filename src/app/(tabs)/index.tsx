@@ -11,7 +11,7 @@ import { PortfolioListItem } from '@/features/portfolio/components/PortfolioList
 import { PortfolioSummaryHeader } from '@/features/portfolio/components/PortfolioSummaryHeader';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
-import { useOrderModalStore } from '@/store';
+import { useOrderModalStore } from '@/features/order/store/orderModal.store';
 import { WalletBanner } from '@/features/wallets/components/WalletBanner';
 
 export default function PortfolioScreen() {

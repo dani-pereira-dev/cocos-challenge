@@ -389,3 +389,13 @@ src/app/wallets/
 - `ReanimatedSwipeable` → el gesto en sí no se puede simular con `fireEvent`; la lógica real es thin (`onDelete(ticker)`), ya cubierta indirectamente.
 - Snapshots → agregan ruido sin valor diferencial en una base de código que cambia activamente.
 - Tests de estilos (`StyleSheet`) → no representan comportamiento del usuario.
+
+---
+
+## 28. Colocation: artefactos feature-específicos viven dentro de su feature
+
+**Decisión:** Todo artefacto con un único dueño vive dentro de `src/features/<nombre>/`. El nivel global (`src/services/`, `src/hooks/`, `src/store/`, `src/components/`) se reserva exclusivamente para código consumido por 2 o más features o infraestructura compartida (api-client, tipos de dominio, query-keys).
+
+**Por qué:** La colocation reduce el tiempo de orientación cuando se trabaja en una feature: todos sus artefactos están en un solo lugar. También hace obvio qué se puede borrar sin efecto colateral — si está dentro de una feature, solo esa feature puede depender de ello.
+
+**Trade-off:** Los tabs (`src/app/(tabs)`) importan desde `src/features/order/store/` directamente, cruzando la frontera feature→app. Es el costo aceptable de un store que coordina la apertura del modal desde cualquier pantalla.

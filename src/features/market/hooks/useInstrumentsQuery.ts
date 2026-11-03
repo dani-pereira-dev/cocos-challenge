@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { InstrumentWithReturn } from '@/domain/entities/instrument';
 import { calculateInstrumentReturn } from '@/domain/use-cases/calculations';
-import { fetchInstruments } from '@/services/instruments.service';
-import { queryKeys } from './query-keys';
+import { fetchInstruments } from '../instruments.service';
+import { queryKeys } from '@/hooks/query-keys';
 
 /**
  * Obtiene y cachea el listado de instrumentos del mercado.

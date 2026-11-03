@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { searchInstruments } from '@/services/search.service';
-import { queryKeys } from './query-keys';
+import { searchInstruments } from '../search.service';
+import { queryKeys } from '@/hooks/query-keys';
 
 /**
  * Busca instrumentos por ticker con debounce delegado al componente que lo llama.
