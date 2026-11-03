@@ -1,125 +1,66 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  isBuyOrder,
-  isLimitOrder,
-  isSellOrder,
-  OrderRequest,
-  OrderResponse,
-  OrderSide,
-  OrderType,
-} from '@/domain/entities/order';
+import { isLimitOrder, OrderRequest, OrderResponse, OrderSide } from '@/domain/entities/order';
 import { isUserError, resolveErrorMessage } from '@/domain/interfaces/api-error';
-import { calculateSharesFromAmount } from '@/domain/use-cases/calculations';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useSubmitOrderMutation } from '@/hooks/useSubmitOrderMutation';
 import { useOrderModalStore } from '@/store';
-import { computeUseAllValue, isUseAllAvailable, QuantityMode } from '../utils/order-form';
+import { useOrderNavigation } from './useOrderNavigation';
+import { useOrderInputs } from './useOrderInputs';
 
-export type Step = 'select' | 'form' | 'confirm' | 'result';
-export type SubSheetType = 'mode' | 'price' | null;
+export type { Step, SubSheetType } from './useOrderNavigation';
 
 export function useOrderForm() {
   const { t } = useTranslation();
-  const { visible, instrument, closeOrder } = useOrderModalStore();
-  const { mutateAsync, isPending } = useSubmitOrderMutation();
+  const { instrument, closeOrder } = useOrderModalStore();
+  const { mutateAsync: submitOrder, isPending } = useSubmitOrderMutation();
   const { cash } = usePortfolioQuery();
 
-  const [step, setStep] = useState<Step>('select');
-  const [side, setSide] = useState<OrderSide>('BUY');
-  const [orderType, setOrderType] = useState<OrderType>('MARKET');
-  const [quantityMode, setQuantityMode] = useState<QuantityMode>('amount');
-  const [amountInput, setAmountInput] = useState('');
-  const [limitPriceInput, setLimitPriceInput] = useState('');
+  const navigation = useOrderNavigation();
+  const inputs = useOrderInputs({ instrument, cash });
+
   const [validationError, setValidationError] = useState<string | null>(null);
   const [systemError, setSystemError] = useState<string | null>(null);
   const [result, setResult] = useState<OrderResponse | null>(null);
-  const [subSheet, setSubSheet] = useState<SubSheetType>(null);
 
-  function reset() {
-    setStep('select');
-    setSide('BUY');
-    setOrderType('MARKET');
-    setQuantityMode('amount');
-    setAmountInput('');
-    setLimitPriceInput('');
-    setValidationError(null);
-    setSystemError(null);
-    setResult(null);
-    setSubSheet(null);
-  }
-
-  const parsedAmount = parseFloat(amountInput.replace(/\./g, '').replace(',', '.')) || 0;
-
-  const derivedShares =
-    quantityMode === 'amount'
-      ? calculateSharesFromAmount(parsedAmount, instrument?.last_price ?? 0)
-      : parseInt(amountInput, 10) || 0;
-
-  const derivedTotal =
-    quantityMode === 'amount' ? parsedAmount : derivedShares * (instrument?.last_price ?? 0);
-
-  const estimatedValid = derivedShares > 0 && Number.isFinite(derivedShares);
-
-  const showUseAll = isUseAllAvailable({ side, cash, ownedShares: instrument?.quantity });
-
-  const exceedsCash = isBuyOrder(side) && cash != null && estimatedValid && derivedTotal > cash;
-  const exceedsShares =
-    isSellOrder(side) &&
-    instrument?.quantity != null &&
-    estimatedValid &&
-    derivedShares > instrument.quantity;
-
-  const submitBlockReason = exceedsCash
+  const submitBlockReason = inputs.exceedsCash
     ? t('order.exceedsCash')
-    : exceedsShares
+    : inputs.exceedsShares
       ? t('order.exceedsShares')
       : null;
 
   const isSubmitDisabled =
     isPending ||
-    !estimatedValid ||
-    (isLimitOrder(orderType) && limitPriceInput.trim() === '') ||
-    exceedsCash ||
-    exceedsShares;
+    !inputs.estimatedValid ||
+    (isLimitOrder(inputs.orderType) && inputs.limitPriceInput.trim() === '') ||
+    inputs.exceedsCash ||
+    inputs.exceedsShares;
 
   function goToForm(selected: OrderSide) {
-    setSide(selected);
-    setStep('form');
+    inputs.setSide(selected);
+    navigation.setStep('form');
   }
 
-  function goBack() {
-    if (subSheet) {
-      setSubSheet(null);
-    } else {
-      setStep('select');
-    }
-  }
-
-  function handleUseAll() {
-    if (!instrument) return;
-    const value = computeUseAllValue({
-      side,
-      quantityMode,
-      cash,
-      ownedShares: instrument.quantity,
-      lastPrice: instrument.last_price,
-    });
-    if (value !== null) setAmountInput(value);
+  function reset() {
+    navigation.resetNavigation();
+    inputs.resetInputs();
+    setValidationError(null);
+    setSystemError(null);
+    setResult(null);
   }
 
   async function handleSubmit() {
     if (!instrument) return;
     setValidationError(null);
 
-    if (!estimatedValid) {
+    if (!inputs.estimatedValid) {
       setValidationError(t('order.invalidQuantity'));
       return;
     }
 
     let limitPrice: number | undefined;
-    if (isLimitOrder(orderType)) {
-      limitPrice = parseFloat(limitPriceInput.replace(',', '.'));
+    if (isLimitOrder(inputs.orderType)) {
+      limitPrice = parseFloat(inputs.limitPriceInput.replace(',', '.'));
       if (!limitPrice || limitPrice <= 0 || !Number.isFinite(limitPrice)) {
         setValidationError(t('order.invalidPrice'));
         return;
@@ -128,21 +69,21 @@ export function useOrderForm() {
 
     const request: OrderRequest = {
       instrument_id: instrument.id,
-      side,
-      type: orderType,
-      quantity: derivedShares,
+      side: inputs.side,
+      type: inputs.orderType,
+      quantity: inputs.derivedShares,
       price: limitPrice,
     };
 
     try {
-      const response = await mutateAsync(request);
+      const response = await submitOrder(request);
       setResult(response);
-      setStep('result');
+      navigation.setStep('result');
     } catch (err) {
       const message = resolveErrorMessage(err, t('order.fetchError'));
       if (isUserError(err)) {
         setValidationError(message);
-        setStep('form');
+        navigation.setStep('form');
       } else {
         setSystemError(message);
       }
@@ -150,39 +91,43 @@ export function useOrderForm() {
   }
 
   return {
-    visible,
     instrument,
     closeOrder,
     cash,
     isPending,
-    step,
-    setStep,
-    reset,
+    // Navigation
+    step: navigation.step,
+    setStep: navigation.setStep,
+    subSheet: navigation.subSheet,
+    setSubSheet: navigation.setSubSheet,
+    goBack: navigation.goBack,
     goToForm,
-    goBack,
-    side,
-    orderType,
-    setOrderType,
-    quantityMode,
-    setQuantityMode,
-    amountInput,
-    setAmountInput,
-    limitPriceInput,
-    setLimitPriceInput,
+    reset,
+    // Form fields
+    side: inputs.side,
+    orderType: inputs.orderType,
+    setOrderType: inputs.setOrderType,
+    quantityMode: inputs.quantityMode,
+    setQuantityMode: inputs.setQuantityMode,
+    amountInput: inputs.amountInput,
+    setAmountInput: inputs.setAmountInput,
+    limitPriceInput: inputs.limitPriceInput,
+    setLimitPriceInput: inputs.setLimitPriceInput,
+    // Derived
+    derivedShares: inputs.derivedShares,
+    derivedTotal: inputs.derivedTotal,
+    estimatedValid: inputs.estimatedValid,
+    showUseAll: inputs.showUseAll,
+    handleUseAll: inputs.handleUseAll,
+    // Submit
+    handleSubmit,
+    isSubmitDisabled,
+    submitBlockReason,
+    // State
     validationError,
     setValidationError,
     systemError,
     setSystemError,
     result,
-    subSheet,
-    setSubSheet,
-    derivedShares,
-    derivedTotal,
-    estimatedValid,
-    showUseAll,
-    submitBlockReason,
-    isSubmitDisabled,
-    handleUseAll,
-    handleSubmit,
   };
 }

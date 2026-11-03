@@ -5,3 +5,6 @@ export * from './foundations/typography';
 
 // Componentes base
 export * from './components';
+
+// Hooks utilitarios
+export * from './hooks/useDebounce';

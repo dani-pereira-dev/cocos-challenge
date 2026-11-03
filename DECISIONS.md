@@ -87,11 +87,11 @@ colors.warning; // Naranja: banners de error de sistema
 
 ---
 
-## 6. Fuente única de verdad para textos: `copy.ts`
+## 6. ~~Fuente única de verdad para textos: `copy.ts`~~ → Superada por Decisión 17
 
-**Decisión:** Ningún string visible al usuario está hardcodeado en componentes. Todo vive en `src/constants/copy.ts`.
+**Decisión original:** Ningún string visible al usuario está hardcodeado en componentes. Todo vive en `src/constants/copy.ts`.
 
-**Por qué:** Facilita internacionalización futura, testing de copy, y revisiones de UX sin tocar componentes. También previene inconsistencias (ej: "Cancelar" vs "Cerrar" vs "Salir" en distintos lugares).
+**Estado actual:** `copy.ts` fue eliminado y reemplazado por i18next (ver Decisión 17). El principio se mantiene: los strings siguen centralizados, ahora en `src/i18n/locales/es.json`.
 
 ---
 
@@ -179,8 +179,10 @@ La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta 
 // store
 openOrder: (instrument) => set((s) => ({ visible: true, instrument, resetToken: s.resetToken + 1 })),
 
-// OrderModal
-<OrderModalContent key={resetToken} onClose={closeOrder} />
+// OrderModal — el key va en el Provider (que envuelve todo el árbol del modal)
+<OrderFormProvider key={resetToken}>
+  <OrderModalInner onClose={closeOrder} />
+</OrderFormProvider>
 ```
 
 **Trade-off:** Se agrega un campo `resetToken` al store. El costo es mínimo y el resultado es determinístico.
@@ -210,10 +212,10 @@ Button/
 
 ```ts
 const stepRenderers: Record<Step, () => ReactNode> = {
-  select:  () => <SelectStep  ... />,
-  form:    () => <FormStep    ... />,
-  confirm: () => <ConfirmStep ... />,
-  result:  () => form.result ? <ResultSheet /> : null,
+  select:  () => <SelectStep />,
+  form:    () => <FormStep />,
+  confirm: () => <ConfirmStep />,
+  result:  () => result ? <ResultSheet onClose={onClose} /> : null,
 };
 
 return (
@@ -223,6 +225,8 @@ return (
   </View>
 );
 ```
+
+Los steps no reciben props de formulario porque los leen directamente del contexto (ver Decisión 20).
 
 **Por qué:** `Record<Step, ...>` es exhaustivo: TypeScript da error si falta algún step o si se agrega uno nuevo sin handler. Agregar un paso (`'otp'`, `'review'`) solo requiere una entrada al mapa sin modificar condicionales existentes. El cuerpo del componente queda con una sola línea de render en lugar de cuatro bloques anidados.
 
@@ -266,3 +270,56 @@ i18n.t('errors.network');
 **Por qué:** Reactotron es el estándar de facto para debugging en React Native/Expo. Permite inspeccionar requests, state y logs desde un cliente de escritorio sin necesidad de remote debugging del JS engine.
 
 La configuración solo se activa en `__DEV__` y no tiene impacto en builds de producción.
+
+---
+
+## 20. Context scoped al modal para eliminar prop drilling
+
+**Decisión:** El estado del formulario de orden se expone a los steps mediante `OrderFormContext` (React Context), no como props. `OrderFormProvider` envuelve el árbol del modal; cada step lee directamente con `useOrderFormContext()`.
+
+```
+OrderModal
+└── OrderFormProvider        ← contexto vive aquí, se destruye con el modal
+    └── OrderModalInner
+        ├── <SelectStep />   ← 0 props de formulario
+        ├── <FormStep />     ← 0 props de formulario
+        └── <ConfirmStep />  ← 0 props de formulario
+```
+
+**Por qué:** `OrderModalContent` era un mediador que reenviaba ~20 props a `FormStep` y ~9 a `ConfirmStep`. Esto rompe el principio de que el propietario del estado debería ser el nodo más cercano que lo necesita. El contexto resuelve eso: cada step suscribe solo a lo que usa, el orquestador no conoce la interfaz de sus hijos.
+
+**Regla general aplicada:** _El estado que no cruza el árbol no necesita props — necesita contexto._ Props son el canal correcto para datos que fluyen hacia afuera del árbol; contexto es el canal correcto para estado compartido dentro de un árbol acotado.
+
+**Trade-off:** Los steps quedan acoplados al `OrderFormContext` — no son reutilizables fuera del modal. Ese acoplamiento ya existía implícitamente con los props; ahora es explícito y verificado por TypeScript.
+
+---
+
+## 21. Descomposición del hook `useOrderForm`
+
+**Decisión:** `useOrderForm` se divide en tres capas con responsabilidad única:
+
+| Hook                 | Responsabilidad                                                                                           |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| `useOrderNavigation` | Estado de paso (`step`) y sub-sheet; transiciones (`goBack`, `resetNavigation`)                           |
+| `useOrderInputs`     | Campos del formulario, parsing, valores derivados, restricciones (`exceedsCash`, `exceedsShares`)         |
+| `useOrderForm`       | Orquestador: conecta los dos, agrega submit, errores, reset coordinado y acciones compuestas (`goToForm`) |
+
+**Por qué:** Un hook de 188 líneas con 7 responsabilidades distintas es difícil de razonar y de testear en aislamiento. La descomposición sigue el principio de responsabilidad única: cada hook tiene un invariante claro. `useOrderForm` solo coordina — no sabe cómo se parsea el monto ni cómo se transiciona el step; lo delega.
+
+**Sobre el retorno de `useOrderForm`:** El retorno es el valor del contexto (Decisión 20). Es explícito por diseño: permite controlar qué implementación interna queda expuesta (ej: `setSide`, `resetNavigation`, `exceedsCash` son privados y no aparecen en el retorno).
+
+---
+
+## 22. Placement de componentes: `ui-kit/` vs `src/components/` vs `src/features/`
+
+**Decisión:** Los componentes se ubican según su conocimiento del dominio:
+
+| Ubicación                    | Qué va ahí                                                    | Ejemplos                      |
+| ---------------------------- | ------------------------------------------------------------- | ----------------------------- |
+| `ui-kit/components/`         | Primitivos del design system, sin dominio                     | `Button`, `Text`, `TextInput` |
+| `src/components/`            | Componentes compartidos entre features, con dominio de la app | `TickerAvatar`, `ReturnBadge` |
+| `src/features/*/components/` | Componentes exclusivos de una feature                         | `FormStep`, `OrderResult`     |
+
+**Por qué:** `ui-kit/` debe poder extraerse a cualquier otra app sin traer lógica de Cocos. `TickerAvatar` sabe sobre "tickers" y `ReturnBadge` usa `resolveGainColor` (lógica de ganancias/pérdidas) — son domain-aware, no pertenecen al ui-kit pero sí son reutilizables entre features.
+
+**Señal de alerta:** Si un componente en `src/features/X/` es importado desde `src/features/Y/`, es candidato a moverse a `src/components/`.

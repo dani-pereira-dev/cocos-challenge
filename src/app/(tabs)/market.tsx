@@ -8,7 +8,7 @@ import { LoadingView } from '@/components/LoadingView';
 import { Instrument } from '@/domain/entities/instrument';
 import { MarketSearchBar } from '@/features/market/components/MarketSearchBar';
 import { InstrumentListItem } from '@/features/market/components/InstrumentListItem';
-import { useDebounce } from '@/hooks/useDebounce';
+import { useDebounce } from '@ui-kit/hooks/useDebounce';
 import { useInstrumentsQuery } from '@/hooks/useInstrumentsQuery';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
