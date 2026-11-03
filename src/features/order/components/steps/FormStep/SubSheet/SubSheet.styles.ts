@@ -4,7 +4,7 @@ import { borderRadius, colors, spacing } from '@ui-kit';
 export const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: colors.overlayLight,
   },
   sheet: {
     position: 'absolute',

@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     color: colors.textInverse,
   },
   sellButton: {
-    backgroundColor: '#374151',
+    backgroundColor: colors.sell,
   },
   sellText: {
     color: colors.textInverse,

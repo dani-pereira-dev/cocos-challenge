@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: colors.onDarkSurfaceSubtle,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -30,6 +30,6 @@ export const styles = StyleSheet.create({
     color: colors.textInverse,
   },
   subtitle: {
-    color: 'rgba(255, 255, 255, 0.75)',
+    color: colors.onDarkSubtle,
   },
 });

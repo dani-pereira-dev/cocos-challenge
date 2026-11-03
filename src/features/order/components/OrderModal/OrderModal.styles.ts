@@ -4,7 +4,7 @@ import { borderRadius, colors, spacing } from '@ui-kit';
 export const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    backgroundColor: colors.overlayDark,
     justifyContent: 'flex-end',
   },
   resultSheet: {

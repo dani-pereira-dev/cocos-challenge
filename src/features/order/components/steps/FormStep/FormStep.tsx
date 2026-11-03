@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Button, Text, TextInput, colors } from '@ui-kit';
+import { Button, Text, TextInput } from '@ui-kit';
 
 import { isBuyOrder, isLimitOrder, isMarketOrder } from '@/domain/entities/order';
 import { useOrderFormContext } from '@/features/order/contexts/OrderFormContext';
@@ -34,14 +34,12 @@ export function FormStep() {
     derivedTotal,
     subSheet,
     setSubSheet,
-    goBack,
     closeOrder,
     handleUseAll,
     setStep,
   } = useOrderFormContext();
 
   const isBuy = isBuyOrder(side);
-  const accentColor = isBuy ? colors.success : colors.error;
   const sideLabel = isBuy ? t('order.buy') : t('order.sell');
 
   const modeLabelText = quantityMode === 'amount' ? t('order.byAmount') : t('order.byShares');
@@ -55,12 +53,7 @@ export function FormStep() {
 
   return (
     <View style={styles.screen}>
-      <OrderNavBar
-        title={sideLabel}
-        accentColor={accentColor}
-        onBack={goBack}
-        onClose={closeOrder}
-      />
+      <OrderNavBar title={sideLabel} onClose={closeOrder} />
 
       <KeyboardAvoidingView
         style={styles.flex}

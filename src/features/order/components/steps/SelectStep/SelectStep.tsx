@@ -27,11 +27,6 @@ export function SelectStep() {
         <Text variant="bodySemibold" style={styles.sellText}>
           {t('order.sell')}
         </Text>
-        {!canSell ? (
-          <Text variant="caption" style={styles.noPositionHint}>
-            {t('order.noPositionHint')}
-          </Text>
-        ) : null}
       </Pressable>
 
       <Pressable style={[styles.actionButton, styles.cancelButton]} onPress={closeOrder}>

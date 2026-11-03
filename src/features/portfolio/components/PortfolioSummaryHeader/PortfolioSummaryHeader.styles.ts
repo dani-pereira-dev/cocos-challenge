@@ -1,24 +1,63 @@
 import { StyleSheet } from 'react-native';
-import { colors, spacing } from '@ui-kit';
+import { colors, spacing, borderRadius } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing['5'],
+    paddingTop: spacing['8'],
+    paddingBottom: spacing['6'],
+  },
+  label: {
+    color: colors.onDarkSecondary,
+    marginBottom: spacing['1'],
+  },
+  heroAmount: {
+    fontSize: 38,
+    fontWeight: '700',
+    lineHeight: 46,
+    letterSpacing: -1,
+    color: colors.white,
+  },
+  cashRow: {
     flexDirection: 'row',
-    backgroundColor: colors.surface,
-    paddingHorizontal: spacing['4'],
-    paddingTop: spacing['6'],
-    paddingBottom: spacing['5'],
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    gap: spacing['4'],
+    alignItems: 'center',
+    gap: 6,
+    marginTop: spacing['3'],
+    alignSelf: 'flex-start',
+    backgroundColor: colors.onDarkSurface,
+    paddingHorizontal: spacing['3'],
+    paddingVertical: 6,
+    borderRadius: borderRadius.full,
   },
-  stat: {
-    flex: 1,
-    gap: spacing['1'],
+  cashDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.successOnDark,
   },
-  divider: {
-    width: 1,
-    backgroundColor: colors.border,
-    marginVertical: spacing['1'],
+  cashText: {
+    color: colors.onDarkStrong,
+  },
+  gainRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: spacing['2'],
+  },
+  gainLabel: {
+    color: colors.onDarkSecondary,
+  },
+  gainPositive: {
+    color: colors.successOnDark,
+    fontWeight: '600',
+  },
+  gainNegative: {
+    color: colors.errorOnDark,
+    fontWeight: '600',
+  },
+  gainNeutral: {
+    color: colors.onDarkTertiary,
+    fontWeight: '600',
   },
 });

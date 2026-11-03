@@ -5,29 +5,21 @@ import { styles } from './OrderNavBar.styles';
 
 interface OrderNavBarProps {
   title: string;
-  accentColor: string;
-  onBack: () => void;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
-export function OrderNavBar({ title, accentColor, onBack, onClose }: OrderNavBarProps) {
+export function OrderNavBar({ title, onClose }: OrderNavBarProps) {
   return (
     <View style={styles.navBar}>
-      <Pressable onPress={onBack} hitSlop={12} style={styles.navButton}>
-        <Icon name="arrow-back" size={22} color={accentColor} />
-      </Pressable>
+      <View style={styles.navButton} />
 
-      <Text variant="bodySemibold" style={[styles.navTitle, { color: accentColor }]}>
+      <Text variant="bodySemibold" style={styles.navTitle}>
         {title}
       </Text>
 
-      {onClose ? (
-        <Pressable onPress={onClose} hitSlop={12} style={styles.navButton}>
-          <Icon name="close" size={22} color={accentColor} />
-        </Pressable>
-      ) : (
-        <View style={styles.navButton} />
-      )}
+      <Pressable onPress={onClose} hitSlop={12} style={styles.navButton}>
+        <Icon name="close" size={22} color={styles.navTitle.color} />
+      </Pressable>
     </View>
   );
 }

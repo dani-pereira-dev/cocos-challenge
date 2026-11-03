@@ -47,14 +47,14 @@ export function ConfirmStep() {
     ? t('order.estimatedToPayLabel')
     : t('order.estimatedToReceiveLabel');
 
-  function handleBack() {
+  function handleClose() {
     setSystemError(null);
     setStep('form');
   }
 
   return (
     <View style={styles.screen}>
-      <OrderNavBar title={title} accentColor={accentColor} onBack={handleBack} />
+      <OrderNavBar title={title} onClose={handleClose} />
 
       <ScrollView
         style={styles.flex}

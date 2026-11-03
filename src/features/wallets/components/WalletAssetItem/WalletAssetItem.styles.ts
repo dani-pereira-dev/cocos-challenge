@@ -38,6 +38,6 @@ export const styles = StyleSheet.create({
     gap: 4,
   },
   deleteLabel: {
-    color: '#fff',
+    color: colors.white,
   },
 });

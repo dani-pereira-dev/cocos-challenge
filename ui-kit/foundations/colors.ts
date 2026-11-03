@@ -44,8 +44,24 @@ export const colors = {
   pillBackground: '#F1F5F9',
   pillBorder: '#E2E8F0',
 
-  // Varios
+  // Overlays
   overlay: 'rgba(0, 0, 0, 0.5)',
+  overlayLight: 'rgba(0, 0, 0, 0.3)',
+  overlayDark: 'rgba(0, 0, 0, 0.55)',
+
+  // Sobre fondo oscuro (ej: header con fondo primary)
+  onDarkSecondary: 'rgba(255, 255, 255, 0.55)',
+  onDarkTertiary: 'rgba(255, 255, 255, 0.7)',
+  onDarkSubtle: 'rgba(255, 255, 255, 0.75)',
+  onDarkStrong: 'rgba(255, 255, 255, 0.8)',
+  onDarkSurface: 'rgba(255, 255, 255, 0.1)',
+  onDarkSurfaceSubtle: 'rgba(255, 255, 255, 0.2)',
+  successOnDark: '#4ADE80',
+  errorOnDark: '#F87171',
+
+  // UI específica
+  sell: '#374151',
+
   transparent: 'transparent',
   black: '#000000',
   white: '#FFFFFF',

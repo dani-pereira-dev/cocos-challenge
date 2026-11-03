@@ -27,6 +27,7 @@
     "shares_other": "{{count}} acciones",
     "totalValueLabel": "Valor total",
     "totalGainLabel": "Resultado",
+    "dailyChangeLabel": "Hoy",
     "cashLabel": "Efectivo disponible"
   },
 
