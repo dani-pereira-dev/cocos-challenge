@@ -14,7 +14,9 @@ describe('WalletEmptyContent', () => {
     await render(<WalletEmptyContent walletId="wallet-1" />);
 
     expect(screen.getByText('Asigná activos a tu cartera')).toBeTruthy();
-    expect(screen.getByText('Elegí los instrumentos de tu portfolio que querés asignar a esta cartera.')).toBeTruthy();
+    expect(
+      screen.getByText('Elegí los instrumentos de tu portfolio que querés asignar a esta cartera.'),
+    ).toBeTruthy();
   });
 
   it('renders the add assets button', async () => {

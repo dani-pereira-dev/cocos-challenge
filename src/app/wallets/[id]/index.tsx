@@ -42,7 +42,7 @@ export default function WalletDetailScreen() {
             router.replace('/wallets');
           },
         },
-      ]
+      ],
     );
   }
 

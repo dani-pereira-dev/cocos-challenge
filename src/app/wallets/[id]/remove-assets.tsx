@@ -45,7 +45,7 @@ export default function RemoveAssetsScreen() {
             removeAllocations(id, Array.from(selected));
           },
         },
-      ]
+      ],
     );
   }
 

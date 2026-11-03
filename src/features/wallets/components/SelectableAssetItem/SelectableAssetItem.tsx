@@ -23,9 +23,7 @@ export function SelectableAssetItem({ allocation, selected, onToggle }: Selectab
       onPress={() => onToggle(allocation.ticker)}
     >
       <View style={[styles.checkbox, selected && styles.checkboxSelected]}>
-        {selected ? (
-          <Icon name="checkmark" size={14} color={colors.textInverse} />
-        ) : null}
+        {selected ? <Icon name="checkmark" size={14} color={colors.textInverse} /> : null}
       </View>
 
       <TickerAvatar ticker={allocation.ticker} size={44} />

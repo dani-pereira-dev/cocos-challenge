@@ -7,7 +7,11 @@ jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
   const React = require('react');
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { View } = require('react-native');
-  return { __esModule: true, default: ({ children }: { children: React.ReactNode }) => React.createElement(View, null, children) };
+  return {
+    __esModule: true,
+    default: ({ children }: { children: React.ReactNode }) =>
+      React.createElement(View, null, children),
+  };
 });
 
 const baseAllocation: EnrichedAllocation = {

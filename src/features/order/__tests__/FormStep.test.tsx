@@ -86,7 +86,7 @@ describe('FormStep', () => {
 
   it('shows validation error text', async () => {
     (useOrderFormContext as jest.Mock).mockReturnValue(
-      buildContext({ validationError: 'Ingresá una cantidad válida (mínimo 1 acción)' })
+      buildContext({ validationError: 'Ingresá una cantidad válida (mínimo 1 acción)' }),
     );
     await render(<FormStep />);
 
@@ -95,7 +95,7 @@ describe('FormStep', () => {
 
   it('shows submitBlockReason when exceeds cash', async () => {
     (useOrderFormContext as jest.Mock).mockReturnValue(
-      buildContext({ submitBlockReason: 'El monto supera el efectivo disponible' })
+      buildContext({ submitBlockReason: 'El monto supera el efectivo disponible' }),
     );
     await render(<FormStep />);
 

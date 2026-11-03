@@ -12,8 +12,7 @@ interface ReturnBadgeProps {
 export function ReturnBadge({ value }: ReturnBadgeProps) {
   const color = resolveGainColor(value);
 
-  const iconName: IconName | null =
-    value > 0 ? 'caret-up' : value < 0 ? 'caret-down' : null;
+  const iconName: IconName | null = value > 0 ? 'caret-up' : value < 0 ? 'caret-down' : null;
 
   return (
     <View style={styles.container}>

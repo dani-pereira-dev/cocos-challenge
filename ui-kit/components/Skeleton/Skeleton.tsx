@@ -23,7 +23,7 @@ export function Skeleton({ width, height = 14, borderRadius = 6, style }: Skelet
     opacity.value = withRepeat(
       withTiming(0.4, { duration: 900, easing: Easing.inOut(Easing.ease) }),
       -1,
-      true
+      true,
     );
   }, [opacity]);
 

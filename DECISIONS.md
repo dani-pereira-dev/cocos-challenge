@@ -325,9 +325,16 @@ OrderModal
 ```ts
 const useWalletsStore = create<WalletsState>()(
   persist(
-    (set) => ({ wallets: [], createWallet, renameWallet, deleteWallet, upsertAllocation, removeAllocations }),
-    { name: 'cocos-wallets', storage: createJSONStorage(() => AsyncStorage) }
-  )
+    (set) => ({
+      wallets: [],
+      createWallet,
+      renameWallet,
+      deleteWallet,
+      upsertAllocation,
+      removeAllocations,
+    }),
+    { name: 'cocos-wallets', storage: createJSONStorage(() => AsyncStorage) },
+  ),
 );
 ```
 
@@ -381,11 +388,13 @@ src/app/wallets/
 **Decisión:** Se priorizan tests de comportamiento observable sobre tests de implementación interna.
 
 **Criterio de selección:**
+
 - **Lógica condicional en UI**: botones que se habilitan/deshabilitan según estado (`isSubmitDisabled`, `canSell`, `exceedsHolding`) son el tipo de bug más silencioso — el código compila pero el usuario no puede operar.
 - **Navegación por props**: cada `router.push` con un path dinámico (ej. `/wallets/${walletId}/add-asset`) es un contrato que puede romperse si cambia la estructura de rutas.
 - **Textos i18n críticos**: las claves de traducción que aparecen en flujos de negocio (errores, CTAs, hints de validación) merecen ser afirmadas para detectar si una clave se borra del JSON o cambia de sentido.
 
 **Qué se descartó y por qué:**
+
 - `ReanimatedSwipeable` → el gesto en sí no se puede simular con `fireEvent`; la lógica real es thin (`onDelete(ticker)`), ya cubierta indirectamente.
 - Snapshots → agregan ruido sin valor diferencial en una base de código que cambia activamente.
 - Tests de estilos (`StyleSheet`) → no representan comportamiento del usuario.

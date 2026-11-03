@@ -11,7 +11,11 @@ jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
   const React = require('react');
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { View } = require('react-native');
-  return { __esModule: true, default: ({ children }: { children: React.ReactNode }) => React.createElement(View, null, children) };
+  return {
+    __esModule: true,
+    default: ({ children }: { children: React.ReactNode }) =>
+      React.createElement(View, null, children),
+  };
 });
 
 const allocations: EnrichedAllocation[] = [
@@ -31,7 +35,7 @@ describe('WalletAssetList', () => {
         totalValue={1950}
         walletId="w-1"
         onDeleteAllocation={jest.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Total valorizado')).toBeTruthy();
@@ -45,7 +49,7 @@ describe('WalletAssetList', () => {
         totalValue={1950}
         walletId="w-1"
         onDeleteAllocation={jest.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('GGAL')).toBeTruthy();
@@ -59,7 +63,7 @@ describe('WalletAssetList', () => {
         totalValue={1950}
         walletId="w-99"
         onDeleteAllocation={jest.fn()}
-      />
+      />,
     );
 
     fireEvent.press(screen.getByText('Agregar activo'));

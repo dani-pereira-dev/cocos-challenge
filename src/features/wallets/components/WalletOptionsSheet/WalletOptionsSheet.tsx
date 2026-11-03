@@ -23,12 +23,7 @@ export function WalletOptionsSheet({
   const { t } = useTranslation();
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="slide"
-      onRequestClose={onClose}
-    >
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <Pressable style={styles.overlay} onPress={onClose} />
       <SafeAreaView style={styles.sheet} edges={['bottom']}>
         <View style={styles.handle} />

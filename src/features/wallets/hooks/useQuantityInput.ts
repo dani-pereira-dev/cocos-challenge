@@ -12,7 +12,7 @@ export function useQuantityInput(walletId: string, ticker: string) {
   const existingAllocation = wallet?.allocations.find((alloc) => alloc.ticker === ticker);
 
   const [quantityInput, setQuantityInput] = useState(
-    existingAllocation ? existingAllocation.quantity.toString() : ''
+    existingAllocation ? existingAllocation.quantity.toString() : '',
   );
 
   const parsedQuantity = parseInt(quantityInput.replace(',', '.'), 10);

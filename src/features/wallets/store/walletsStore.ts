@@ -44,7 +44,7 @@ export const useWalletsStore = create<WalletsState>()(
             const exists = wallet.allocations.some((alloc) => alloc.ticker === allocation.ticker);
             const allocations = exists
               ? wallet.allocations.map((alloc) =>
-                  alloc.ticker === allocation.ticker ? allocation : alloc
+                  alloc.ticker === allocation.ticker ? allocation : alloc,
                 )
               : [...wallet.allocations, allocation];
             return { ...wallet, allocations };
@@ -58,14 +58,16 @@ export const useWalletsStore = create<WalletsState>()(
               ? wallet
               : {
                   ...wallet,
-                  allocations: wallet.allocations.filter((alloc) => !tickers.includes(alloc.ticker)),
-                }
+                  allocations: wallet.allocations.filter(
+                    (alloc) => !tickers.includes(alloc.ticker),
+                  ),
+                },
           ),
         })),
     }),
     {
       name: 'cocos-wallets',
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );

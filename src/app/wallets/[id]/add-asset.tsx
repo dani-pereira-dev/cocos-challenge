@@ -21,7 +21,7 @@ export default function AddAssetScreen() {
   const { holdings, isLoading, isError, error, refetch } = usePortfolioQuery();
 
   const allocationMap = new Map(
-    wallet?.allocations.map((alloc) => [alloc.ticker, alloc.quantity]) ?? []
+    wallet?.allocations.map((alloc) => [alloc.ticker, alloc.quantity]) ?? [],
   );
 
   function handleAssetPress(asset: PortfolioAssetWithMetrics) {
@@ -60,4 +60,3 @@ export default function AddAssetScreen() {
     </SafeAreaView>
   );
 }
-

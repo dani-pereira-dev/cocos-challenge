@@ -23,4 +23,3 @@ export function SkeletonListItem({ avatarSize = 44 }: SkeletonListItemProps) {
     </View>
   );
 }
-

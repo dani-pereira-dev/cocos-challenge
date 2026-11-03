@@ -16,9 +16,9 @@ export function useWalletDetail(walletId: string) {
   const holdingsMap = useMemo(
     () =>
       new Map<string, PortfolioAssetWithMetrics>(
-        holdings.map((holding) => [holding.ticker, holding])
+        holdings.map((holding) => [holding.ticker, holding]),
       ),
-    [holdings]
+    [holdings],
   );
 
   const enrichedAllocations = useMemo<EnrichedAllocation[]>(() => {
@@ -35,7 +35,7 @@ export function useWalletDetail(walletId: string) {
 
   const totalValue = useMemo(
     () => enrichedAllocations.reduce((sum, alloc) => sum + alloc.currentValue, 0),
-    [enrichedAllocations]
+    [enrichedAllocations],
   );
 
   return { wallet, enrichedAllocations, totalValue, isLoading, isError, error };
