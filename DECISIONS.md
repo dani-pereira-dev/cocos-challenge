@@ -42,13 +42,9 @@ src/
 
 **Por qué:** React Query resuelve caching, loading/error states, refetch on focus, y deduplicación de requests sin código adicional. En una app fintech donde los precios cambian frecuentemente, el refresco automático es valioso.
 
-**Detalle importante (React 19 + React Query v5):** La opción `select` de `useQuery` causa un loop infinito en React 19 porque React compara referencias en cada render. Se reemplazó con `useMemo` sobre `query.data` como solución estable.
+**Nota (React 19 + React Query v5):** La opción `select` de `useQuery` causa un loop infinito en React 19 porque React compara referencias en cada render. Se usa `useMemo` sobre `query.data`:
 
 ```ts
-// ❌ Causa loop en React 19
-useQuery({ queryFn: fetchPortfolio, select: (data) => transform(data) });
-
-// ✅ Estable
 const query = useQuery({ queryFn: fetchPortfolio });
 const result = useMemo(() => transform(query.data), [query.data]);
 ```
@@ -72,7 +68,7 @@ const useStore = create<State>()((set) => ({ ... }));
 
 ## 5. UI Kit interno como design system
 
-**Decisión:** Se creó un `ui-kit/` propio con `Button`, `Text`, `TextInput`, `Card` y foundations (`colors`, `typography`, `spacing`).
+**Decisión:** Se creó un `ui-kit/` propio con `Button`, `Text`, `TextInput` y foundations (`colors`, `typography`, `spacing`).
 
 **Por qué:** En una app fintech la consistencia visual no es opcional. Un design system centralizado evita colores hardcodeados, tamaños inconsistentes, y hace que cualquier cambio de marca se aplique en un solo lugar.
 
@@ -87,11 +83,9 @@ colors.warning; // Naranja: banners de error de sistema
 
 ---
 
-## 6. ~~Fuente única de verdad para textos: `copy.ts`~~ → Superada por Decisión 17
+## 6. Centralización de textos: i18next
 
-**Decisión original:** Ningún string visible al usuario está hardcodeado en componentes. Todo vive en `src/constants/copy.ts`.
-
-**Estado actual:** `copy.ts` fue eliminado y reemplazado por i18next (ver Decisión 17). El principio se mantiene: los strings siguen centralizados, ahora en `src/i18n/locales/es.json`.
+Ver Decisión 17.
 
 ---
 
@@ -106,7 +100,7 @@ colors.warning; // Naranja: banners de error de sistema
 5xx / red / parse  → systemError    → banner de warning, no bloquea la UI
 ```
 
-Los mensajes en inglés que devuelve la API se traducen al español mediante un mapa en `copy.errors.apiMessages` dentro del `api-client.ts`, sin dependencia de la API.
+Los mensajes en inglés que devuelve la API se traducen al español mediante claves en `errors.apiMessages` de `es.json`, sin dependencia de la API.
 
 ---
 
@@ -173,7 +167,7 @@ La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta 
 
 **Decisión:** El store de Zustand expone un `resetToken: number` que incrementa en cada llamada a `openOrder`. El contenido del modal (`OrderModalContent`) recibe ese token como `key`, lo que fuerza un remount sincrónico en cada apertura.
 
-**Por qué:** El enfoque anterior (`onShow={reset}`) disparaba el reset **después** de que terminaba la animación de entrada (~300ms). Durante esa ventana el modal era visible mostrando el estado de la orden anterior, produciendo un flash perceptible. Con `key={resetToken}`, React desmonta y monta el componente sincrónicamente antes del primer frame, garantizando que siempre abra en el paso `select` sin estado residual.
+**Por qué:** `key={resetToken}` fuerza un remount sincrónico de React antes del primer frame, garantizando que el modal siempre abra en el paso `select` sin estado residual de la orden anterior.
 
 ```ts
 // store
@@ -236,7 +230,7 @@ Los steps no reciben props de formulario porque los leen directamente del contex
 
 **Decisión:** Los textos visibles al usuario están centralizados en `src/i18n/locales/es.json` y se acceden mediante `useTranslation()` de `react-i18next` en componentes React, e `i18n.t()` directamente en código no-React (servicios, domain).
 
-**Por qué:** Un objeto `copy` tipado en TypeScript funciona bien para un idioma, pero no escala a múltiples idiomas sin reescribir todos los puntos de uso. i18next resuelve plurales, interpolaciones y cambio de idioma en runtime sin modificar componentes. La migración también elimina las funciones de formato (`copy.portfolio.shares(qty)`) reemplazándolas con el sistema de plurales nativo de i18next (`count`).
+**Por qué:** i18next resuelve plurales, interpolaciones y cambio de idioma en runtime sin modificar componentes. Escala a múltiples idiomas sin tocar los puntos de uso.
 
 ```ts
 // Componente React
@@ -249,7 +243,7 @@ import i18n from '@/i18n';
 i18n.t('errors.network');
 ```
 
-**Trade-off:** Agrega una dependencia de runtime y quita el tipado estático de claves (aunque existen plugins de TypeScript para i18next que lo recuperan). Para una app de un solo idioma el `copy.ts` era suficiente; se eligió i18next pensando en la escalabilidad del producto.
+**Trade-off:** Agrega una dependencia de runtime y quita el tipado estático de claves (recuperable con plugins de TypeScript para i18next).
 
 ---
 
@@ -286,11 +280,11 @@ OrderModal
         └── <ConfirmStep />  ← 0 props de formulario
 ```
 
-**Por qué:** `OrderModalContent` era un mediador que reenviaba ~20 props a `FormStep` y ~9 a `ConfirmStep`. Esto rompe el principio de que el propietario del estado debería ser el nodo más cercano que lo necesita. El contexto resuelve eso: cada step suscribe solo a lo que usa, el orquestador no conoce la interfaz de sus hijos.
+**Por qué:** El estado del formulario es compartido por todos los steps pero no sale del árbol del modal. Contexto es el canal correcto: cada step suscribe solo a lo que usa, sin que el orquestador conozca la interfaz de sus hijos.
 
-**Regla general aplicada:** _El estado que no cruza el árbol no necesita props — necesita contexto._ Props son el canal correcto para datos que fluyen hacia afuera del árbol; contexto es el canal correcto para estado compartido dentro de un árbol acotado.
+**Regla:** _El estado que no cruza el árbol no necesita props — necesita contexto._
 
-**Trade-off:** Los steps quedan acoplados al `OrderFormContext` — no son reutilizables fuera del modal. Ese acoplamiento ya existía implícitamente con los props; ahora es explícito y verificado por TypeScript.
+**Trade-off:** Los steps quedan acoplados al `OrderFormContext` y no son reutilizables fuera del modal. Es un trade-off aceptable dado que son componentes propios del flujo de orden.
 
 ---
 
@@ -304,9 +298,7 @@ OrderModal
 | `useOrderInputs`     | Campos del formulario, parsing, valores derivados, restricciones (`exceedsCash`, `exceedsShares`)         |
 | `useOrderForm`       | Orquestador: conecta los dos, agrega submit, errores, reset coordinado y acciones compuestas (`goToForm`) |
 
-**Por qué:** Un hook de 188 líneas con 7 responsabilidades distintas es difícil de razonar y de testear en aislamiento. La descomposición sigue el principio de responsabilidad única: cada hook tiene un invariante claro. `useOrderForm` solo coordina — no sabe cómo se parsea el monto ni cómo se transiciona el step; lo delega.
-
-**Sobre el retorno de `useOrderForm`:** El retorno es el valor del contexto (Decisión 20). Es explícito por diseño: permite controlar qué implementación interna queda expuesta (ej: `setSide`, `resetNavigation`, `exceedsCash` son privados y no aparecen en el retorno).
+**Por qué:** Cada hook tiene un invariante claro. `useOrderForm` solo coordina — delega el parsing del monto a `useOrderInputs` y las transiciones de paso a `useOrderNavigation`. El retorno explícito de `useOrderForm` controla qué implementación interna queda expuesta al contexto (`setSide`, `resetNavigation`, `exceedsCash` son privados).
 
 ---
 
@@ -323,3 +315,51 @@ OrderModal
 **Por qué:** `ui-kit/` debe poder extraerse a cualquier otra app sin traer lógica de Cocos. `TickerAvatar` sabe sobre "tickers" y `ReturnBadge` usa `resolveGainColor` (lógica de ganancias/pérdidas) — son domain-aware, no pertenecen al ui-kit pero sí son reutilizables entre features.
 
 **Señal de alerta:** Si un componente en `src/features/X/` es importado desde `src/features/Y/`, es candidato a moverse a `src/components/`.
+
+---
+
+## 23. Estado persistente de Carteras: Zustand + AsyncStorage
+
+**Decisión:** Las carteras personalizadas se persisten con Zustand `persist` middleware sobre `@react-native-async-storage/async-storage`. El store (`useWalletsStore`) es el único source of truth para `CustomWallet[]`.
+
+```ts
+const useWalletsStore = create<WalletsState>()(
+  persist(
+    (set) => ({ wallets: [], createWallet, renameWallet, deleteWallet, upsertAllocation, removeAllocations }),
+    { name: 'cocos-wallets', storage: createJSONStorage(() => AsyncStorage) }
+  )
+);
+```
+
+**Por qué:** Las carteras son estado local del usuario (no viven en el servidor). AsyncStorage es el mecanismo estándar de persistencia en React Native y está soportado nativamente por el middleware de Zustand.
+
+**Trade-off:** Sin sincronización entre dispositivos. Si el usuario reinstala la app, pierde las carteras. Aceptable para una feature de organización personal sin backend propio.
+
+---
+
+## 24. Enriquecimiento de allocations: cross-referencia en hooks
+
+**Decisión:** `useWalletDetail` une las `WalletAllocation[]` del store con los `PortfolioAssetWithMetrics[]` de React Query para construir `EnrichedAllocation[]` (agrega `holding` y `currentValue`). No hay snapshot de precios guardado — el valor siempre refleja el precio de mercado actual.
+
+**Por qué:** Guardar precios históricos en el store complicaría la sincronización y generaría stale data. La unión en el hook es O(n) con un `Map` y se recomputa solo cuando cambia el portfolio o la wallet.
+
+---
+
+## 25. Navegación de Carteras: Stack independiente fuera de tabs
+
+**Decisión:** Las pantallas de Carteras viven en `src/app/wallets/` con su propio Stack (`wallets/_layout.tsx`). El entry point es un `WalletBanner` en el `ListFooterComponent` del FlatList de Portfolio.
+
+```
+src/app/wallets/
+  _layout.tsx           # Stack (headerShown: false)
+  index.tsx             # Lista de carteras
+  new.tsx               # Crear cartera
+  [id]/
+    index.tsx           # Detalle
+    add-asset.tsx       # Picker de activos
+    [ticker].tsx        # Input de cantidad
+    remove-assets.tsx   # Selección para eliminar
+    rename.tsx          # Renombrar
+```
+
+**Por qué:** Las carteras son un flujo completo con múltiples pasos que no corresponde a un tab. Un Stack independiente mantiene la historia de navegación limpia y permite volver paso a paso.
