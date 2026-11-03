@@ -1,9 +1,8 @@
 import { Pressable, View } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@ui-kit';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+import { Icon, Text, colors } from '@ui-kit';
+
 import { styles } from './WalletBanner.styles';
 
 export function WalletBanner() {

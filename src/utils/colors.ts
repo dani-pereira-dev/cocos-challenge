@@ -1,4 +1,4 @@
-import { colors } from '@ui-kit/foundations/colors';
+import { colors } from '@ui-kit';
 
 export function resolveGainColor(amount: number): string {
   if (amount > 0) return colors.success;

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { isBuyOrder, OrderSide } from '@/domain/entities/order';
 import { formatCurrency } from '@/utils/formatters';
 import { styles } from './OrderBreakdownCard.styles';

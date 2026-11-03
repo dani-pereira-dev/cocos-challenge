@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '@ui-kit/foundations/colors';
-import { spacing } from '@ui-kit/foundations/spacing';
+import { colors, spacing } from '@ui-kit';
 
 export const DELETE_ACTION_WIDTH = 80;
 

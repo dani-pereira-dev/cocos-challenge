@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { styles } from './TickerAvatar.styles';
 
 const AVATAR_PALETTE = [

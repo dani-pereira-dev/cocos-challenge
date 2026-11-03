@@ -1,6 +1,6 @@
 import { ActivityIndicator, View, ViewStyle } from 'react-native';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+import { Text, colors } from '@ui-kit';
+
 import { styles } from './LoadingView.styles';
 
 interface LoadingViewProps {

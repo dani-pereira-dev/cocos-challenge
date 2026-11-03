@@ -1,11 +1,11 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@ui-kit';
+import { Icon, Text } from '@ui-kit';
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Animated, { SharedValue, useAnimatedStyle } from 'react-native-reanimated';
-import { Text } from '@ui-kit/components/Text';
+
 import { TickerAvatar } from '@/components/TickerAvatar';
 import { formatCurrency } from '@/utils/formatters';
 import { EnrichedAllocation } from '../../hooks/useWalletDetail';

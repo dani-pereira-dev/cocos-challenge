@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '@ui-kit/foundations/colors';
-import { fontSize, fontWeight } from '@ui-kit/foundations/typography';
-import { spacing } from '@ui-kit/foundations/spacing';
+import { colors, fontSize, fontWeight, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   footer: {

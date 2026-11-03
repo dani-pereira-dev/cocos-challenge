@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
-import { TextInput } from '@ui-kit/components/TextInput';
+import { Text, TextInput } from '@ui-kit';
+
 import { formatAmount } from '@/utils/formatters';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { styles } from './QuantityInputCard.styles';

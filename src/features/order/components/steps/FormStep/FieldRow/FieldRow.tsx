@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { styles } from './FieldRow.styles';
 
 interface FieldRowProps {

@@ -1,8 +1,7 @@
 import { View } from 'react-native';
-import { Icon } from '@ui-kit';
+import { Icon, Text, colors } from '@ui-kit';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+
 import { isMarketOrder, OrderType } from '@/domain/entities/order';
 import { formatCurrency } from '@/utils/formatters';
 import { styles } from './OrderDetailCard.styles';

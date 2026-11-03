@@ -1,7 +1,7 @@
 import { ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+import { Text, colors } from '@ui-kit';
+
 import { isBuyOrder, isLimitOrder } from '@/domain/entities/order';
 import { useOrderFormContext } from '@/features/order/contexts/OrderFormContext';
 import { formatDate } from '@/utils/formatters';

@@ -1,8 +1,8 @@
 import { FlatList, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { Button } from '@ui-kit/components/Button';
-import { Text } from '@ui-kit/components/Text';
+import { Button, Text } from '@ui-kit';
+
 import { formatCurrency } from '@/utils/formatters';
 import { EnrichedAllocation } from '../../hooks/useWalletDetail';
 import { WalletAssetItem } from '../WalletAssetItem';

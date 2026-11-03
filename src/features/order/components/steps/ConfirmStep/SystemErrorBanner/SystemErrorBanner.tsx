@@ -1,7 +1,6 @@
 import { View } from 'react-native';
-import { Icon } from '@ui-kit';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+import { Icon, Text, colors } from '@ui-kit';
+
 import { styles } from './SystemErrorBanner.styles';
 
 interface SystemErrorBannerProps {

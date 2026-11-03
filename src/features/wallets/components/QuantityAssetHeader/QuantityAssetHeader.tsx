@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { TickerAvatar } from '@/components/TickerAvatar';
 import { styles } from './QuantityAssetHeader.styles';
 

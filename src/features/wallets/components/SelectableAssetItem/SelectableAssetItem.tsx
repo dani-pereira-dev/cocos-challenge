@@ -1,9 +1,9 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@ui-kit';
-import { Text } from '@ui-kit/components/Text';
+import { Icon, Text, colors } from '@ui-kit';
+
 import { TickerAvatar } from '@/components/TickerAvatar';
-import { colors } from '@ui-kit/foundations/colors';
+
 import { formatCurrency } from '@/utils/formatters';
 import { EnrichedAllocation } from '../../hooks/useWalletDetail';
 import { styles } from './SelectableAssetItem.styles';

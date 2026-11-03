@@ -3,7 +3,7 @@ import { Alert, FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Button } from '@ui-kit/components/Button';
+import { Button } from '@ui-kit';
 import { WalletRemoveAssetsSkeleton } from '@/features/wallets/components/WalletRemoveAssetsSkeleton';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { SelectableAssetItem } from '@/features/wallets/components/SelectableAssetItem';

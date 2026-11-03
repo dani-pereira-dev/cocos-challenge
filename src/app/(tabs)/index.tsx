@@ -1,7 +1,7 @@
 import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { EmptyView } from '@/components/EmptyView';
 import { styles } from '@/features/portfolio/portfolio.screen.styles';
 import { ErrorView } from '@/components/ErrorView';

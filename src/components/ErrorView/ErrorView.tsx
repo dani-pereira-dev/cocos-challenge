@@ -1,9 +1,7 @@
 import { View, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@ui-kit';
-import { Button } from '@ui-kit/components/Button';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+import { Button, Icon, Text, colors } from '@ui-kit';
+
 import { styles } from './ErrorView.styles';
 
 interface ErrorViewProps {

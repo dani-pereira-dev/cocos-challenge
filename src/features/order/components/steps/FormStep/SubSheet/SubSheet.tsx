@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { isLimitOrder, isMarketOrder, OrderType } from '@/domain/entities/order';
 import { QuantityMode } from '@/features/order/utils/order-form';
 import { SubSheetType } from '@/features/order/hooks/useOrderForm';

@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '@ui-kit/foundations/colors';
-import { borderRadius, spacing } from '@ui-kit/foundations/spacing';
+import { borderRadius, colors, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   overlay: {

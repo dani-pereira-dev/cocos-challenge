@@ -2,8 +2,8 @@ import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { useLocalSearchParams } from 'expo-router';
-import { Button } from '@ui-kit/components/Button';
-import { Text } from '@ui-kit/components/Text';
+import { Button, Text } from '@ui-kit';
+
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { QuantityAssetHeader } from '@/features/wallets/components/QuantityAssetHeader';
 import { QuantityInputCard } from '@/features/wallets/components/QuantityInputCard';

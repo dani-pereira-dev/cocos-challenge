@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
-import { Icon } from '@ui-kit';
-import { Text } from '@ui-kit/components/Text';
+import { Icon, Text } from '@ui-kit';
+
 import { styles } from './OrderNavBar.styles';
 
 interface OrderNavBarProps {

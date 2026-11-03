@@ -1,10 +1,9 @@
 import { View } from 'react-native';
-import { Icon, type IconName } from '@ui-kit';
-import { Text } from '@ui-kit/components/Text';
+import { Icon, Text, type IconName } from '@ui-kit';
+
 import { formatPercent } from '@/utils/formatters';
 import { resolveGainColor } from '@/utils/colors';
 import { styles } from './ReturnBadge.styles';
-
 
 interface ReturnBadgeProps {
   value: number;

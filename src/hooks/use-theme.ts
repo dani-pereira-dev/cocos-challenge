@@ -1,4 +1,4 @@
-import { colors } from '@ui-kit/foundations/colors';
+import { colors } from '@ui-kit';
 
 // Placeholder — se expandirá con soporte de modo oscuro en fases futuras
 export function useTheme() {

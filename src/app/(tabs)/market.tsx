@@ -8,12 +8,12 @@ import { MarketSkeleton } from '@/features/market/components/MarketSkeleton';
 import { Instrument } from '@/domain/entities/instrument';
 import { MarketSearchBar } from '@/features/market/components/MarketSearchBar';
 import { InstrumentListItem } from '@/features/market/components/InstrumentListItem';
-import { useDebounce } from '@ui-kit/hooks/useDebounce';
+import { Text, useDebounce } from '@ui-kit';
 import { useInstrumentsQuery } from '@/hooks/useInstrumentsQuery';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { useOrderModalStore } from '@/store';
-import { Text } from '@ui-kit/components/Text';
+
 import { styles } from '@/features/market/market.screen.styles';
 
 export default function MarketScreen() {

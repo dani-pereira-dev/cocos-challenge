@@ -2,7 +2,7 @@ import { Modal, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { styles } from './WalletOptionsSheet.styles';
 
 interface WalletOptionsSheetProps {

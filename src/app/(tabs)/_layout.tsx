@@ -1,9 +1,8 @@
-import { Icon, type IconName } from '@ui-kit';
+import { Icon, colors, type IconName } from '@ui-kit';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { colors } from '@ui-kit/foundations/colors';
-import { OrderModal } from '@/features/order/components/OrderModal';
 
+import { OrderModal } from '@/features/order/components/OrderModal';
 
 interface TabIconProps {
   name: IconName;

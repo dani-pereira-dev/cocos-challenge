@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { resolveGainColor } from '@/utils/colors';
 import { formatCurrency } from '@/utils/formatters';

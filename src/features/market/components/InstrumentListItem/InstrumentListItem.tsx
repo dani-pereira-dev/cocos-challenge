@@ -2,7 +2,7 @@ import { Pressable, View } from 'react-native';
 import { Instrument } from '@/domain/entities/instrument';
 import { calculateInstrumentReturn } from '@/domain/use-cases/calculations';
 import { formatCurrency } from '@/utils/formatters';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { ReturnBadge } from '@/components/ReturnBadge';
 import { TickerAvatar } from '@/components/TickerAvatar';
 import { styles } from './InstrumentListItem.styles';

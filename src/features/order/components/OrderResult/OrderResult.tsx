@@ -1,9 +1,7 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Icon, type IconName } from '@ui-kit';
-import { Button } from '@ui-kit/components/Button';
-import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
+import { Button, Icon, Text, colors, type IconName } from '@ui-kit';
+
 import { OrderResponse, OrderStatus } from '@/domain/entities/order';
 import { styles } from './OrderResult.styles';
 
@@ -11,7 +9,6 @@ interface OrderResultProps {
   result: OrderResponse;
   onClose: () => void;
 }
-
 
 type StatusConfig = { iconName: IconName; labelKey: string; color: string };
 

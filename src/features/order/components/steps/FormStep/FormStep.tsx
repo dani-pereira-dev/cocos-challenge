@@ -1,9 +1,7 @@
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@ui-kit/components/Button';
-import { Text } from '@ui-kit/components/Text';
-import { TextInput } from '@ui-kit/components/TextInput';
-import { colors } from '@ui-kit/foundations/colors';
+import { Button, Text, TextInput, colors } from '@ui-kit';
+
 import { isBuyOrder, isLimitOrder, isMarketOrder } from '@/domain/entities/order';
 import { useOrderFormContext } from '@/features/order/contexts/OrderFormContext';
 import { formatAmount } from '@/utils/formatters';

@@ -1,7 +1,7 @@
-import { Icon } from '@ui-kit';
+import { Icon, colors } from '@ui-kit';
 import { Pressable, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { colors } from '@ui-kit/foundations/colors';
+
 import { styles } from './MarketSearchBar.styles';
 
 interface MarketSearchBarProps {

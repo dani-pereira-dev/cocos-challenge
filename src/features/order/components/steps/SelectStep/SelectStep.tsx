@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit';
 import { useOrderFormContext } from '@/features/order/contexts/OrderFormContext';
 import { styles } from './SelectStep.styles';
 
