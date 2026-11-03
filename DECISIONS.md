@@ -415,24 +415,10 @@ Las query keys siguen la misma regla: `src/features/market/market.query-keys.ts`
 
 ---
 
-## 29. Lógica de negocio financiera en el dominio, no en componentes
+## 29. Pull-to-refresh en la pantalla de Portfolio
 
-**Decisión:** Las constantes de tasas (`COMISION_RATE`, `IMPUESTOS_RATE`) y la función `calculateOrderBreakdown` viven en `src/domain/use-cases/calculations.ts`, junto al resto de las fórmulas financieras del dominio.
+**Decisión:** El `FlatList` de Portfolio tiene un `RefreshControl` que llama a `refetch()` de React Query al hacer el gesto de arrastre hacia abajo. El spinner usa `isRefetching` (no `isLoading`) para distinguir una recarga manual del loading inicial.
 
-**Por qué:** Las reglas de comisiones e impuestos son lógica de negocio pura — no dependen de UI, son testeables en aislamiento y podrían cambiar independientemente del componente que las consume. Mezclarlas en `ConfirmStep` las habría dejado sin cobertura de tests y acopladas a la presentación.
+**Por qué:** En una app de inversiones los precios cambian constantemente. El pull-to-refresh le da al usuario control explícito sobre cuándo actualizar, complementando el `staleTime` automático de React Query. Usar `isRefetching` en lugar de `isLoading` evita que la pantalla muestre el skeleton durante una recarga — los datos viejos siguen visibles mientras llegan los nuevos.
 
----
-
-## 30. `useDebounce` fuera del UI kit
-
-**Decisión:** `useDebounce` vive en `src/hooks/useDebounce.ts`, no en `ui-kit/`.
-
-**Por qué:** El UI kit es una capa puramente presentacional (componentes visuales y tokens de diseño). `useDebounce` es infraestructura de datos — no tiene relación con la capa visual y no debería ser importable como parte del design system. Los consumidores lo importan desde `@/hooks/useDebounce`.
-
----
-
-## 31. `OrderableInstrument.name` es opcional
-
-**Decisión:** El campo `name` en `OrderableInstrument` es `name?: string`.
-
-**Por qué:** La API de portfolio no devuelve el nombre del instrumento en los holdings — solo el ticker. Al abrir el modal desde Portfolio, `name` no está disponible. Forzarlo como requerido generaba el bug de pasar `name: asset.ticker` (mostrando el ticker dos veces). `InstrumentCard` renderiza la línea de nombre solo cuando el valor está presente.
+**Trade-off:** Se eligió no agregar pull-to-refresh en la pantalla de Mercado porque ya tiene búsqueda en tiempo real y el listado se refresca al volver al foco de la pantalla por la política de `staleTime` de React Query.

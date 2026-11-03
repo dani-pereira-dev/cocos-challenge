@@ -1,7 +1,7 @@
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Text } from '@ui-kit';
+import { Text, colors } from '@ui-kit';
 import { styles } from '@/features/portfolio/portfolio.screen.styles';
 import { PortfolioEmptyState } from '@/features/portfolio/components/PortfolioEmptyState';
 import { ErrorView } from '@/components/ErrorView';
@@ -16,8 +16,12 @@ import { WalletBanner } from '@/features/wallets/components/WalletBanner';
 
 export default function PortfolioScreen() {
   const { t } = useTranslation();
-  const { holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
+  const { holdings, cash, isLoading, isRefetching, isError, error, refetch } = usePortfolioQuery();
   const openOrder = useOrderModalStore((s) => s.openOrder);
+
+  function handleRefresh() {
+    refetch();
+  }
 
   function handleAssetPress(asset: PortfolioAssetWithMetrics) {
     openOrder({
@@ -55,6 +59,14 @@ export default function PortfolioScreen() {
 
           ListEmptyComponent={<PortfolioEmptyState />}
           contentContainerStyle={holdings.length === 0 ? styles.emptyList : undefined}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefetching}
+              onRefresh={handleRefresh}
+              tintColor={colors.primary}
+              colors={[colors.primary]}
+            />
+          }
           removeClippedSubviews
           maxToRenderPerBatch={20}
           windowSize={10}

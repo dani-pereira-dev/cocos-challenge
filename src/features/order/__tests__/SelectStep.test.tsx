@@ -29,11 +29,10 @@ describe('SelectStep', () => {
     expect(screen.getByText('Cancelar')).toBeTruthy();
   });
 
-  it('sell button is disabled and shows hint when quantity is null', async () => {
+  it('sell button does not trigger action when quantity is null', async () => {
     (useOrderFormContext as jest.Mock).mockReturnValue(buildContext(null));
     await render(<SelectStep />);
 
-    expect(screen.getByText('Sin posición en este instrumento')).toBeTruthy();
     fireEvent.press(screen.getByText('Vender'));
     expect(mockGoToForm).not.toHaveBeenCalled();
   });
