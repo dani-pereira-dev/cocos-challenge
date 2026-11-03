@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
-import { copy } from '@/constants/copy';
 import { styles } from './FieldRow.styles';
 
 interface FieldRowProps {
@@ -9,6 +9,8 @@ interface FieldRowProps {
 }
 
 export function FieldRow({ label, onModify }: FieldRowProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.row}>
       <Text variant="body" color="primary" style={styles.label}>
@@ -16,7 +18,7 @@ export function FieldRow({ label, onModify }: FieldRowProps) {
       </Text>
       <Pressable onPress={onModify} hitSlop={8}>
         <Text variant="label" color="brand">
-          {copy.order.modify}
+          {t('order.modify')}
         </Text>
       </Pressable>
     </View>

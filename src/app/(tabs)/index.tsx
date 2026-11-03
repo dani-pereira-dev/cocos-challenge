@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { EmptyView } from '@/components/EmptyView';
 import { ErrorView } from '@/components/ErrorView';
 import { LoadingView } from '@/components/LoadingView';
@@ -13,10 +14,10 @@ import { useSearchQuery } from '@/hooks/useSearchQuery';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { useOrderModalStore } from '@/store';
 import { Text } from '@ui-kit/components/Text';
-import { copy } from '@/constants/copy';
-import { styles } from './index.styles';
+import { styles } from '@/features/market/market.screen.styles';
 
 export default function MarketScreen() {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText, 400);
   const openOrder = useOrderModalStore((s) => s.openOrder);
@@ -26,7 +27,6 @@ export default function MarketScreen() {
   const instrumentsQuery = useInstrumentsQuery();
   const searchQuery = useSearchQuery(debouncedSearch);
 
-  // La query activa depende de si hay texto en el buscador
   const activeQuery = isSearching ? searchQuery : instrumentsQuery;
   const { data, isLoading, isError, error, refetch } = activeQuery;
 
@@ -43,15 +43,15 @@ export default function MarketScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <Text variant="h3">{copy.market.title}</Text>
+        <Text variant="h3">{t('market.title')}</Text>
       </View>
 
       <MarketSearchBar value={searchText} onChangeText={setSearchText} onClear={handleClear} />
 
       {isLoading ? (
-        <LoadingView message={copy.market.loading} />
+        <LoadingView message={t('market.loading')} />
       ) : isError ? (
-        <ErrorView message={resolveErrorMessage(error, copy.market.fetchError)} onRetry={refetch} />
+        <ErrorView message={resolveErrorMessage(error, t('market.fetchError'))} onRetry={refetch} />
       ) : (
         <FlatList
           data={listData}
@@ -63,13 +63,12 @@ export default function MarketScreen() {
             <EmptyView
               message={
                 isSearching
-                  ? copy.market.noSearchResults(debouncedSearch)
-                  : copy.market.noInstruments
+                  ? t('market.noSearchResults', { query: debouncedSearch })
+                  : t('market.noInstruments')
               }
               style={styles.emptyContainer}
             />
           }
-          // Mejora el rendimiento en listas largas
           removeClippedSubviews
           maxToRenderPerBatch={20}
           windowSize={10}

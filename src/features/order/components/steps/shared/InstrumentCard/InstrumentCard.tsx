@@ -1,8 +1,8 @@
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { TickerAvatar } from '@/features/market/components/TickerAvatar';
 import { formatAmount } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { styles } from './InstrumentCard.styles';
 
 interface InstrumentCardProps {
@@ -13,6 +13,8 @@ interface InstrumentCardProps {
 }
 
 export function InstrumentCard({ ticker, name, lastPrice, avatarSize = 40 }: InstrumentCardProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.card}>
       <TickerAvatar ticker={ticker} size={avatarSize} />
@@ -25,7 +27,7 @@ export function InstrumentCard({ ticker, name, lastPrice, avatarSize = 40 }: Ins
       {lastPrice != null ? (
         <View style={styles.priceBox}>
           <Text variant="caption" color="secondary">
-            {copy.common.currencyPrefix}
+            {t('common.currencyPrefix')}
           </Text>
           <Text variant="bodySemibold">{formatAmount(lastPrice)}</Text>
         </View>

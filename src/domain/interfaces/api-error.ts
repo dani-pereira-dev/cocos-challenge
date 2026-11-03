@@ -1,9 +1,5 @@
-import { copy } from '@/constants/copy';
+import i18n from '@/i18n';
 
-/**
- * Tipos de error que puede devolver la capa de servicios.
- * Permite distinguir entre errores de red, errores del servidor y errores inesperados.
- */
 export type ApiErrorKind = 'network' | 'http' | 'parse' | 'unknown';
 
 export class ApiError extends Error {
@@ -17,48 +13,39 @@ export class ApiError extends Error {
     this.statusCode = statusCode;
   }
 
-  static network(message: string = copy.errors.network): ApiError {
+  static network(message: string = i18n.t('errors.network')): ApiError {
     return new ApiError(message, 'network');
   }
 
   static http(statusCode: number, message?: string): ApiError {
-    const defaultMessage = copy.errors.http[statusCode] ?? copy.errors.httpDefault(statusCode);
+    const defaultMessage = i18n.t(`errors.http.${statusCode}`, {
+      defaultValue: i18n.t('errors.httpDefault', { statusCode }),
+    });
     return new ApiError(message ?? defaultMessage, 'http', statusCode);
   }
 
-  static parse(message: string = copy.errors.parse): ApiError {
+  static parse(message: string = i18n.t('errors.parse')): ApiError {
     return new ApiError(message, 'parse');
   }
 
-  static unknown(message: string = copy.errors.unknown): ApiError {
+  static unknown(message: string = i18n.t('errors.unknown')): ApiError {
     return new ApiError(message, 'unknown');
   }
 }
 
-/**
- * Retorna true si el error es una instancia de ApiError.
- */
 export function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
 }
 
-/**
- * Extrae el mensaje localizado de cualquier tipo de error de forma type-safe.
- * Evita el uso de `(err as Error).message` en los componentes.
- */
 export function resolveErrorMessage(
   error: unknown,
-  fallback: string = copy.errors.unknown,
+  fallback: string = i18n.t('errors.unknown'),
 ): string {
   if (isApiError(error)) return error.message;
   if (error instanceof Error && error.message) return error.message;
   return fallback;
 }
 
-/**
- * Retorna true si el error es un error de negocio (4xx) que el usuario puede corregir.
- * Retorna false para errores de sistema: red, servidor 5xx, parseo, etc.
- */
 export function isUserError(error: unknown): boolean {
   if (!isApiError(error)) return false;
   const { kind, statusCode } = error;

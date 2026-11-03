@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   isBuyOrder,
   isLimitOrder,
@@ -13,13 +14,13 @@ import { calculateSharesFromAmount } from '@/domain/use-cases/calculations';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useSubmitOrderMutation } from '@/hooks/useSubmitOrderMutation';
 import { useOrderModalStore } from '@/store';
-import { copy } from '@/constants/copy';
 import { computeUseAllValue, isUseAllAvailable, QuantityMode } from '../utils/order-form';
 
 export type Step = 'select' | 'form' | 'confirm' | 'result';
 export type SubSheetType = 'mode' | 'price' | null;
 
 export function useOrderForm() {
+  const { t } = useTranslation();
   const { visible, instrument, closeOrder } = useOrderModalStore();
   const { mutateAsync, isPending } = useSubmitOrderMutation();
   const { cash } = usePortfolioQuery();
@@ -70,9 +71,9 @@ export function useOrderForm() {
     derivedShares > instrument.quantity;
 
   const submitBlockReason = exceedsCash
-    ? copy.order.exceedsCash
+    ? t('order.exceedsCash')
     : exceedsShares
-      ? copy.order.exceedsShares
+      ? t('order.exceedsShares')
       : null;
 
   const isSubmitDisabled =
@@ -112,7 +113,7 @@ export function useOrderForm() {
     setValidationError(null);
 
     if (!estimatedValid) {
-      setValidationError(copy.order.invalidQuantity);
+      setValidationError(t('order.invalidQuantity'));
       return;
     }
 
@@ -120,7 +121,7 @@ export function useOrderForm() {
     if (isLimitOrder(orderType)) {
       limitPrice = parseFloat(limitPriceInput.replace(',', '.'));
       if (!limitPrice || limitPrice <= 0 || !Number.isFinite(limitPrice)) {
-        setValidationError(copy.order.invalidPrice);
+        setValidationError(t('order.invalidPrice'));
         return;
       }
     }
@@ -138,7 +139,7 @@ export function useOrderForm() {
       setResult(response);
       setStep('result');
     } catch (err) {
-      const message = resolveErrorMessage(err, copy.order.fetchError);
+      const message = resolveErrorMessage(err, t('order.fetchError'));
       if (isUserError(err)) {
         setValidationError(message);
         setStep('form');

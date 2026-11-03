@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { colors } from '@ui-kit/foundations/colors';
-import { copy } from '@/constants/copy';
 import { OrderModal } from '@/features/order/components/OrderModal';
 
 type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
@@ -16,6 +16,8 @@ function TabIcon({ name, focused }: TabIconProps) {
 }
 
 export default function TabLayout() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Tabs
@@ -40,7 +42,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: copy.market.tabLabel,
+            title: t('market.tabLabel'),
             tabBarIcon: ({ focused }) => (
               <TabIcon name={focused ? 'bar-chart' : 'bar-chart-outline'} focused={focused} />
             ),
@@ -49,7 +51,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="portfolio"
           options={{
-            title: copy.portfolio.tabLabel,
+            title: t('portfolio.tabLabel'),
             tabBarIcon: ({ focused }) => (
               <TabIcon name={focused ? 'briefcase' : 'briefcase-outline'} focused={focused} />
             ),

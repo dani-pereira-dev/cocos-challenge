@@ -1,4 +1,5 @@
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
 import { TextInput } from '@ui-kit/components/TextInput';
@@ -14,7 +15,6 @@ import {
 import { QuantityMode } from '@/features/order/utils/order-form';
 import { SubSheetType } from '@/features/order/hooks/useOrderForm';
 import { formatAmount } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { InstrumentCard } from '../shared/InstrumentCard/InstrumentCard';
 import { OrderNavBar } from '../shared/OrderNavBar/OrderNavBar';
 import { FieldRow } from './FieldRow/FieldRow';
@@ -76,18 +76,19 @@ export function FormStep({
   onSelectQuantityMode,
   onSelectOrderType,
 }: FormStepProps) {
+  const { t } = useTranslation();
   const isBuy = isBuyOrder(side);
   const accentColor = isBuy ? colors.success : colors.error;
-  const sideLabel = isBuy ? copy.order.buy : copy.order.sell;
+  const sideLabel = isBuy ? t('order.buy') : t('order.sell');
 
-  const modeLabelText = quantityMode === 'amount' ? copy.order.byAmount : copy.order.byShares;
-  const priceLabelText = isMarketOrder(orderType) ? copy.order.typeMarket : copy.order.typeLimit;
+  const modeLabelText = quantityMode === 'amount' ? t('order.byAmount') : t('order.byShares');
+  const priceLabelText = isMarketOrder(orderType) ? t('order.typeMarket') : t('order.typeLimit');
   const modeRowLabel = isBuy
-    ? copy.order.modeLabel(modeLabelText)
-    : copy.order.modeLabelSell(modeLabelText);
+    ? t('order.modeLabel', { mode: modeLabelText })
+    : t('order.modeLabelSell', { mode: modeLabelText });
   const estimatedText = isBuy
-    ? copy.order.estimatedLabel(formatAmount(derivedTotal))
-    : copy.order.estimatedLabelSell(formatAmount(derivedTotal));
+    ? t('order.estimatedLabel', { amount: formatAmount(derivedTotal) })
+    : t('order.estimatedLabelSell', { amount: formatAmount(derivedTotal) });
 
   return (
     <View style={styles.screen}>
@@ -117,13 +118,13 @@ export function FormStep({
             <View style={styles.availableRow}>
               <Text variant="caption" color="secondary">
                 {isBuy
-                  ? copy.order.availableLabel(formatAmount(cash ?? 0))
-                  : copy.portfolio.shares(instrument.quantity ?? 0)}
+                  ? t('order.availableLabel', { amount: formatAmount(cash ?? 0) })
+                  : t('portfolio.shares', { count: instrument.quantity ?? 0 })}
               </Text>
               {showUseAll ? (
                 <Pressable onPress={onUseAll} hitSlop={8}>
                   <Text variant="label" color="brand">
-                    {copy.order.useAll}
+                    {t('order.useAll')}
                   </Text>
                 </Pressable>
               ) : null}
@@ -132,14 +133,14 @@ export function FormStep({
             <View style={styles.amountRow}>
               {quantityMode === 'amount' ? (
                 <Text variant="bodySemibold" style={styles.currencyPrefix}>
-                  {copy.common.currencyPrefix}
+                  {t('common.currencyPrefix')}
                 </Text>
               ) : null}
               <TextInput
                 value={amountInput}
                 onChangeText={onAmountChange}
                 keyboardType="numeric"
-                placeholder={copy.order.amountPlaceholder}
+                placeholder={t('order.amountPlaceholder')}
                 containerStyle={styles.amountInputContainer}
                 inputContainerStyle={styles.amountInputInner}
                 inputStyle={styles.amountInputText}
@@ -148,7 +149,10 @@ export function FormStep({
 
             <View style={styles.divider} />
 
-            <FieldRow label={copy.order.priceLabel(priceLabelText)} onModify={onOpenPriceSheet} />
+            <FieldRow
+              label={t('order.priceLabel', { type: priceLabelText })}
+              onModify={onOpenPriceSheet}
+            />
 
             {isLimitOrder(orderType) ? (
               <View style={styles.limitPriceRow}>
@@ -156,14 +160,14 @@ export function FormStep({
                   value={limitPriceInput}
                   onChangeText={onLimitPriceChange}
                   keyboardType="numeric"
-                  prefix={copy.common.currencyPrefix}
-                  placeholder={copy.order.limitPricePlaceholder}
+                  prefix={t('common.currencyPrefix')}
+                  placeholder={t('order.limitPricePlaceholder')}
                 />
               </View>
             ) : (
               <View style={styles.marketPriceDisplay}>
                 <Text variant="body" color="secondary">
-                  {copy.common.currencyPrefix} {formatAmount(instrument.last_price)}
+                  {t('common.currencyPrefix')} {formatAmount(instrument.last_price)}
                 </Text>
               </View>
             )}
@@ -187,7 +191,7 @@ export function FormStep({
             </Text>
           ) : null}
           <Button
-            label={copy.order.submitButton}
+            label={t('order.submitButton')}
             onPress={onSubmit}
             disabled={isSubmitDisabled}
             size="md"

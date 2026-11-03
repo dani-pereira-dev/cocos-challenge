@@ -1,12 +1,11 @@
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { isLimitOrder, isMarketOrder, OrderType } from '@/domain/entities/order';
 import { QuantityMode } from '@/features/order/utils/order-form';
 import { SubSheetType } from '@/features/order/hooks/useOrderForm';
-import { copy } from '@/constants/copy';
 import { styles } from './SubSheet.styles';
 
-// RadioRow es un detalle de implementación interno del SubSheet
 interface RadioRowProps {
   label: string;
   selected: boolean;
@@ -47,6 +46,8 @@ export function SubSheet({
   onSelectQuantityMode,
   onSelectOrderType,
 }: SubSheetProps) {
+  const { t } = useTranslation();
+
   if (!subSheet) return null;
 
   return (
@@ -58,12 +59,12 @@ export function SubSheet({
         {subSheet === 'mode' ? (
           <>
             <RadioRow
-              label={copy.order.byAmount}
+              label={t('order.byAmount')}
               selected={quantityMode === 'amount'}
               onPress={() => onSelectQuantityMode('amount')}
             />
             <RadioRow
-              label={copy.order.byShares}
+              label={t('order.byShares')}
               selected={quantityMode === 'shares'}
               onPress={() => onSelectQuantityMode('shares')}
             />
@@ -71,12 +72,12 @@ export function SubSheet({
         ) : (
           <>
             <RadioRow
-              label={copy.order.typeMarket}
+              label={t('order.typeMarket')}
               selected={isMarketOrder(orderType)}
               onPress={() => onSelectOrderType('MARKET')}
             />
             <RadioRow
-              label={copy.order.typeLimit}
+              label={t('order.typeLimit')}
               selected={isLimitOrder(orderType)}
               onPress={() => onSelectOrderType('LIMIT')}
             />

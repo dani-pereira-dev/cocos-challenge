@@ -245,4 +245,3 @@ return (
 **Por qué:** Reactotron es el estándar de facto para debugging en React Native/Expo. Permite inspeccionar requests, state y logs desde un cliente de escritorio sin necesidad de remote debugging del JS engine.
 
 La configuración solo se activa en `__DEV__` y no tiene impacto en builds de producción.
-

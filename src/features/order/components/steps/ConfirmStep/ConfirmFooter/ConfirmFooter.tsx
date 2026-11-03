@@ -1,8 +1,8 @@
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
 import { formatCurrency } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { SystemErrorBanner } from '../SystemErrorBanner/SystemErrorBanner';
 import { styles } from './ConfirmFooter.styles';
 
@@ -23,6 +23,8 @@ export function ConfirmFooter({
   isPending,
   onSubmit,
 }: ConfirmFooterProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.footer}>
       {systemError ? <SystemErrorBanner message={systemError} /> : null}
@@ -42,7 +44,7 @@ export function ConfirmFooter({
         </Text>
       </View>
       <Button
-        label={isPending ? copy.order.sendingButton : copy.order.confirmButton}
+        label={isPending ? t('order.sendingButton') : t('order.confirmButton')}
         onPress={onSubmit}
         loading={isPending}
         disabled={isPending}

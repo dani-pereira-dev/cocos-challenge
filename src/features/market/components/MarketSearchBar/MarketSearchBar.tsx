@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, TextInput, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { colors } from '@ui-kit/foundations/colors';
-import { copy } from '@/constants/copy';
 import { styles } from './MarketSearchBar.styles';
 
 interface MarketSearchBarProps {
@@ -11,6 +11,8 @@ interface MarketSearchBarProps {
 }
 
 export function MarketSearchBar({ value, onChangeText, onClear }: MarketSearchBarProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
@@ -19,7 +21,7 @@ export function MarketSearchBar({ value, onChangeText, onClear }: MarketSearchBa
           style={styles.input}
           value={value}
           onChangeText={onChangeText}
-          placeholder={copy.market.searchPlaceholder}
+          placeholder={t('market.searchPlaceholder')}
           placeholderTextColor={colors.placeholder}
           autoCapitalize="characters"
           autoCorrect={false}

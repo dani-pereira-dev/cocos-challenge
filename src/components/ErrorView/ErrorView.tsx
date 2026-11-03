@@ -1,7 +1,7 @@
 import { View, ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@ui-kit/components/Button';
 import { Text } from '@ui-kit/components/Text';
-import { copy } from '@/constants/copy';
 import { styles } from './ErrorView.styles';
 
 interface ErrorViewProps {
@@ -10,21 +10,24 @@ interface ErrorViewProps {
   style?: ViewStyle;
 }
 
-export function ErrorView({ message = copy.common.genericError, onRetry, style }: ErrorViewProps) {
+export function ErrorView({ message, onRetry, style }: ErrorViewProps) {
+  const { t } = useTranslation();
+  const resolvedMessage = message ?? t('common.genericError');
+
   return (
     <View style={[styles.container, style]}>
       <Text variant="h3" style={styles.icon}>
         ⚠️
       </Text>
       <Text variant="bodyMedium" color="primary" align="center">
-        {copy.common.somethingWentWrong}
+        {t('common.somethingWentWrong')}
       </Text>
       <Text variant="body" color="secondary" align="center" style={styles.message}>
-        {message}
+        {resolvedMessage}
       </Text>
       {onRetry ? (
         <Button
-          label={copy.common.retry}
+          label={t('common.retry')}
           onPress={onRetry}
           variant="outline"
           size="sm"

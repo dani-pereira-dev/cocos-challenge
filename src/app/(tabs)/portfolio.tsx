@@ -1,8 +1,9 @@
 import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { EmptyView } from '@/components/EmptyView';
-import { styles } from './portfolio.styles';
+import { styles } from '@/features/portfolio/portfolio.screen.styles';
 import { ErrorView } from '@/components/ErrorView';
 import { LoadingView } from '@/components/LoadingView';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
@@ -11,9 +12,9 @@ import { PortfolioSummaryHeader } from '@/features/portfolio/components/Portfoli
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { usePortfolioQuery } from '@/hooks/usePortfolioQuery';
 import { useOrderModalStore } from '@/store';
-import { copy } from '@/constants/copy';
 
 export default function PortfolioScreen() {
+  const { t } = useTranslation();
   const { holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
   const openOrder = useOrderModalStore((s) => s.openOrder);
 
@@ -30,14 +31,14 @@ export default function PortfolioScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <Text variant="h3">{copy.portfolio.title}</Text>
+        <Text variant="h3">{t('portfolio.title')}</Text>
       </View>
 
       {isLoading ? (
         <LoadingView />
       ) : isError ? (
         <ErrorView
-          message={resolveErrorMessage(error, copy.portfolio.fetchError)}
+          message={resolveErrorMessage(error, t('portfolio.fetchError'))}
           onRetry={refetch}
         />
       ) : (
@@ -47,7 +48,7 @@ export default function PortfolioScreen() {
           renderItem={({ item }) => <PortfolioListItem asset={item} onPress={handleAssetPress} />}
           ListHeaderComponent={<PortfolioSummaryHeader assets={holdings} cash={cash} />}
           ListEmptyComponent={
-            <EmptyView message={copy.portfolio.noAssets} style={styles.emptyContainer} />
+            <EmptyView message={t('portfolio.noAssets')} style={styles.emptyContainer} />
           }
           contentContainerStyle={holdings.length === 0 ? styles.emptyList : undefined}
           removeClippedSubviews

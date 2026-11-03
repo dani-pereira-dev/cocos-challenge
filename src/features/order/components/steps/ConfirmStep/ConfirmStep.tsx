@@ -1,4 +1,5 @@
 import { ScrollView, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
 import {
@@ -10,7 +11,6 @@ import {
 } from '@/domain/entities/order';
 import { styles } from './ConfirmStep.styles';
 import { formatDate } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { InstrumentCard } from '../shared/InstrumentCard/InstrumentCard';
 import { OrderNavBar } from '../shared/OrderNavBar/OrderNavBar';
 import { OrderDetailCard } from './OrderDetailCard/OrderDetailCard';
@@ -43,9 +43,10 @@ export function ConfirmStep({
   onBack,
   onSubmit,
 }: ConfirmStepProps) {
+  const { t } = useTranslation();
   const isBuy = isBuyOrder(side);
   const accentColor = isBuy ? colors.success : colors.error;
-  const title = isBuy ? copy.order.confirmTitleBuy : copy.order.confirmTitleSell;
+  const title = isBuy ? t('order.confirmTitleBuy') : t('order.confirmTitleSell');
 
   const orderPrice = isLimitOrder(orderType)
     ? parseFloat(limitPriceInput.replace(',', '.'))
@@ -57,8 +58,8 @@ export function ConfirmStep({
   const netTotal = isBuy ? subtotal + comision + impuestos : subtotal - comision - impuestos;
 
   const estimatedLabel = isBuy
-    ? copy.order.estimatedToPayLabel
-    : copy.order.estimatedToReceiveLabel;
+    ? t('order.estimatedToPayLabel')
+    : t('order.estimatedToReceiveLabel');
 
   return (
     <View style={styles.screen}>
@@ -78,7 +79,7 @@ export function ConfirmStep({
         />
 
         <Text variant="h3" style={styles.sectionTitle}>
-          {copy.order.detallesTitle}
+          {t('order.detallesTitle')}
         </Text>
 
         <OrderBreakdownCard

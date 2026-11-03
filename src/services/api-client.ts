@@ -1,4 +1,4 @@
-import { copy } from '@/constants/copy';
+import i18n from '@/i18n';
 import { ApiError } from '@/domain/interfaces/api-error';
 
 const BASE_URL = 'https://dummy-api-topaz.vercel.app';
@@ -32,7 +32,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
       const body = await response.json();
       const rawMessage = typeof body?.error === 'string' ? body.error : undefined;
       const serverMessage = rawMessage
-        ? (copy.errors.apiMessages[rawMessage] ?? rawMessage)
+        ? i18n.t(`errors.apiMessages.${rawMessage}`, { defaultValue: rawMessage })
         : undefined;
       throw ApiError.http(response.status, serverMessage);
     } catch (e) {

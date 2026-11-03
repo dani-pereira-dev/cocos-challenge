@@ -1,8 +1,8 @@
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { isBuyOrder, OrderSide } from '@/domain/entities/order';
 import { formatCurrency } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { styles } from './OrderBreakdownCard.styles';
 
 interface OrderBreakdownCardProps {
@@ -20,9 +20,10 @@ export function OrderBreakdownCard({
   comision,
   impuestos,
 }: OrderBreakdownCardProps) {
+  const { t } = useTranslation();
   const detailLabel = isBuyOrder(side)
-    ? copy.order.buyDetailLabel(derivedShares)
-    : copy.order.sellDetailLabel(derivedShares);
+    ? t('order.buyDetailLabel', { count: derivedShares })
+    : t('order.sellDetailLabel', { count: derivedShares });
 
   return (
     <View style={styles.card}>
@@ -54,7 +55,7 @@ export function OrderBreakdownCard({
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {copy.order.comisionesLabel}
+          {t('order.comisionesLabel')}
         </Text>
         <Text
           variant="bodySemibold"
@@ -74,7 +75,7 @@ export function OrderBreakdownCard({
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {copy.order.impuestosLabel}
+          {t('order.impuestosLabel')}
         </Text>
         <Text
           variant="bodySemibold"

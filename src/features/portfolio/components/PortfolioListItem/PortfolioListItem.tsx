@@ -1,11 +1,11 @@
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { TickerAvatar } from '@/features/market/components/TickerAvatar';
 import { ReturnBadge } from '@/features/market/components/ReturnBadge';
 import { formatCurrency } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { styles } from './PortfolioListItem.styles';
 
 interface PortfolioListItemProps {
@@ -14,6 +14,7 @@ interface PortfolioListItemProps {
 }
 
 export function PortfolioListItem({ asset, onPress }: PortfolioListItemProps) {
+  const { t } = useTranslation();
   const gainColor =
     asset.gain_amount > 0
       ? colors.success
@@ -35,7 +36,7 @@ export function PortfolioListItem({ asset, onPress }: PortfolioListItemProps) {
           {asset.ticker}
         </Text>
         <Text variant="caption" color="tertiary">
-          {copy.portfolio.shares(asset.quantity)}
+          {t('portfolio.shares', { count: asset.quantity })}
         </Text>
       </View>
 

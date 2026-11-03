@@ -1,9 +1,9 @@
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { formatCurrency } from '@/utils/formatters';
-import { copy } from '@/constants/copy';
 import { styles } from './PortfolioSummaryHeader.styles';
 
 interface PortfolioSummaryHeaderProps {
@@ -12,6 +12,7 @@ interface PortfolioSummaryHeaderProps {
 }
 
 export function PortfolioSummaryHeader({ assets, cash }: PortfolioSummaryHeaderProps) {
+  const { t } = useTranslation();
   const totalValue = assets.reduce((sum, a) => sum + a.market_value, 0);
   const totalGain = assets.reduce((sum, a) => sum + a.gain_amount, 0);
 
@@ -23,7 +24,7 @@ export function PortfolioSummaryHeader({ assets, cash }: PortfolioSummaryHeaderP
     <View style={styles.container}>
       <View style={styles.stat}>
         <Text variant="caption" color="secondary">
-          {copy.portfolio.totalValueLabel}
+          {t('portfolio.totalValueLabel')}
         </Text>
         <Text variant="priceXl">{formatCurrency(totalValue)}</Text>
       </View>
@@ -32,7 +33,7 @@ export function PortfolioSummaryHeader({ assets, cash }: PortfolioSummaryHeaderP
 
       <View style={styles.stat}>
         <Text variant="caption" color="secondary">
-          {copy.portfolio.totalGainLabel}
+          {t('portfolio.totalGainLabel')}
         </Text>
         <Text variant="bodyMedium" style={{ color: gainColor }}>
           {gainPrefix}
@@ -40,7 +41,7 @@ export function PortfolioSummaryHeader({ assets, cash }: PortfolioSummaryHeaderP
         </Text>
         {cash !== undefined ? (
           <Text variant="caption" color="tertiary">
-            {copy.portfolio.cashLabel}: {formatCurrency(cash)}
+            {t('portfolio.cashLabel')}: {formatCurrency(cash)}
           </Text>
         ) : null}
       </View>

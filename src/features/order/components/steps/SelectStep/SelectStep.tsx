@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit/components/Text';
 import { OrderableInstrument } from '@/domain/entities/order';
-import { copy } from '@/constants/copy';
 import { styles } from './SelectStep.styles';
 
 interface SelectStepProps {
@@ -12,6 +12,7 @@ interface SelectStepProps {
 }
 
 export function SelectStep({ instrument, onBuy, onSell, onCancel }: SelectStepProps) {
+  const { t } = useTranslation();
   const canSell = instrument.quantity != null && instrument.quantity > 0;
 
   return (
@@ -20,7 +21,7 @@ export function SelectStep({ instrument, onBuy, onSell, onCancel }: SelectStepPr
 
       <Pressable style={[styles.actionButton, styles.buyButton]} onPress={onBuy}>
         <Text variant="bodySemibold" style={styles.buyText}>
-          {copy.order.buy}
+          {t('order.buy')}
         </Text>
       </Pressable>
 
@@ -30,18 +31,18 @@ export function SelectStep({ instrument, onBuy, onSell, onCancel }: SelectStepPr
         disabled={!canSell}
       >
         <Text variant="bodySemibold" style={styles.sellText}>
-          {copy.order.sell}
+          {t('order.sell')}
         </Text>
         {!canSell ? (
           <Text variant="caption" style={styles.noPositionHint}>
-            {copy.order.noPositionHint}
+            {t('order.noPositionHint')}
           </Text>
         ) : null}
       </Pressable>
 
       <Pressable style={[styles.actionButton, styles.cancelButton]} onPress={onCancel}>
         <Text variant="bodySemibold" color="secondary">
-          {copy.order.cancelButton}
+          {t('order.cancelButton')}
         </Text>
       </Pressable>
     </View>
