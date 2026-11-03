@@ -3,21 +3,19 @@ import { colors, spacing } from '@ui-kit';
 
 export const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    backgroundColor: colors.surface,
-    paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['5'],
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    gap: spacing['4'],
-  },
-  stat: {
-    flex: 1,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing['5'],
+    paddingTop: spacing['8'],
+    paddingBottom: spacing['6'],
     gap: spacing['2'],
   },
-  divider: {
-    width: 1,
-    backgroundColor: colors.border,
-    marginVertical: spacing['1'],
+  gainRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing['2'],
+    marginTop: spacing['1'],
+  },
+  bone: {
+    backgroundColor: colors.onDarkSurfaceSubtle,
   },
 });

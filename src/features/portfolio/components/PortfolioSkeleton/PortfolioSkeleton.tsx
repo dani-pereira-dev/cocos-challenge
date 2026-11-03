@@ -8,15 +8,11 @@ export function PortfolioSkeleton() {
   return (
     <>
       <View style={styles.header}>
-        <View style={styles.stat}>
-          <Skeleton width={80} height={12} />
-          <Skeleton width={140} height={28} />
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.stat}>
-          <Skeleton width={80} height={12} />
-          <Skeleton width={100} height={18} />
-          <Skeleton width={72} height={12} />
+        <Skeleton width={100} height={12} style={styles.bone} />
+        <Skeleton width={200} height={42} style={styles.bone} />
+        <View style={styles.gainRow}>
+          <Skeleton width={32} height={12} style={styles.bone} />
+          <Skeleton width={80} height={12} style={styles.bone} />
         </View>
       </View>
 
