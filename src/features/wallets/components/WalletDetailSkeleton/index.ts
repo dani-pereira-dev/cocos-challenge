@@ -1,0 +1,1 @@
+export { WalletDetailSkeleton } from './WalletDetailSkeleton';

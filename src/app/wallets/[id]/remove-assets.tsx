@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Button } from '@ui-kit/components/Button';
-import { LoadingView } from '@/components/LoadingView';
+import { WalletRemoveAssetsSkeleton } from '@/features/wallets/components/WalletRemoveAssetsSkeleton';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { SelectableAssetItem } from '@/features/wallets/components/SelectableAssetItem';
 import { useWalletDetail } from '@/features/wallets/hooks/useWalletDetail';
@@ -54,7 +54,7 @@ export default function RemoveAssetsScreen() {
       <WalletNavBar title={t('wallets.removeAssetsTitle')} />
 
       {isLoading ? (
-        <LoadingView />
+        <WalletRemoveAssetsSkeleton />
       ) : (
         <>
           <FlatList

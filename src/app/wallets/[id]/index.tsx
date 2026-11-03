@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Icon } from '@ui-kit';
-import { LoadingView } from '@/components/LoadingView';
+import { WalletDetailSkeleton } from '@/features/wallets/components/WalletDetailSkeleton';
 import { colors } from '@ui-kit/foundations/colors';
 import { WalletNavBar } from '@/features/wallets/components/WalletNavBar';
 import { WalletEmptyContent } from '@/features/wallets/components/WalletEmptyContent';
@@ -58,7 +58,7 @@ export default function WalletDetailScreen() {
       />
 
       {isLoading ? (
-        <LoadingView />
+        <WalletDetailSkeleton />
       ) : isEmpty ? (
         <WalletEmptyContent walletId={id} />
       ) : (

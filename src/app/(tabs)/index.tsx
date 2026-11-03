@@ -5,7 +5,7 @@ import { Text } from '@ui-kit/components/Text';
 import { EmptyView } from '@/components/EmptyView';
 import { styles } from '@/features/portfolio/portfolio.screen.styles';
 import { ErrorView } from '@/components/ErrorView';
-import { LoadingView } from '@/components/LoadingView';
+import { PortfolioSkeleton } from '@/features/portfolio/components/PortfolioSkeleton';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
 import { PortfolioListItem } from '@/features/portfolio/components/PortfolioListItem';
 import { PortfolioSummaryHeader } from '@/features/portfolio/components/PortfolioSummaryHeader';
@@ -36,7 +36,7 @@ export default function PortfolioScreen() {
       </View>
 
       {isLoading ? (
-        <LoadingView />
+        <PortfolioSkeleton />
       ) : isError ? (
         <ErrorView
           message={resolveErrorMessage(error, t('portfolio.fetchError'))}

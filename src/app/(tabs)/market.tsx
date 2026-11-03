@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { EmptyView } from '@/components/EmptyView';
 import { ErrorView } from '@/components/ErrorView';
-import { LoadingView } from '@/components/LoadingView';
+import { MarketSkeleton } from '@/features/market/components/MarketSkeleton';
 import { Instrument } from '@/domain/entities/instrument';
 import { MarketSearchBar } from '@/features/market/components/MarketSearchBar';
 import { InstrumentListItem } from '@/features/market/components/InstrumentListItem';
@@ -49,7 +49,7 @@ export default function MarketScreen() {
       <MarketSearchBar value={searchText} onChangeText={setSearchText} onClear={handleClear} />
 
       {isLoading ? (
-        <LoadingView message={t('market.loading')} />
+        <MarketSkeleton />
       ) : isError ? (
         <ErrorView message={resolveErrorMessage(error, t('market.fetchError'))} onRetry={refetch} />
       ) : (

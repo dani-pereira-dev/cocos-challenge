@@ -2,7 +2,7 @@ import { FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
-import { LoadingView } from '@/components/LoadingView';
+import { WalletAssetPickerSkeleton } from '@/features/wallets/components/WalletAssetPickerSkeleton';
 import { ErrorView } from '@/components/ErrorView';
 import { EmptyView } from '@/components/EmptyView';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
@@ -35,7 +35,7 @@ export default function AddAssetScreen() {
       <WalletNavBar title={title} />
 
       {isLoading ? (
-        <LoadingView />
+        <WalletAssetPickerSkeleton />
       ) : isError ? (
         <ErrorView
           message={resolveErrorMessage(error, t('wallets.fetchError'))}
