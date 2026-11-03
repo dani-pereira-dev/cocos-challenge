@@ -1,6 +1,8 @@
 # Cocos Challenge — App Fintech
 
-App móvil desarrollada con **Expo / React Native** para el challenge técnico de Cocos Capital. Permite visualizar instrumentos del mercado, consultar el portafolio personal y enviar órdenes de compra y venta.
+App móvil desarrollada con **Expo / React Native** para el challenge técnico de Cocos Capital. Permite visualizar instrumentos del mercado, consultar el portafolio personal, enviar órdenes de compra y venta, y gestionar carteras personalizadas.
+
+> Las decisiones de arquitectura y diseño están documentadas en [DECISIONS.md](./DECISIONS.md).
 
 ---
 
@@ -116,50 +118,70 @@ Los endpoints de la API están centralizados en `src/constants/api-endpoints.ts`
 
 ```
 cocos-challenge/
-├── .env.example               # Variables de entorno de referencia (se versiona)
+├── .env.example                    # Variables de entorno de referencia (se versiona)
 ├── src/
-│   ├── app/                   # Pantallas (Expo Router — file-based routing)
+│   ├── app/                        # Pantallas (Expo Router — file-based routing)
+│   │   ├── _layout.tsx             # Root layout (splash screen, providers)
 │   │   ├── (tabs)/
-│   │   │   ├── index.tsx      # Tab Portfolio
-│   │   │   └── market.tsx     # Tab Mercado
-│   │   └── wallets/           # Pantallas de carteras (stack independiente)
+│   │   │   ├── index.tsx           # Tab Portfolio
+│   │   │   └── market.tsx          # Tab Mercado
+│   │   └── wallets/                # Stack independiente de Carteras
+│   │       ├── index.tsx           # Lista de carteras
+│   │       ├── new.tsx             # Crear cartera
+│   │       └── [id]/
+│   │           ├── index.tsx       # Detalle de cartera
+│   │           ├── add-asset.tsx   # Picker de instrumentos
+│   │           ├── [ticker].tsx    # Ingreso de cantidad
+│   │           ├── remove-assets.tsx
+│   │           └── rename.tsx
 │   ├── constants/
-│   │   └── api-endpoints.ts   # Todos los paths de la API centralizados
+│   │   └── api-endpoints.ts        # Todos los paths de la API centralizados
 │   ├── domain/
-│   │   ├── entities/          # Tipos e interfaces del negocio
-│   │   ├── interfaces/        # ApiError, resolveErrorMessage, isUserError
-│   │   └── use-cases/         # Lógica de negocio pura (cálculos)
+│   │   ├── entities/               # Tipos e interfaces del negocio
+│   │   ├── interfaces/             # ApiError, resolveErrorMessage, isUserError
+│   │   └── use-cases/              # Lógica de negocio pura (cálculos)
 │   ├── features/
-│   │   ├── market/            # Componentes, servicio e hook de instrumentos/búsqueda
-│   │   ├── order/             # Modal de orden, store, servicio, utils y tests
-│   │   ├── portfolio/         # Componentes y hook de portfolio
-│   │   └── wallets/           # Carteras: componentes, hooks, store
-│   ├── hooks/                 # Hooks de datos compartidos entre features (portfolio)
-│   ├── services/              # api-client + portfolio.service (compartido)
-│   └── utils/                 # Formatters (moneda, porcentaje, fecha)
-└── ui-kit/                    # Design system interno
-    ├── components/            # Button, Text, TextInput, Icon, Skeleton
-    └── foundations/           # Colors, typography, spacing
+│   │   ├── market/                 # Componentes, servicio e hook de instrumentos/búsqueda
+│   │   ├── order/                  # Modal de orden, store, servicio, contexto, utils y tests
+│   │   ├── portfolio/              # Componentes y estilos de la pantalla Portfolio
+│   │   └── wallets/                # Carteras: componentes, hooks, store (AsyncStorage)
+│   ├── hooks/                      # Hooks compartidos entre features (usePortfolio)
+│   ├── services/                   # api-client + portfolio.service
+│   └── utils/                      # Formatters (moneda, porcentaje, fecha)
+└── ui-kit/                         # Design system interno
+    ├── components/                 # Button, Text, TextInput, Icon, Skeleton
+    └── foundations/                # Colors, typography, spacing, borderRadius
 ```
 
-> **Principio de colocation:** los servicios, hooks y stores propios de una feature viven dentro de `src/features/<nombre>/`. El nivel global (`src/services/`, `src/hooks/`) solo contiene código compartido por dos o más features.
+> **Principio de colocation:** los servicios, hooks y stores propios de una feature viven dentro de `src/features/<nombre>/`. El nivel global (`src/services/`, `src/hooks/`) solo contiene código consumido por dos o más features. Ver [DECISIONS.md §28](./DECISIONS.md).
 
 ---
 
 ## Funcionalidades implementadas
 
+### Mercado
 - **Listado de instrumentos** con ticker, nombre, último precio y retorno del día
-- **Búsqueda de instrumentos** por ticker en tiempo real (debounce 400 ms)
-- **Portfolio** con valor de mercado, ganancia absoluta y rendimiento porcentual por posición
-- **Modal de orden** con flujo en pasos:
-  1. Selección de acción (Comprar / Vender)
-  2. Formulario (monto en AR$ o cantidad de títulos, tipo Mercado o Límite)
-  3. Pantalla de presupuesto con desglose de comisiones e impuestos estimados
-  4. Resultado (estado FILLED / PENDING / REJECTED)
-- **"Usar todo"**: completa automáticamente el campo con el máximo disponible
-- **Restricción de venta**: el botón Vender queda deshabilitado si no hay posición en el instrumento
+- **Búsqueda en tiempo real** por ticker con debounce de 400 ms
+
+### Portfolio
+- **Resumen de cartera** con valor total y variación del día
+- **Lista de posiciones** con valor de mercado y rendimiento por instrumento
+
+### Órdenes de compra y venta
+- **Flujo en 4 pasos**: selección de acción → formulario → presupuesto → resultado
+- **Dos modos de ingreso**: monto en AR$ o cantidad de títulos, con conversión automática
+- **"Usar todo"**: completa el campo con el máximo disponible según contexto (efectivo o títulos)
+- **Tipo de orden**: Mercado o Límite (con campo de precio límite)
+- **Restricción de venta**: el botón Vender se deshabilita si no hay posición en el instrumento
 - **Validación en tiempo real**: bloquea el botón Siguiente si el monto supera el efectivo o las acciones disponibles
-- **Manejo robusto de errores**: errores de usuario (4xx) mostrados en el formulario; errores de sistema (5xx / red) mostrados como banner
+- **Manejo de errores**: errores de usuario (4xx) mostrados en el formulario; errores de sistema (5xx / red) mostrados como banner
+
+### Carteras personalizadas
+- **Crear carteras** con nombre personalizado, persistidas localmente con AsyncStorage
+- **Agregar instrumentos** a una cartera con la cantidad deseada
+- **Detalle de cartera**: valor total valorizado al precio de mercado actual, lista de allocations con rendimiento individual
+- **Eliminar instrumentos** de una cartera con swipe o selección múltiple
+- **Renombrar y eliminar** carteras
 
 ---
 
