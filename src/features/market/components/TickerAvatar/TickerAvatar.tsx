@@ -3,8 +3,14 @@ import { Text } from '@ui-kit/components/Text';
 import { styles } from './TickerAvatar.styles';
 
 const AVATAR_PALETTE = [
-  '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B',
-  '#EF4444', '#EC4899', '#06B6D4', '#84CC16',
+  '#3B82F6',
+  '#8B5CF6',
+  '#10B981',
+  '#F59E0B',
+  '#EF4444',
+  '#EC4899',
+  '#06B6D4',
+  '#84CC16',
 ];
 
 function colorFromTicker(ticker: string): string {
@@ -23,8 +29,16 @@ export function TickerAvatar({ ticker, size = 44 }: TickerAvatarProps) {
   const avatarFontSize = size * 0.36;
 
   return (
-    <View style={[styles.container, { width: size, height: size, borderRadius: size / 2, backgroundColor }]}>
-      <Text variant="label" style={{ color: '#FFFFFF', fontSize: avatarFontSize, fontWeight: '700' }}>
+    <View
+      style={[
+        styles.container,
+        { width: size, height: size, borderRadius: size / 2, backgroundColor },
+      ]}
+    >
+      <Text
+        variant="label"
+        style={{ color: '#FFFFFF', fontSize: avatarFontSize, fontWeight: '700' }}
+      >
         {initials}
       </Text>
     </View>

@@ -24,7 +24,9 @@ export function InstrumentCard({ ticker, name, lastPrice, avatarSize = 40 }: Ins
       </View>
       {lastPrice != null ? (
         <View style={styles.priceBox}>
-          <Text variant="caption" color="secondary">{copy.common.currencyPrefix}</Text>
+          <Text variant="caption" color="secondary">
+            {copy.common.currencyPrefix}
+          </Text>
           <Text variant="bodySemibold">{formatAmount(lastPrice)}</Text>
         </View>
       ) : null}

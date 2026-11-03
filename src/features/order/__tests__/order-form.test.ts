@@ -12,19 +12,34 @@ describe('computeUseAllValue', () => {
   describe('BUY + Por monto (amount)', () => {
     it('retorna el floor del cash disponible como string', () => {
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'amount', cash: 1000.75, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'amount',
+          cash: 1000.75,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('1000');
     });
 
     it('devuelve el cash exacto cuando es entero', () => {
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'amount', cash: 5000, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'amount',
+          cash: 5000,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('5000');
     });
 
     it('retorna null cuando cash es undefined', () => {
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'amount', cash: undefined, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'amount',
+          cash: undefined,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBeNull();
     });
   });
@@ -33,26 +48,46 @@ describe('computeUseAllValue', () => {
     it('calcula cuántas acciones enteras se pueden comprar con todo el cash', () => {
       // 500 / 50 = 10 acciones exactas
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'shares', cash: 500, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'shares',
+          cash: 500,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('10');
     });
 
     it('trunca hacia abajo cuando el cash no alcanza para una acción más', () => {
       // 549 / 50 = 10.98 → 10 acciones
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'shares', cash: 549, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'shares',
+          cash: 549,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('10');
     });
 
     it('retorna "0" cuando el cash es menor al precio de una acción', () => {
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'shares', cash: 10, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'shares',
+          cash: 10,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('0');
     });
 
     it('retorna null cuando cash es undefined', () => {
       expect(
-        computeUseAllValue({ side: 'BUY', quantityMode: 'shares', cash: undefined, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'BUY',
+          quantityMode: 'shares',
+          cash: undefined,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBeNull();
     });
   });
@@ -61,19 +96,34 @@ describe('computeUseAllValue', () => {
   describe('SELL + Cantidad de títulos (shares)', () => {
     it('retorna la cantidad exacta de acciones en cartera', () => {
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'shares', ownedShares: 5, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'shares',
+          ownedShares: 5,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('5');
     });
 
     it('retorna "1" cuando solo hay una acción en cartera', () => {
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'shares', ownedShares: 1, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'shares',
+          ownedShares: 1,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('1');
     });
 
     it('retorna null cuando ownedShares es undefined (instrumento abierto desde mercado)', () => {
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'shares', ownedShares: undefined, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'shares',
+          ownedShares: undefined,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBeNull();
     });
   });
@@ -82,26 +132,46 @@ describe('computeUseAllValue', () => {
     it('retorna el valor de mercado total (floor) de todas las acciones', () => {
       // 3 acciones × AR$ 50 = AR$ 150
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'amount', ownedShares: 3, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'amount',
+          ownedShares: 3,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('150');
     });
 
     it('aplica floor cuando el resultado tiene decimales', () => {
       // 3 acciones × AR$ 45.72 = AR$ 137.16 → floor = 137
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'amount', ownedShares: 3, lastPrice: 45.72 }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'amount',
+          ownedShares: 3,
+          lastPrice: 45.72,
+        }),
       ).toBe('137');
     });
 
     it('retorna "0" cuando ownedShares es 0', () => {
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'amount', ownedShares: 0, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'amount',
+          ownedShares: 0,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBe('0');
     });
 
     it('retorna null cuando ownedShares es undefined', () => {
       expect(
-        computeUseAllValue({ side: 'SELL', quantityMode: 'amount', ownedShares: undefined, lastPrice: LAST_PRICE }),
+        computeUseAllValue({
+          side: 'SELL',
+          quantityMode: 'amount',
+          ownedShares: undefined,
+          lastPrice: LAST_PRICE,
+        }),
       ).toBeNull();
     });
   });

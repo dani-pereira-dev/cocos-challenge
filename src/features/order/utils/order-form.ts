@@ -39,7 +39,9 @@ export function computeUseAllValue(params: UseAllParams): string | null {
 /**
  * Determina si el botón "Usar todo" debe mostrarse.
  */
-export function isUseAllAvailable(params: Pick<UseAllParams, 'side' | 'cash' | 'ownedShares'>): boolean {
+export function isUseAllAvailable(
+  params: Pick<UseAllParams, 'side' | 'cash' | 'ownedShares'>,
+): boolean {
   if (params.side === 'BUY') return params.cash != null;
   return params.ownedShares != null;
 }

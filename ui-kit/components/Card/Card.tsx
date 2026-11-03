@@ -30,12 +30,7 @@ export const Card: React.FC<CardProps> = ({
       <Pressable
         testID={testID}
         onPress={onPress}
-        style={({ pressed }) => [
-          styles.base,
-          elevationStyle,
-          pressed && styles.pressed,
-          style,
-        ]}
+        style={({ pressed }) => [styles.base, elevationStyle, pressed && styles.pressed, style]}
       >
         <View style={[styles.content, contentStyle]}>{children}</View>
       </Pressable>
@@ -48,4 +43,3 @@ export const Card: React.FC<CardProps> = ({
     </View>
   );
 };
-

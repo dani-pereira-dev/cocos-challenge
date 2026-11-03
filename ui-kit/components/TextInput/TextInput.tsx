@@ -42,11 +42,7 @@ export const TextInput: React.FC<TextInputProps> = ({
 }) => {
   const [focused, setFocused] = useState(false);
 
-  const borderColor = error
-    ? colors.error
-    : focused
-    ? colors.inputFocusBorder
-    : colors.inputBorder;
+  const borderColor = error ? colors.error : focused ? colors.inputFocusBorder : colors.inputBorder;
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -105,4 +101,3 @@ export const TextInput: React.FC<TextInputProps> = ({
     </View>
   );
 };
-

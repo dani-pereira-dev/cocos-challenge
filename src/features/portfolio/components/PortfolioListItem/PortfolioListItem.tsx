@@ -44,7 +44,8 @@ export function PortfolioListItem({ asset, onPress }: PortfolioListItemProps) {
           {formatCurrency(asset.market_value)}
         </Text>
         <Text variant="caption" align="right" style={{ color: gainColor }}>
-          {gainPrefix}{formatCurrency(asset.gain_amount)}
+          {gainPrefix}
+          {formatCurrency(asset.gain_amount)}
         </Text>
         <ReturnBadge value={asset.gain_percent} />
       </View>

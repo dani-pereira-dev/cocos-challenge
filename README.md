@@ -6,12 +6,12 @@ App móvil desarrollada con **Expo / React Native** para el challenge técnico d
 
 ## Requisitos previos
 
-| Herramienta | Versión mínima | Cómo instalar |
-|---|---|---|
-| Node.js | 20 LTS | [nodejs.org](https://nodejs.org) |
-| pnpm | 10 | `npm install -g pnpm` |
-| Expo CLI | última | `npm install -g expo-cli` (o usar `bunx`/`npx`) |
-| Expo Go (dispositivo físico) | cualquiera | [App Store](https://apps.apple.com/app/expo-go/id982107779) / [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) |
+| Herramienta                  | Versión mínima | Cómo instalar                                                                                                                               |
+| ---------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node.js                      | 20 LTS         | [nodejs.org](https://nodejs.org)                                                                                                            |
+| pnpm                         | 10             | `npm install -g pnpm`                                                                                                                       |
+| Expo CLI                     | última         | `npm install -g expo-cli` (o usar `bunx`/`npx`)                                                                                             |
+| Expo Go (dispositivo físico) | cualquiera     | [App Store](https://apps.apple.com/app/expo-go/id982107779) / [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) |
 
 > **Simulador (alternativa a Expo Go):** para iOS necesitás Xcode instalado; para Android, Android Studio con un AVD configurado.
 
@@ -39,12 +39,12 @@ npx expo start
 
 Luego elegí cómo correr la app:
 
-| Opción | Cómo |
-|---|---|
+| Opción                    | Cómo                                                                                      |
+| ------------------------- | ----------------------------------------------------------------------------------------- |
 | **Expo Go (iOS/Android)** | Escaneá el QR que aparece en la terminal con la cámara del celular o desde la app Expo Go |
-| **Simulador iOS** | Presioná `i` en la terminal (requiere Xcode) |
-| **Emulador Android** | Presioná `a` en la terminal (requiere Android Studio + AVD) |
-| **Web** | Presioná `w` en la terminal |
+| **Simulador iOS**         | Presioná `i` en la terminal (requiere Xcode)                                              |
+| **Emulador Android**      | Presioná `a` en la terminal (requiere Android Studio + AVD)                               |
+| **Web**                   | Presioná `w` en la terminal                                                               |
 
 ---
 

@@ -18,8 +18,7 @@ export const copy = {
     searchPlaceholder: 'Buscar por ticker...',
     loading: 'Cargando instrumentos...',
     noInstruments: 'No hay instrumentos disponibles.',
-    noSearchResults: (query: string) =>
-      `No se encontraron instrumentos para "${query}"`,
+    noSearchResults: (query: string) => `No se encontraron instrumentos para "${query}"`,
     fetchError: 'Error al cargar los instrumentos',
   },
 

@@ -12,7 +12,9 @@ interface EmptyViewProps {
 export function EmptyView({ title = copy.common.noResults, message, style }: EmptyViewProps) {
   return (
     <View style={[styles.container, style]}>
-      <Text variant="h3" align="center" style={styles.icon}>🔍</Text>
+      <Text variant="h3" align="center" style={styles.icon}>
+        🔍
+      </Text>
       <Text variant="bodyMedium" color="primary" align="center">
         {title}
       </Text>

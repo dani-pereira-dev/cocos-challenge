@@ -13,7 +13,9 @@ interface ErrorViewProps {
 export function ErrorView({ message = copy.common.genericError, onRetry, style }: ErrorViewProps) {
   return (
     <View style={[styles.container, style]}>
-      <Text variant="h3" style={styles.icon}>⚠️</Text>
+      <Text variant="h3" style={styles.icon}>
+        ⚠️
+      </Text>
       <Text variant="bodyMedium" color="primary" align="center">
         {copy.common.somethingWentWrong}
       </Text>

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import { ActivityIndicator, Pressable, TextStyle, ViewStyle } from 'react-native';
 import { colors } from '../../foundations/colors';
 import { borderRadius, spacing } from '../../foundations/spacing';
 import { textStyles } from '../../foundations/typography';
@@ -127,14 +122,10 @@ export const Button: React.FC<ButtonProps> = ({
           color={variant === 'ghost' ? colors.primary : colors.textInverse}
         />
       ) : (
-        <Text
-          variant="button"
-          style={[sizeStyles.label, variantStyles.label]}
-        >
+        <Text variant="button" style={[sizeStyles.label, variantStyles.label]}>
           {label}
         </Text>
       )}
     </Pressable>
   );
 };
-

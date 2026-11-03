@@ -46,7 +46,7 @@ src/
 
 ```ts
 // ❌ Causa loop en React 19
-useQuery({ queryFn: fetchPortfolio, select: (data) => transform(data) })
+useQuery({ queryFn: fetchPortfolio, select: (data) => transform(data) });
 
 // ✅ Estable
 const query = useQuery({ queryFn: fetchPortfolio });
@@ -62,6 +62,7 @@ const result = useMemo(() => transform(query.data), [query.data]);
 **Por qué:** Zustand v5 tiene una API mínima (sin boilerplate), es compatible con React 19, y no requiere providers. Se separó del estado de servidor (React Query) para mantener cada herramienta en su rol.
 
 **Sintaxis de Zustand v5:**
+
 ```ts
 // ✅ Curried form requerida en v5
 const useStore = create<State>()((set) => ({ ... }));
@@ -76,11 +77,12 @@ const useStore = create<State>()((set) => ({ ... }));
 **Por qué:** En una app fintech la consistencia visual no es opcional. Un design system centralizado evita colores hardcodeados, tamaños inconsistentes, y hace que cualquier cambio de marca se aplique en un solo lugar.
 
 **Tokens de color semánticos:**
+
 ```ts
-colors.success     // Verde: BUY, ganancias
-colors.error       // Rojo: SELL, pérdidas, alertas
-colors.textBrand   // Primario de marca: links, acciones
-colors.warning     // Naranja: banners de error de sistema
+colors.success; // Verde: BUY, ganancias
+colors.error; // Rojo: SELL, pérdidas, alertas
+colors.textBrand; // Primario de marca: links, acciones
+colors.warning; // Naranja: banners de error de sistema
 ```
 
 ---
@@ -130,12 +132,12 @@ Los mensajes en inglés que devuelve la API se traducen al español mediante un 
 
 **Decisión:** Botón que completa el campo con el máximo disponible según el contexto.
 
-| Contexto | Resultado |
-|---|---|
-| BUY + Por monto | `floor(cash)` en AR$ |
-| BUY + Por títulos | `floor(cash / lastPrice)` títulos |
-| SELL + Por monto | `floor(ownedShares * lastPrice)` en AR$ |
-| SELL + Por títulos | `ownedShares` títulos exactos |
+| Contexto           | Resultado                               |
+| ------------------ | --------------------------------------- |
+| BUY + Por monto    | `floor(cash)` en AR$                    |
+| BUY + Por títulos  | `floor(cash / lastPrice)` títulos       |
+| SELL + Por monto   | `floor(ownedShares * lastPrice)` en AR$ |
+| SELL + Por títulos | `ownedShares` títulos exactos           |
 
 La lógica está aislada en `src/features/order/utils/order-form.ts` y cubierta por 20 tests unitarios.
 
@@ -197,19 +199,19 @@ La configuración solo se activa en `__DEV__` y no tiene impacto en builds de pr
 
 ## Checklist de requisitos del challenge
 
-| Requisito | Estado |
-|---|---|
-| Listado de instrumentos con ticker, nombre, precio y retorno | ✅ |
-| Portfolio con valor de mercado, ganancia y rendimiento | ✅ |
-| Buscador por ticker | ✅ |
-| Modal de orden BUY/SELL, MARKET/LIMIT | ✅ |
-| Input de cantidad o monto en pesos | ✅ |
-| Mostrar resultado con id y status | ✅ |
-| TypeScript | ✅ |
-| Expo | ✅ |
-| README con instrucciones | ✅ |
-| Decisiones técnicas documentadas | ✅ |
-| Tests unitarios | ✅ (20 tests en order-form) |
-| Manejo robusto de errores | ✅ |
-| Arquitectura escalable | ✅ |
-| State management | ✅ (React Query + Zustand) |
+| Requisito                                                    | Estado                      |
+| ------------------------------------------------------------ | --------------------------- |
+| Listado de instrumentos con ticker, nombre, precio y retorno | ✅                          |
+| Portfolio con valor de mercado, ganancia y rendimiento       | ✅                          |
+| Buscador por ticker                                          | ✅                          |
+| Modal de orden BUY/SELL, MARKET/LIMIT                        | ✅                          |
+| Input de cantidad o monto en pesos                           | ✅                          |
+| Mostrar resultado con id y status                            | ✅                          |
+| TypeScript                                                   | ✅                          |
+| Expo                                                         | ✅                          |
+| README con instrucciones                                     | ✅                          |
+| Decisiones técnicas documentadas                             | ✅                          |
+| Tests unitarios                                              | ✅ (20 tests en order-form) |
+| Manejo robusto de errores                                    | ✅                          |
+| Arquitectura escalable                                       | ✅                          |
+| State management                                             | ✅ (React Query + Zustand)  |

@@ -37,7 +37,8 @@ export function ConfirmFooter({
           minimumFontScale={0.5}
           numberOfLines={1}
         >
-          {'≈ '}{formatCurrency(netTotal)}
+          {'≈ '}
+          {formatCurrency(netTotal)}
         </Text>
       </View>
       <Button

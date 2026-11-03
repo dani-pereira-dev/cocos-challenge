@@ -28,26 +28,62 @@ export function OrderBreakdownCard({
   return (
     <View style={styles.card}>
       <View style={styles.row}>
-        <Text variant="body" color="secondary" style={styles.label} numberOfLines={1} ellipsizeMode="tail">
+        <Text
+          variant="body"
+          color="secondary"
+          style={styles.label}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {detailLabel}
         </Text>
-        <Text variant="bodySemibold" style={styles.value} adjustsFontSizeToFit minimumFontScale={0.6} numberOfLines={1}>
+        <Text
+          variant="bodySemibold"
+          style={styles.value}
+          adjustsFontSizeToFit
+          minimumFontScale={0.6}
+          numberOfLines={1}
+        >
           {formatCurrency(subtotal)}
         </Text>
       </View>
       <View style={styles.row}>
-        <Text variant="body" color="secondary" style={styles.label} numberOfLines={1} ellipsizeMode="tail">
+        <Text
+          variant="body"
+          color="secondary"
+          style={styles.label}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {copy.order.comisionesLabel}
         </Text>
-        <Text variant="bodySemibold" style={[styles.value, styles.deduction]} adjustsFontSizeToFit minimumFontScale={0.6} numberOfLines={1}>
+        <Text
+          variant="bodySemibold"
+          style={[styles.value, styles.deduction]}
+          adjustsFontSizeToFit
+          minimumFontScale={0.6}
+          numberOfLines={1}
+        >
           {`-${formatCurrency(comision)}`}
         </Text>
       </View>
       <View style={styles.row}>
-        <Text variant="body" color="secondary" style={styles.label} numberOfLines={1} ellipsizeMode="tail">
+        <Text
+          variant="body"
+          color="secondary"
+          style={styles.label}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {copy.order.impuestosLabel}
         </Text>
-        <Text variant="bodySemibold" style={[styles.value, styles.deduction]} adjustsFontSizeToFit minimumFontScale={0.6} numberOfLines={1}>
+        <Text
+          variant="bodySemibold"
+          style={[styles.value, styles.deduction]}
+          adjustsFontSizeToFit
+          minimumFontScale={0.6}
+          numberOfLines={1}
+        >
           {`-${formatCurrency(impuestos)}`}
         </Text>
       </View>

@@ -35,7 +35,8 @@ export function PortfolioSummaryHeader({ assets, cash }: PortfolioSummaryHeaderP
           {copy.portfolio.totalGainLabel}
         </Text>
         <Text variant="bodyMedium" style={{ color: gainColor }}>
-          {gainPrefix}{formatCurrency(totalGain)}
+          {gainPrefix}
+          {formatCurrency(totalGain)}
         </Text>
         {cash !== undefined ? (
           <Text variant="caption" color="tertiary">

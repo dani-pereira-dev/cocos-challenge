@@ -45,17 +45,10 @@ export default function PortfolioScreen() {
         <FlatList
           data={holdings}
           keyExtractor={(item) => item.instrument_id.toString()}
-          renderItem={({ item }) => (
-            <PortfolioListItem asset={item} onPress={handleAssetPress} />
-          )}
-          ListHeaderComponent={
-            <PortfolioSummaryHeader assets={holdings} cash={cash} />
-          }
+          renderItem={({ item }) => <PortfolioListItem asset={item} onPress={handleAssetPress} />}
+          ListHeaderComponent={<PortfolioSummaryHeader assets={holdings} cash={cash} />}
           ListEmptyComponent={
-            <EmptyView
-              message={copy.portfolio.noAssets}
-              style={styles.emptyContainer}
-            />
+            <EmptyView message={copy.portfolio.noAssets} style={styles.emptyContainer} />
           }
           contentContainerStyle={holdings.length === 0 ? styles.emptyList : undefined}
           removeClippedSubviews

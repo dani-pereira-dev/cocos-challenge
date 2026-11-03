@@ -47,28 +47,18 @@ export default function MarketScreen() {
         <Text variant="h3">{copy.market.title}</Text>
       </View>
 
-      <MarketSearchBar
-        value={searchText}
-        onChangeText={setSearchText}
-        onClear={handleClear}
-      />
+      <MarketSearchBar value={searchText} onChangeText={setSearchText} onClear={handleClear} />
 
       {isLoading ? (
         <LoadingView message={copy.market.loading} />
       ) : isError ? (
-        <ErrorView
-          message={resolveErrorMessage(error, copy.market.fetchError)}
-          onRetry={refetch}
-        />
+        <ErrorView message={resolveErrorMessage(error, copy.market.fetchError)} onRetry={refetch} />
       ) : (
         <FlatList
           data={listData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <InstrumentListItem
-              instrument={item}
-              onPress={handleInstrumentPress}
-            />
+            <InstrumentListItem instrument={item} onPress={handleInstrumentPress} />
           )}
           ListEmptyComponent={
             <EmptyView

@@ -42,16 +42,16 @@ export function ConfirmStep({
   const title = isBuy ? copy.order.confirmTitleBuy : copy.order.confirmTitleSell;
 
   const orderPrice =
-    orderType === 'LIMIT'
-      ? parseFloat(limitPriceInput.replace(',', '.'))
-      : instrument.last_price;
+    orderType === 'LIMIT' ? parseFloat(limitPriceInput.replace(',', '.')) : instrument.last_price;
 
   const subtotal = derivedShares * instrument.last_price;
   const comision = subtotal * COMISION_RATE;
   const impuestos = subtotal * IMPUESTOS_RATE;
   const netTotal = isBuy ? subtotal + comision + impuestos : subtotal - comision - impuestos;
 
-  const estimatedLabel = isBuy ? copy.order.estimatedToPayLabel : copy.order.estimatedToReceiveLabel;
+  const estimatedLabel = isBuy
+    ? copy.order.estimatedToPayLabel
+    : copy.order.estimatedToReceiveLabel;
 
   return (
     <View style={styles.screen}>

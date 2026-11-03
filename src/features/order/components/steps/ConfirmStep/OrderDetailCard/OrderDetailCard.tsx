@@ -19,7 +19,9 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
       <View style={styles.row}>
         <View style={styles.rowLeft}>
           <Ionicons name="time-outline" size={16} color={colors.textSecondary} />
-          <Text variant="body" color="secondary">{copy.order.liquidacionLabel}</Text>
+          <Text variant="body" color="secondary">
+            {copy.order.liquidacionLabel}
+          </Text>
         </View>
         <Text variant="bodySemibold">{copy.order.liquidacionValue}</Text>
       </View>
@@ -33,7 +35,10 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
             {orderType === 'MARKET' ? copy.order.priceMarketLabel : copy.order.priceLimitLabel}
           </Text>
         </View>
-        <Text variant="bodySemibold">{'≈ '}{formatCurrency(orderPrice)}</Text>
+        <Text variant="bodySemibold">
+          {'≈ '}
+          {formatCurrency(orderPrice)}
+        </Text>
       </View>
 
       <View style={styles.divider} />
@@ -41,7 +46,9 @@ export function OrderDetailCard({ orderType, orderPrice, today }: OrderDetailCar
       <View style={styles.row}>
         <View style={styles.rowLeft}>
           <Ionicons name="calendar-outline" size={16} color={colors.textSecondary} />
-          <Text variant="body" color="secondary">{copy.order.validezLabel}</Text>
+          <Text variant="body" color="secondary">
+            {copy.order.validezLabel}
+          </Text>
         </View>
         <Text variant="bodySemibold">{copy.order.validezValue(today)}</Text>
       </View>

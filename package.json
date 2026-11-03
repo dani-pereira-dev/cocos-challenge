@@ -38,6 +38,7 @@
     "eslint-config-expo": "~58.0.4",
     "jest": "^30.5.2",
     "jest-expo": "^58.0.13",
+    "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
     "typescript": "~6.0.3"
   },
@@ -49,7 +50,10 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "check": "tsc --noEmit && expo lint && prettier --check ."
   },
   "private": true,
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
