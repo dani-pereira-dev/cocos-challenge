@@ -3,7 +3,9 @@ import { WalletAssetItem } from '../components/WalletAssetItem/WalletAssetItem';
 import { EnrichedAllocation } from '../hooks/useWalletDetail';
 
 jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { View } = require('react-native');
   return { __esModule: true, default: ({ children }: { children: React.ReactNode }) => React.createElement(View, null, children) };
 });

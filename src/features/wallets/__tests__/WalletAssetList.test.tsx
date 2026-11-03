@@ -7,7 +7,9 @@ jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 const { router } = jest.requireMock('expo-router') as { router: { push: jest.Mock } };
 
 jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { View } = require('react-native');
   return { __esModule: true, default: ({ children }: { children: React.ReactNode }) => React.createElement(View, null, children) };
 });

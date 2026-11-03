@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { View } = require('react-native');
 
 const useSharedValue = (value: unknown) => ({ value });
