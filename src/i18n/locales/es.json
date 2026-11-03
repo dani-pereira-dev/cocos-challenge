@@ -3,6 +3,7 @@
     "retry": "Reintentar",
     "somethingWentWrong": "Algo salió mal",
     "genericError": "Ocurrió un error al cargar los datos.",
+    "unexpectedError": "Ocurrió un error inesperado en la aplicación.",
     "noResults": "Sin resultados",
     "currencyPrefix": "AR$"
   },

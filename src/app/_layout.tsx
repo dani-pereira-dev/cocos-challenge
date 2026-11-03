@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { styles } from '@/styles/layout.styles';
 
+export { GlobalErrorFallback as ErrorBoundary } from '@/components/GlobalErrorFallback';
+
 // Reactotron solo se inicializa en desarrollo — no afecta builds de producción
 if (__DEV__) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

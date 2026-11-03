@@ -18,6 +18,7 @@ import { styles } from '@/features/market/market.screen.styles';
 
 export default function MarketScreen() {
   const { t } = useTranslation();
+
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText, 400);
   const openOrder = useOrderModalStore((s) => s.openOrder);
