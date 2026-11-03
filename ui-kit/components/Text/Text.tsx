@@ -12,6 +12,8 @@ interface TextProps {
   align?: TextStyle['textAlign'];
   numberOfLines?: number;
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip';
+  adjustsFontSizeToFit?: boolean;
+  minimumFontScale?: number;
   style?: StyleProp<TextStyle>;
   testID?: string;
 }
@@ -34,6 +36,8 @@ export const Text: React.FC<TextProps> = ({
   align,
   numberOfLines,
   ellipsizeMode,
+  adjustsFontSizeToFit,
+  minimumFontScale,
   style,
   testID,
 }) => {
@@ -44,6 +48,8 @@ export const Text: React.FC<TextProps> = ({
       testID={testID}
       numberOfLines={numberOfLines}
       ellipsizeMode={ellipsizeMode}
+      adjustsFontSizeToFit={adjustsFontSizeToFit}
+      minimumFontScale={minimumFontScale}
       style={[
         styles.base,
         textStyles[variant],

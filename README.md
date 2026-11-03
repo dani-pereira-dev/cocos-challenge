@@ -1,56 +1,134 @@
-# Welcome to your Expo app 👋
+# Cocos Challenge — App Fintech
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil desarrollada con **Expo / React Native** para el challenge técnico de Cocos Capital. Permite visualizar instrumentos del mercado, consultar el portafolio personal y enviar órdenes de compra y venta.
 
-## Get started
+---
 
-1. Install dependencies
+## Requisitos previos
 
-   ```bash
-   npm install
-   ```
+| Herramienta | Versión mínima | Cómo instalar |
+|---|---|---|
+| Node.js | 20 LTS | [nodejs.org](https://nodejs.org) |
+| pnpm | 10 | `npm install -g pnpm` |
+| Expo CLI | última | `npm install -g expo-cli` (o usar `bunx`/`npx`) |
+| Expo Go (dispositivo físico) | cualquiera | [App Store](https://apps.apple.com/app/expo-go/id982107779) / [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) |
 
-2. Start the app
+> **Simulador (alternativa a Expo Go):** para iOS necesitás Xcode instalado; para Android, Android Studio con un AVD configurado.
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Instalación
 
 ```bash
-npm run reset-project
+# 1. Clonar el repositorio
+git clone <url-del-repo>
+cd cocos-challenge
+
+# 2. Instalar dependencias
+pnpm install
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+---
 
-### Other setup steps
+## Ejecutar en desarrollo
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+# Inicia el servidor de desarrollo (Metro Bundler)
+npx expo start
+```
 
-## Learn more
+Luego elegí cómo correr la app:
 
-To learn more about developing your project with Expo, look at the following resources:
+| Opción | Cómo |
+|---|---|
+| **Expo Go (iOS/Android)** | Escaneá el QR que aparece en la terminal con la cámara del celular o desde la app Expo Go |
+| **Simulador iOS** | Presioná `i` en la terminal (requiere Xcode) |
+| **Emulador Android** | Presioná `a` en la terminal (requiere Android Studio + AVD) |
+| **Web** | Presioná `w` en la terminal |
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## Scripts útiles
 
-Join our community of developers creating universal apps.
+```bash
+# Ejecutar tests unitarios
+pnpm test
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Ejecutar tests en modo watch
+pnpm test --watch
+
+# Lint
+npx expo lint
+
+# Typecheck
+npx tsc --noEmit
+
+# Diagnóstico de dependencias
+npx expo-doctor
+```
+
+---
+
+## Variables de entorno
+
+No se requieren variables de entorno. La URL base de la API y los headers necesarios están configurados directamente en `src/services/api-client.ts`:
+
+- **Base URL:** `https://dummy-api-topaz.vercel.app`
+- **Headers requeridos:** `X-Enable-Bugs: off` y `X-Candidate-Id: <email>`
+
+---
+
+## Estructura del proyecto
+
+```
+cocos-challenge/
+├── src/
+│   ├── app/                   # Pantallas (Expo Router — file-based routing)
+│   │   └── (tabs)/
+│   │       ├── index.tsx      # Pantalla Mercado
+│   │       └── portfolio.tsx  # Pantalla Portfolio
+│   ├── constants/
+│   │   └── copy.ts            # Todos los textos de UI centralizados
+│   ├── domain/
+│   │   ├── entities/          # Tipos e interfaces del negocio
+│   │   ├── interfaces/        # ApiError, resolveErrorMessage, isUserError
+│   │   └── use-cases/         # Lógica de negocio pura (cálculos)
+│   ├── features/
+│   │   ├── market/            # Componentes de la pantalla Mercado
+│   │   ├── order/             # Modal de orden + utils + tests
+│   │   └── portfolio/         # Componentes de la pantalla Portfolio
+│   ├── hooks/                 # React Query hooks (instrumentos, portfolio, search, orden)
+│   ├── services/              # Capa de acceso a la API
+│   ├── store/                 # Estado global (Zustand)
+│   └── utils/                 # Formatters (moneda, porcentaje, fecha)
+└── ui-kit/                    # Design system interno (Button, Text, TextInput, Card)
+    ├── components/
+    └── foundations/           # Colors, typography, spacing
+```
+
+---
+
+## Funcionalidades implementadas
+
+- **Listado de instrumentos** con ticker, nombre, último precio y retorno del día
+- **Búsqueda de instrumentos** por ticker en tiempo real (debounce 400 ms)
+- **Portfolio** con valor de mercado, ganancia absoluta y rendimiento porcentual por posición
+- **Modal de orden** con flujo en pasos:
+  1. Selección de acción (Comprar / Vender)
+  2. Formulario (monto en AR$ o cantidad de títulos, tipo Mercado o Límite)
+  3. Pantalla de presupuesto con desglose de comisiones e impuestos estimados
+  4. Resultado (estado FILLED / PENDING / REJECTED)
+- **"Usar todo"**: completa automáticamente el campo con el máximo disponible
+- **Restricción de venta**: el botón Vender queda deshabilitado si no hay posición en el instrumento
+- **Validación en tiempo real**: bloquea el botón Siguiente si el monto supera el efectivo o las acciones disponibles
+- **Manejo robusto de errores**: errores de usuario (4xx) mostrados en el formulario; errores de sistema (5xx / red) mostrados como banner
+
+---
+
+## Tests
+
+Los tests unitarios cubren la lógica del formulario de órdenes (`src/features/order/__tests__/order-form.test.ts`):
+
+- `computeUseAllValue`: todas las combinaciones BUY/SELL × monto/títulos
+- `isUseAllAvailable`: casos de borde con efectivo o posición nula/cero
+- Validación de inputs inválidos (NaN, Infinity, negativo, cero)

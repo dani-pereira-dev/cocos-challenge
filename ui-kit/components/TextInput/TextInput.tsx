@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
+  TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
@@ -21,6 +22,7 @@ interface TextInputProps extends Omit<RNTextInputProps, 'style'> {
   disabled?: boolean;
   containerStyle?: ViewStyle;
   inputContainerStyle?: ViewStyle;
+  inputStyle?: TextStyle;
   onSuffixPress?: () => void;
   testID?: string;
 }
@@ -34,6 +36,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   disabled = false,
   containerStyle,
   inputContainerStyle,
+  inputStyle,
   onSuffixPress,
   testID,
   ...rest
@@ -70,7 +73,7 @@ export const TextInput: React.FC<TextInputProps> = ({
 
         <RNTextInput
           testID={testID}
-          style={[styles.input, disabled && styles.disabledText]}
+          style={[styles.input, disabled && styles.disabledText, inputStyle]}
           placeholderTextColor={colors.placeholder}
           editable={!disabled}
           onFocus={() => setFocused(true)}
