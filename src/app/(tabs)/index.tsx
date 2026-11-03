@@ -2,8 +2,8 @@ import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@ui-kit';
-import { EmptyView } from '@/components/EmptyView';
 import { styles } from '@/features/portfolio/portfolio.screen.styles';
+import { PortfolioEmptyState } from '@/features/portfolio/components/PortfolioEmptyState';
 import { ErrorView } from '@/components/ErrorView';
 import { PortfolioSkeleton } from '@/features/portfolio/components/PortfolioSkeleton';
 import { PortfolioAssetWithMetrics } from '@/domain/entities/portfolio';
@@ -16,7 +16,8 @@ import { WalletBanner } from '@/features/wallets/components/WalletBanner';
 
 export default function PortfolioScreen() {
   const { t } = useTranslation();
-  const { holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
+  const { holdings: _holdings, cash, isLoading, isError, error, refetch } = usePortfolioQuery();
+  const holdings: typeof _holdings = []; // TODO: remove — simulating empty state
   const openOrder = useOrderModalStore((s) => s.openOrder);
 
   function handleAssetPress(asset: PortfolioAssetWithMetrics) {
@@ -53,9 +54,7 @@ export default function PortfolioScreen() {
             </>
           }
 
-          ListEmptyComponent={
-            <EmptyView message={t('portfolio.noAssets')} style={styles.emptyContainer} />
-          }
+          ListEmptyComponent={<PortfolioEmptyState />}
           contentContainerStyle={holdings.length === 0 ? styles.emptyList : undefined}
           removeClippedSubviews
           maxToRenderPerBatch={20}
