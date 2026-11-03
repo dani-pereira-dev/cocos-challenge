@@ -2,6 +2,11 @@ export type OrderSide = 'BUY' | 'SELL';
 export type OrderType = 'MARKET' | 'LIMIT';
 export type OrderStatus = 'PENDING' | 'FILLED' | 'REJECTED';
 
+export const isBuyOrder = (side: OrderSide) => side === 'BUY';
+export const isSellOrder = (side: OrderSide) => side === 'SELL';
+export const isLimitOrder = (type: OrderType) => type === 'LIMIT';
+export const isMarketOrder = (type: OrderType) => type === 'MARKET';
+
 export interface OrderableInstrument {
   id: number;
   ticker: string;

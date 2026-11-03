@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { EmptyView } from '@/components/EmptyView';
 import { ErrorView } from '@/components/ErrorView';
@@ -13,9 +13,8 @@ import { useSearchQuery } from '@/hooks/useSearchQuery';
 import { resolveErrorMessage } from '@/domain/interfaces/api-error';
 import { useOrderModalStore } from '@/store';
 import { Text } from '@ui-kit/components/Text';
-import { colors } from '@ui-kit/foundations/colors';
-import { spacing } from '@ui-kit/foundations/spacing';
 import { copy } from '@/constants/copy';
+import { styles } from './index.styles';
 
 export default function MarketScreen() {
   const [searchText, setSearchText] = useState('');
@@ -80,22 +79,3 @@ export default function MarketScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    paddingHorizontal: spacing['4'],
-    paddingVertical: spacing['4'],
-    backgroundColor: colors.surface,
-  },
-  emptyList: {
-    flex: 1,
-  },
-  emptyContainer: {
-    flex: 1,
-    minHeight: 300,
-  },
-});

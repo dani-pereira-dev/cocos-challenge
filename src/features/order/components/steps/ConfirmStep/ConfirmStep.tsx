@@ -1,8 +1,8 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Text } from '@ui-kit/components/Text';
 import { colors } from '@ui-kit/foundations/colors';
-import { borderRadius, spacing } from '@ui-kit/foundations/spacing';
 import { OrderableInstrument, OrderSide, OrderType } from '@/domain/entities/order';
+import { styles } from './ConfirmStep.styles';
 import { formatDate } from '@/utils/formatters';
 import { copy } from '@/constants/copy';
 import { InstrumentCard } from '../shared/InstrumentCard/InstrumentCard';
@@ -94,26 +94,3 @@ export function ConfirmStep({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.background,
-    marginTop: 60,
-    borderTopLeftRadius: borderRadius['2xl'],
-    borderTopRightRadius: borderRadius['2xl'],
-    overflow: 'hidden',
-  },
-  flex: {
-    flex: 1,
-  },
-  content: {
-    padding: spacing['4'],
-    gap: spacing['3'],
-    paddingBottom: spacing['6'],
-  },
-  sectionTitle: {
-    marginTop: spacing['2'],
-    marginBottom: spacing['1'],
-  },
-});
