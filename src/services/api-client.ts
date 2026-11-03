@@ -1,7 +1,7 @@
 import i18n from '@/i18n';
 import { ApiError } from '@/domain/interfaces/api-error';
 
-const BASE_URL = 'https://dummy-api-topaz.vercel.app';
+const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? '';
 
 const DEFAULT_HEADERS: HeadersInit = {
   'Content-Type': 'application/json',

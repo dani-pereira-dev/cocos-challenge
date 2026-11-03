@@ -71,10 +71,19 @@ npx expo-doctor
 
 ## Variables de entorno
 
-No se requieren variables de entorno. La URL base de la API y los headers necesarios están configurados directamente en `src/services/api-client.ts`:
+Copiá el archivo de ejemplo y completá los valores:
 
-- **Base URL:** `https://dummy-api-topaz.vercel.app`
-- **Headers requeridos:** `X-Enable-Bugs: off` y `X-Candidate-Id: <email>`
+```bash
+cp .env.example .env
+```
+
+| Variable                   | Descripción             | Valor por defecto                        |
+| -------------------------- | ----------------------- | ---------------------------------------- |
+| `EXPO_PUBLIC_API_BASE_URL` | URL base de la REST API | `https://dummy-api-topaz.vercel.app`     |
+
+> El prefijo `EXPO_PUBLIC_` es requerido por Expo para exponer la variable al bundle del cliente. El archivo `.env` está en `.gitignore`; `.env.example` sí se versiona como referencia.
+
+Los endpoints de la API están centralizados en `src/constants/api-endpoints.ts`. Los headers de autenticación (`X-Enable-Bugs`, `X-Candidate-Id`) se envían automáticamente desde `src/services/api-client.ts`.
 
 ---
 
@@ -82,13 +91,15 @@ No se requieren variables de entorno. La URL base de la API y los headers necesa
 
 ```
 cocos-challenge/
+├── .env.example               # Variables de entorno de referencia (se versiona)
 ├── src/
 │   ├── app/                   # Pantallas (Expo Router — file-based routing)
-│   │   └── (tabs)/
-│   │       ├── index.tsx      # Pantalla Mercado
-│   │       └── portfolio.tsx  # Pantalla Portfolio
+│   │   ├── (tabs)/
+│   │   │   ├── index.tsx      # Tab Portfolio
+│   │   │   └── market.tsx     # Tab Mercado
+│   │   └── wallets/           # Pantallas de carteras
 │   ├── constants/
-│   │   └── copy.ts            # Todos los textos de UI centralizados
+│   │   └── api-endpoints.ts   # Todos los paths de la API centralizados
 │   ├── domain/
 │   │   ├── entities/          # Tipos e interfaces del negocio
 │   │   ├── interfaces/        # ApiError, resolveErrorMessage, isUserError
@@ -96,13 +107,14 @@ cocos-challenge/
 │   ├── features/
 │   │   ├── market/            # Componentes de la pantalla Mercado
 │   │   ├── order/             # Modal de orden + utils + tests
-│   │   └── portfolio/         # Componentes de la pantalla Portfolio
+│   │   ├── portfolio/         # Componentes de la pantalla Portfolio
+│   │   └── wallets/           # Carteras: componentes, hooks, store
 │   ├── hooks/                 # React Query hooks (instrumentos, portfolio, search, orden)
 │   ├── services/              # Capa de acceso a la API
 │   ├── store/                 # Estado global (Zustand)
 │   └── utils/                 # Formatters (moneda, porcentaje, fecha)
-└── ui-kit/                    # Design system interno (Button, Text, TextInput, Card)
-    ├── components/
+└── ui-kit/                    # Design system interno
+    ├── components/            # Button, Text, TextInput, Icon, Skeleton
     └── foundations/           # Colors, typography, spacing
 ```
 

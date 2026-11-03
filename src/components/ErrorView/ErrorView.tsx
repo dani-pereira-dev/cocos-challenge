@@ -1,6 +1,6 @@
-import { View, ViewStyle } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { Button, Icon, Text, colors } from '@ui-kit';
+import { useTranslation } from 'react-i18next';
+import { View, ViewStyle } from 'react-native';
 
 import { styles } from './ErrorView.styles';
 
