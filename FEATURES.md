@@ -6,7 +6,7 @@
 
 | Portfolio con posiciones | Portfolio vacío |
 |:---:|:---:|
-| ![Portfolio con posiciones](./reference-screens/android%20full.png) | ![Portfolio vacío](./reference-screens/android%20empty.png) |
+| ![Portfolio con posiciones](./mocks/android-full.png) | ![Portfolio vacío](./mocks/android-empty.png) |
 
 ---
 
