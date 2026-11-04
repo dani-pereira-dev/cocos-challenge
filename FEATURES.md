@@ -2,6 +2,14 @@
 
 ---
 
+## Capturas de pantalla
+
+| Portfolio con posiciones | Portfolio vacío |
+|:---:|:---:|
+| ![Portfolio con posiciones](./reference-screens/android%20full.png) | ![Portfolio vacío](./reference-screens/android%20empty.png) |
+
+---
+
 ## Funcionalidades del challenge
 
 ### Mercado
