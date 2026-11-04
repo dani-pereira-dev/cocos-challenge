@@ -22,12 +22,17 @@ Este documento registra las decisiones de arquitectura y diseño tomadas durante
 src/
 ├── domain/          # Entidades, interfaces, casos de uso (sin deps de UI)
 ├── features/
-│   ├── market/      # Componentes, servicio e hook de instrumentos/búsqueda
+│   ├── market/      # Componentes, servicio e hooks de instrumentos/búsqueda
 │   ├── order/       # Modal + store + servicio + utils + tests
-│   ├── portfolio/   # Componentes y hook de portfolio
-│   └── wallets/     # Carteras: componentes, hooks, store
-├── hooks/           # Hooks compartidos entre 2+ features (portfolio)
-└── services/        # api-client + servicios compartidos (portfolio.service)
+│   ├── portfolio/   # Componentes y hooks de portfolio
+│   └── wallets/     # Carteras: componentes, hooks, store (AsyncStorage)
+├── app/             # Pantallas (Expo Router — file-based routing)
+├── components/      # Componentes compartidos entre features (TickerAvatar, ReturnBadge)
+├── hooks/           # Hooks compartidos entre 2+ features
+├── services/        # api-client + portfolio.service
+├── i18n/            # Configuración de i18next y traducciones (es.json)
+├── test-utils/      # Setup de Jest, mocks de Reanimated y vector-icons
+└── utils/           # Formatters (moneda, porcentaje, fecha)
 ```
 
 Ver Decisión 28 para el criterio de colocation que rige qué vive dentro de una feature y qué va al nivel global.
@@ -82,12 +87,6 @@ colors.error; // Rojo: SELL, pérdidas, alertas
 colors.textBrand; // Primario de marca: links, acciones
 colors.warning; // Naranja: banners de error de sistema
 ```
-
----
-
-## 6. Centralización de textos: i18next
-
-Ver Decisión 17.
 
 ---
 
@@ -230,19 +229,14 @@ Los steps no reciben props de formulario porque los leen directamente del contex
 
 ## 17. Internacionalización: i18next
 
-**Decisión:** Los textos visibles al usuario están centralizados en `src/i18n/locales/es.json` y se acceden mediante `useTranslation()` de `react-i18next` en componentes React, e `i18n.t()` directamente en código no-React (servicios, domain).
+**Decisión:** Los textos visibles al usuario viven en `src/i18n/locales/es.json` y se acceden mediante `useTranslation()` de `react-i18next` en componentes React.
 
-**Por qué:** i18next resuelve plurales, interpolaciones y cambio de idioma en runtime sin modificar componentes. Escala a múltiples idiomas sin tocar los puntos de uso.
+**Por qué:** i18next resuelve plurales e interpolaciones sin modificar componentes. Escala a múltiples idiomas sin tocar los puntos de uso.
 
 ```ts
-// Componente React
 const { t } = useTranslation();
 t('portfolio.shares', { count: qty }); // "1 acción" / "5 acciones"
 t('market.noSearchResults', { query }); // interpolación
-
-// Servicio / dominio (no-React)
-import i18n from '@/i18n';
-i18n.t('errors.network');
 ```
 
 **Trade-off:** Agrega una dependencia de runtime y quita el tipado estático de claves (recuperable con plugins de TypeScript para i18next).
@@ -261,9 +255,9 @@ i18n.t('errors.network');
 
 ## 19. Debugging: Reactotron
 
-**Decisión:** Se integró Reactotron para debugging en desarrollo.
+**Decisión:** Se integró Reactotron para inspeccionar requests, state y logs en desarrollo.
 
-**Por qué:** Reactotron es el estándar de facto para debugging en React Native/Expo. Permite inspeccionar requests, state y logs desde un cliente de escritorio sin necesidad de remote debugging del JS engine.
+**Por qué:** Permite ver requests HTTP y estado de Zustand desde un cliente de escritorio sin herramientas adicionales del browser.
 
 La configuración solo se activa en `__DEV__` y no tiene impacto en builds de producción.
 
