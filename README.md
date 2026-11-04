@@ -6,7 +6,28 @@ App móvil desarrollada con **Expo / React Native** para el challenge técnico d
 
 ---
 
-## Requisitos previos
+## Probar la app en Android (sin instalar nada)
+
+Podés instalar la app directamente en cualquier dispositivo Android descargando el APK desde el siguiente link:
+
+**[Descargar APK](https://expo.dev/accounts/danielpereira19861978/projects/cocos-challenge/builds/4d740482-a026-43cb-b155-d00686959a6f)**
+
+### Pasos para instalar
+
+1. Abrí el link desde el navegador del celular Android
+2. Descargá el APK
+3. Si el sistema pide permiso, habilitá **Instalar apps de fuentes desconocidas** (Ajustes → Seguridad) y confirmá la instalación
+4. Abrí la app desde el cajón de aplicaciones
+
+> No requiere cuenta de Expo, Node.js ni ningún entorno de desarrollo.
+
+---
+
+## Ejecutar en local
+
+Las siguientes instrucciones son para correr el proyecto en un entorno de desarrollo local.
+
+### Requisitos previos
 
 | Herramienta | Versión mínima | Cómo instalar                    |
 | ----------- | -------------- | -------------------------------- |
