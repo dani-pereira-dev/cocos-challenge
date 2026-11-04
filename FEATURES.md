@@ -4,9 +4,23 @@
 
 ## Capturas de pantalla
 
-| Portfolio con posiciones | Portfolio vacío |
+### Portfolio
+
+| Con posiciones | Vacío |
 |:---:|:---:|
 | ![Portfolio con posiciones](./mocks/android-full.png) | ![Portfolio vacío](./mocks/android-empty.png) |
+
+### Carteras personalizadas
+
+| Lista de carteras | Crear cartera | Agregar activos |
+|:---:|:---:|:---:|
+| ![Lista de carteras](./mocks/wallets-list.png) | ![Crear cartera](./mocks/wallets-create.png) | ![Agregar activos](./mocks/wallets-add-asset.png) |
+
+### Órdenes de compra y venta
+
+| Formulario de compra | Presupuesto |
+|:---:|:---:|
+| ![Formulario de compra](./mocks/order-form.png) | ![Presupuesto](./mocks/order-confirm.png) |
 
 ---
 
